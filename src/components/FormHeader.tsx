@@ -1,5 +1,5 @@
 import React from 'react';
-import royalCaninLogo from '@/assets/royal-canin-logo.png';
+import nzPremierLogo from '@/assets/nz-premier-logo.png';
 
 const FormHeader = () => {
   return (
@@ -8,9 +8,9 @@ const FormHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
-              src={royalCaninLogo} 
-              alt="Royal Canin" 
-              className="h-12 w-auto"
+              src={nzPremierLogo} 
+              alt="NZ Premier Show Dog of the Year" 
+              className="h-16 w-auto"
             />
             <div className="border-l border-primary-glow h-12 mx-4" />
             <div>

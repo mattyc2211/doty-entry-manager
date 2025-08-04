@@ -10,11 +10,13 @@ import { toast } from '@/hooks/use-toast';
 interface ReviewSubmitProps {
   formData: FormData;
   calculateTotal: () => number;
+  entryType: 'competition' | 'catering';
 }
 
 const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
   formData,
-  calculateTotal
+  calculateTotal,
+  entryType
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -183,7 +185,8 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
             </div>
           ))}
         </CardContent>
-      </Card>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>

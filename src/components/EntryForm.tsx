@@ -7,11 +7,13 @@ import ExhibitorDetails from './form-steps/ExhibitorDetails';
 import DogEntries from './form-steps/DogEntries';
 import CateringExtras from './form-steps/CateringExtras';
 import ReviewSubmit from './form-steps/ReviewSubmit';
+import WelcomeStep from './form-steps/WelcomeStep';
 import FormHeader from './FormHeader';
 import { FormData, ExhibitorData, DogEntry, CateringData } from '@/types/form';
 
 const EntryForm = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [entryType, setEntryType] = useState<'competition' | 'catering' | null>(null);
   const [formData, setFormData] = useState<FormData>({
     exhibitor: {
       firstName: '',
@@ -26,12 +28,25 @@ const EntryForm = () => {
     }
   });
 
-  const steps = [
-    { number: 1, title: 'Exhibitor Details', component: ExhibitorDetails },
-    { number: 2, title: 'Dog Entries', component: DogEntries },
-    { number: 3, title: 'Catering & Extras', component: CateringExtras },
-    { number: 4, title: 'Review & Submit', component: ReviewSubmit }
-  ];
+  const getSteps = () => {
+    if (entryType === 'catering') {
+      return [
+        { number: 0, title: 'Welcome', component: WelcomeStep },
+        { number: 1, title: 'Exhibitor Details', component: ExhibitorDetails },
+        { number: 2, title: 'Catering & Extras', component: CateringExtras },
+        { number: 3, title: 'Review & Submit', component: ReviewSubmit }
+      ];
+    }
+    return [
+      { number: 0, title: 'Welcome', component: WelcomeStep },
+      { number: 1, title: 'Exhibitor Details', component: ExhibitorDetails },
+      { number: 2, title: 'Dog Entries', component: DogEntries },
+      { number: 3, title: 'Catering & Extras', component: CateringExtras },
+      { number: 4, title: 'Review & Submit', component: ReviewSubmit }
+    ];
+  };
+
+  const steps = getSteps();
 
   const updateExhibitorData = (data: ExhibitorData) => {
     setFormData(prev => ({ ...prev, exhibitor: data }));
@@ -45,20 +60,27 @@ const EntryForm = () => {
     setFormData(prev => ({ ...prev, catering: data }));
   };
 
+  const handleEntryTypeSelection = (type: 'competition' | 'catering') => {
+    setEntryType(type);
+    setCurrentStep(1);
+  };
+
   const nextStep = () => {
-    if (currentStep < steps.length) {
+    if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
 
   const prevStep = () => {
-    if (currentStep > 1) {
+    if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
 
   const goToStep = (step: number) => {
-    setCurrentStep(step);
+    if (step === 0 || entryType) {
+      setCurrentStep(step);
+    }
   };
 
   const calculateTotal = () => {
@@ -70,9 +92,7 @@ const EntryForm = () => {
     return eventCost + dinnerCost + catalogueCost;
   };
 
-  const CurrentStepComponent = steps[currentStep - 1].component;
-
-  const progress = (currentStep / steps.length) * 100;
+  const progress = (currentStep / (steps.length - 1)) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
@@ -81,94 +101,110 @@ const EntryForm = () => {
       {/* Add padding top to account for fixed header */}
       <div className="pt-24 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <Card className="shadow-card">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between mb-4">
-                <CardTitle className="text-2xl font-bold text-foreground">
-                  {steps[currentStep - 1].title}
-                </CardTitle>
-                <div className="text-sm text-muted-foreground">
-                  Step {currentStep} of {steps.length}
+          {currentStep === 0 ? (
+            <WelcomeStep onSelectEntryType={handleEntryTypeSelection} />
+          ) : (
+            <Card className="shadow-card">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <CardTitle className="text-2xl font-bold text-foreground">
+                    {steps[currentStep].title}
+                  </CardTitle>
+                  <div className="text-sm text-muted-foreground">
+                    Step {currentStep} of {steps.length - 1}
+                    {entryType === 'catering' && (
+                      <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                        Catering Only
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              
-              <Progress value={progress} className="w-full" />
-              
-              <div className="flex justify-between mt-4">
-                {steps.map((step) => (
-                  <button
-                    key={step.number}
-                    onClick={() => goToStep(step.number)}
-                    className={`text-xs px-3 py-1 rounded-full transition-smooth ${
-                      currentStep === step.number
-                        ? 'bg-primary text-primary-foreground'
-                        : currentStep > step.number
-                        ? 'bg-success text-success-foreground'
-                        : 'bg-muted text-muted-foreground'
-                    }`}
-                  >
-                    {step.number}. {step.title}
-                  </button>
-                ))}
-              </div>
-            </CardHeader>
+                
+                {currentStep > 0 && (
+                  <>
+                    <Progress value={progress} className="w-full" />
+                    
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {steps.filter(s => s.number > 0).map((step) => (
+                        <button
+                          key={step.number}
+                          onClick={() => goToStep(step.number)}
+                          disabled={step.number === 0}
+                          className={`text-xs px-3 py-1 rounded-full transition-smooth ${
+                            currentStep === step.number
+                              ? 'bg-primary text-primary-foreground'
+                              : currentStep > step.number
+                              ? 'bg-green-100 text-green-800 border border-green-200'
+                              : 'bg-muted text-muted-foreground'
+                          }`}
+                        >
+                          {step.number}. {step.title}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </CardHeader>
 
-            <CardContent className="space-y-6">
-              {currentStep === 1 && (
-                <ExhibitorDetails
-                  formData={formData}
-                  updateExhibitorData={updateExhibitorData}
-                  nextStep={nextStep}
-                />
-              )}
-              
-              {currentStep === 2 && (
-                <DogEntries
-                  formData={formData}
-                  updateDogData={updateDogData}
-                  nextStep={nextStep}
-                />
-              )}
-              
-              {currentStep === 3 && (
-                <CateringExtras
-                  formData={formData}
-                  updateCateringData={updateCateringData}
-                  calculateTotal={calculateTotal}
-                  nextStep={nextStep}
-                />
-              )}
-              
-              {currentStep === 4 && (
-                <ReviewSubmit
-                  formData={formData}
-                  calculateTotal={calculateTotal}
-                />
-              )}
+              <CardContent className="space-y-6">
+                {currentStep === 1 && (
+                  <ExhibitorDetails
+                    formData={formData}
+                    updateExhibitorData={updateExhibitorData}
+                    nextStep={nextStep}
+                  />
+                )}
+                
+                {currentStep === 2 && entryType === 'competition' && (
+                  <DogEntries
+                    formData={formData}
+                    updateDogData={updateDogData}
+                    nextStep={nextStep}
+                  />
+                )}
+                
+                {((currentStep === 3 && entryType === 'competition') || (currentStep === 2 && entryType === 'catering')) && (
+                  <CateringExtras
+                    formData={formData}
+                    updateCateringData={updateCateringData}
+                    calculateTotal={calculateTotal}
+                    nextStep={nextStep}
+                    isCateringOnly={entryType === 'catering'}
+                  />
+                )}
+                
+                {((currentStep === 4 && entryType === 'competition') || (currentStep === 3 && entryType === 'catering')) && (
+                  <ReviewSubmit
+                    formData={formData}
+                    calculateTotal={calculateTotal}
+                    entryType={entryType || 'competition'}
+                  />
+                )}
 
-              <div className="flex justify-between pt-6 border-t border-border">
-                <Button
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
-                  className="flex items-center gap-2"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  Previous
-                </Button>
-
-                {currentStep < steps.length && (
+                <div className="flex justify-between pt-6 border-t border-border">
                   <Button
-                    onClick={nextStep}
+                    variant="outline"
+                    onClick={prevStep}
+                    disabled={currentStep <= 1}
                     className="flex items-center gap-2"
                   >
-                    Next
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronLeft className="w-4 h-4" />
+                    Previous
                   </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+
+                  {currentStep < steps.length - 1 && (
+                    <Button
+                      onClick={nextStep}
+                      className="flex items-center gap-2"
+                    >
+                      Next
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

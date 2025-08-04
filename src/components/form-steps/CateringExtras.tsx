@@ -12,6 +12,7 @@ interface CateringExtrasProps {
   updateCateringData: (data: CateringData) => void;
   calculateTotal: () => number;
   nextStep: () => void;
+  isCateringOnly?: boolean;
 }
 
 const CateringExtras: React.FC<CateringExtrasProps> = ({
@@ -40,6 +41,15 @@ const CateringExtras: React.FC<CateringExtrasProps> = ({
 
   return (
     <div className="space-y-6">
+      {isCateringOnly && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h3 className="font-medium text-blue-900 mb-2">Catering & Catalogues Only</h3>
+          <p className="text-sm text-blue-700">
+            You've selected to purchase catering and catalogues without entering dogs in the competition. 
+            Please select at least one item below to continue.
+          </p>
+        </div>
+      )}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
