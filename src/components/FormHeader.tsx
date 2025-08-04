@@ -40,21 +40,6 @@ const FormHeader = ({
                   About Show
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/judges') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/judges')}>
-                  Meet Judges
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/winners') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/winners')}>
-                  Past Winners
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/qualified') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/qualified')}>
-                  Qualified
-                </NavigationMenuLink>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           
