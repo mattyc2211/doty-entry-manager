@@ -10,19 +10,6 @@ const WelcomeStep = ({
   onSelectEntryType
 }: WelcomeStepProps) => {
   return <div className="space-y-6">
-      {/* Welcome Section */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/10 py-[100px]">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <Award className="w-16 h-16 text-primary" />
-          </div>
-          <CardTitle className="text-3xl font-bold text-primary mb-2">
-            Welcome to NZ Premier Show Dog of the Year 2025
-          </CardTitle>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Join New Zealand's Premier dog show competition. Showcase your dog's excellence and compete for the ultimate title of Show Dog of the Year.</p>
-        </CardHeader>
-      </Card>
-
       {/* Entry Type Selection */}
       <div className="grid md:grid-cols-2 gap-6">
         <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/40">
@@ -162,35 +149,6 @@ const WelcomeStep = ({
         </Card>
       </div>
 
-      {/* Rules Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="w-5 h-5" />
-            Key Rules & Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div className="space-y-2">
-              <h4 className="font-medium text-base mb-2">Competition Rules</h4>
-              <p>• Dogs must be registered with recognized kennel club</p>
-              <p>• Maximum 8 dogs per exhibitor</p>
-              <p>• No duplicate entries (same dog, same event)</p>
-              <p>• Professional handling allowed</p>
-              <p>• Grooming tools and setup provided</p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-base mb-2">What's Included</h4>
-              <p>• Competition entry and judging</p>
-              <p>• Show catalogue (1 per dog entry)</p>
-              <p>• Certificate for all participants</p>
-              <p>📧 nzdoty@gmail.com</p>
-              <p>📧 nzdoty@gmail.com</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Contact Information */}
       <Card className="bg-muted/50">
@@ -200,10 +158,8 @@ const WelcomeStep = ({
             <p className="text-sm text-muted-foreground mb-4">
               Contact our show secretary for assistance with entries or questions
             </p>
-            <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
-              <span>📧 secretary@nzpremiershow.com</span>
-              <span className="hidden sm:inline">•</span>
-              <span>📞 (09) 123-4567</span>
+            <div className="flex justify-center text-sm">
+              <span>📧 nzdoty@gmail.com</span>
             </div>
           </div>
         </CardContent>
