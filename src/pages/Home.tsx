@@ -16,7 +16,7 @@ const Home = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Hero Section with Image */}
           <div className="text-center mb-16">
-            <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8">
+            <div className="relative h-[200px] md:h-[250px] rounded-lg overflow-hidden mb-8">
               <img 
                 src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
                 alt="Royal Canin New Zealand Premier Show featuring our international judges"
