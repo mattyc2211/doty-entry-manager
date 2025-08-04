@@ -18,8 +18,8 @@ const Home = () => {
           <div className="text-center mb-16">
             <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8">
               <img 
-                src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
-                alt="Royal Canin New Zealand Premier Show featuring our international judges"
+                src="/lovable-uploads/ebf1ca0a-6eaa-479b-aa83-36873c57c728.png" 
+                alt="Royal Canin New Zealand Premier Show - Show Dog of the Year"
                 className="w-full h-full object-cover"
               />
             </div>
