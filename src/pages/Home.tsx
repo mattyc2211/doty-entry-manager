@@ -14,9 +14,7 @@ const Home = () => {
           {/* Hero Section - 2025 Show Dog of the Year */}
           <div className="text-center mb-20">
             {/* Year Badge */}
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-primary to-primary/80 rounded-full mb-8 shadow-lg">
-              <span className="text-2xl font-bold text-primary-foreground">2025</span>
-            </div>
+            
             
             {/* Main Title */}
             
@@ -25,7 +23,7 @@ const Home = () => {
             
             
             {/* Competition Image */}
-            <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden my-10">
+            <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden mb-10 shadow-2xl">
               <img src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" alt="2025 Show Dog of the Year - Royal Canin New Zealand Premier Show" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
             </div>
