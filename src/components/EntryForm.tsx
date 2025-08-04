@@ -76,8 +76,30 @@ const EntryForm = () => {
     setCurrentStep(1);
   };
 
+  const isStepValid = (stepNumber: number) => {
+    if (stepNumber === 1) {
+      return formData.exhibitor.firstName.trim() && 
+             formData.exhibitor.surname.trim() && 
+             formData.exhibitor.email.trim() && 
+             formData.exhibitor.phone.trim();
+    }
+    if (stepNumber === 2 && entryType === 'competition') {
+      return formData.dogs.length > 0 && formData.dogs.every(dog => 
+        dog.pedigreeName.trim() &&
+        dog.dogsNzRegistration.trim() &&
+        dog.breed &&
+        dog.events.length > 0 &&
+        dog.events.every(event => 
+          event.qualifyingShow.trim() && event.qualifyingDate
+        ) &&
+        dog.photo
+      );
+    }
+    return true;
+  };
+
   const nextStep = () => {
-    if (currentStep < steps.length - 1) {
+    if (currentStep < steps.length - 1 && isStepValid(currentStep)) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -90,7 +112,17 @@ const EntryForm = () => {
 
   const goToStep = (step: number) => {
     if (entryType && step >= 1) {
-      setCurrentStep(step);
+      // Only allow navigation to completed steps or the next incomplete step
+      let canNavigate = true;
+      for (let i = 1; i < step; i++) {
+        if (!isStepValid(i)) {
+          canNavigate = false;
+          break;
+        }
+      }
+      if (canNavigate) {
+        setCurrentStep(step);
+      }
     }
   };
 
@@ -170,21 +202,31 @@ const EntryForm = () => {
                 <Progress value={progress} className="w-full" />
                 
                 <div className="flex flex-wrap gap-2 mt-4">
-                  {steps.map((step) => (
-                    <button
-                      key={step.number}
-                      onClick={() => goToStep(step.number)}
-                      className={`text-xs px-3 py-1 rounded-full transition-all ${
-                        currentStep === step.number
-                          ? 'bg-primary text-primary-foreground'
-                          : currentStep > step.number
-                          ? 'bg-green-100 text-green-800 border border-green-200'
-                          : 'bg-muted text-muted-foreground'
-                      }`}
-                    >
-                      {step.number}. {step.title}
-                    </button>
-                  ))}
+                  {steps.map((step) => {
+                    const isCompleted = isStepValid(step.number);
+                    const canAccess = step.number === 1 || 
+                      (step.number <= currentStep + 1 && 
+                       Array.from({length: step.number - 1}, (_, i) => i + 1).every(i => isStepValid(i)));
+                    
+                    return (
+                      <button
+                        key={step.number}
+                        onClick={() => goToStep(step.number)}
+                        disabled={!canAccess}
+                        className={`text-xs px-3 py-1 rounded-full transition-all ${
+                          currentStep === step.number
+                            ? 'bg-primary text-primary-foreground'
+                            : isCompleted && currentStep > step.number
+                            ? 'bg-green-100 text-green-800 border border-green-200'
+                            : canAccess
+                            ? 'bg-muted text-muted-foreground hover:bg-muted/80'
+                            : 'bg-muted/50 text-muted-foreground/50 cursor-not-allowed'
+                        }`}
+                      >
+                        {step.number}. {step.title}
+                      </button>
+                    );
+                  })}
                 </div>
               </CardHeader>
 
@@ -237,6 +279,7 @@ const EntryForm = () => {
                   {currentStep < steps.length && (
                     <Button
                       onClick={nextStep}
+                      disabled={!isStepValid(currentStep)}
                       className="flex items-center gap-2"
                     >
                       Next

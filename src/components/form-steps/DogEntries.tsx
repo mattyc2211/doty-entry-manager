@@ -24,15 +24,6 @@ const DogEntries: React.FC<DogEntriesProps> = ({
   );
 
   const addNewDog = () => {
-    if (dogs.length >= 8) {
-      toast({
-        title: "Maximum entries reached",
-        description: "You can enter up to 8 dogs maximum",
-        variant: "destructive"
-      });
-      return;
-    }
-
     const newDog: DogEntry = {
       id: Date.now().toString(),
       pedigreeName: '',
@@ -116,10 +107,9 @@ const DogEntries: React.FC<DogEntriesProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Dog Entries ({dogs.length}/8)</span>
+            <span>Dog Entries ({dogs.length})</span>
             <Button
               onClick={addNewDog}
-              disabled={dogs.length >= 8}
               size="sm"
               className="flex items-center gap-2"
             >

@@ -24,6 +24,7 @@ export interface DogEntry {
 export interface CateringData {
   dinnerTickets: number;
   extraCatalogues: number;
+  dietaryRequirements?: string;
 }
 
 export interface FormData {

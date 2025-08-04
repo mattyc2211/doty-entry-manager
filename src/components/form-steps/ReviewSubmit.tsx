@@ -85,11 +85,14 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
             <div className="space-y-2 text-sm">
               <h4 className="font-medium">Bank Transfer Details:</h4>
               <div className="bg-muted p-3 rounded space-y-1">
-                <p><strong>Account Name:</strong> [Bank Account Holder]</p>
-                <p><strong>Bank:</strong> [Bank Name]</p>
-                <p><strong>Account Number:</strong> [Account Number]</p>
-                <p><strong>Reference:</strong> {exhibitor.surname}</p>
+                <p><strong>Account Name:</strong> New Zealand Dog of the Year</p>
+                <p><strong>Bank:</strong> ANZ Bank</p>
+                <p><strong>Account Number:</strong> 01-0123-0123456-00</p>
+                <p><strong>Reference:</strong> {exhibitor.surname}-{entryType}</p>
               </div>
+              <p className="text-xs text-muted-foreground">
+                Entry will not be accepted until payment is received
+              </p>
             </div>
 
             <div className="text-xs text-muted-foreground text-center">
@@ -221,10 +224,12 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex justify-between">
-            <span>Dog entries ({dogs.reduce((total, dog) => total + dog.events.length, 0)} events)</span>
-            <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 30}</span>
-          </div>
+          {entryType === 'competition' && (
+            <div className="flex justify-between">
+              <span>Dog entries ({dogs.reduce((total, dog) => total + dog.events.length, 0)} events)</span>
+              <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 30}</span>
+            </div>
+          )}
           <div className="flex justify-between">
             <span>Dinner tickets</span>
             <span>${catering.dinnerTickets * 45}</span>
@@ -237,6 +242,23 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           <div className="flex justify-between text-xl font-bold text-primary">
             <span>Total Amount Due</span>
             <span>${total}</span>
+          </div>
+          
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
+            <p className="font-medium text-yellow-900 mb-2">⚠️ Payment Required</p>
+            <p className="text-sm text-yellow-800">
+              Your entry will not be accepted until payment is made via bank transfer.
+            </p>
+          </div>
+          
+          <div className="space-y-2 text-sm">
+            <h4 className="font-medium">Bank Transfer Details:</h4>
+            <div className="bg-muted p-3 rounded space-y-1">
+              <p><strong>Account Name:</strong> New Zealand Dog of the Year</p>
+              <p><strong>Bank:</strong> ANZ Bank</p>
+              <p><strong>Account Number:</strong> 01-0123-0123456-00</p>
+              <p><strong>Reference:</strong> {exhibitor.surname}-{entryType}</p>
+            </div>
           </div>
         </CardContent>
       </Card>

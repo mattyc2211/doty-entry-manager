@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
 import { FormData, CateringData } from '@/types/form';
 import { Utensils, Book, Calculator } from 'lucide-react';
 
@@ -22,12 +23,19 @@ const CateringExtras = ({
   nextStep, 
   isCateringOnly = false 
 }: CateringExtrasProps) => {
-  const handleInputChange = (field: keyof CateringData, value: number) => {
-    const newValue = Math.max(0, value);
-    updateCateringData({
-      ...formData.catering,
-      [field]: newValue
-    });
+  const handleInputChange = (field: keyof CateringData, value: number | string) => {
+    if (typeof value === 'number') {
+      const newValue = Math.max(0, value);
+      updateCateringData({
+        ...formData.catering,
+        [field]: newValue
+      });
+    } else {
+      updateCateringData({
+        ...formData.catering,
+        [field]: value
+      });
+    }
   };
 
   // Calculate costs
@@ -65,19 +73,26 @@ const CateringExtras = ({
               Dinner Tickets
             </CardTitle>
             <p className="text-sm text-orange-700">
-              Join us for the awards dinner and celebration
+              Back by popular demand from last year! Join us for our celebration dinner.
             </p>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-orange-200">
                 <div>
-                  <p className="font-medium">Awards Dinner</p>
+                  <p className="font-medium">Dinner Ticket</p>
                   <p className="text-sm text-muted-foreground">Per person</p>
                 </div>
                 <Badge variant="secondary" className="bg-orange-100 text-orange-800">
                   $45.00
                 </Badge>
+              </div>
+              
+              <div className="bg-white rounded-lg border border-orange-200 p-3 space-y-2">
+                <p className="text-sm font-medium text-orange-900">Menu includes:</p>
+                <p className="text-sm text-orange-700">
+                  Spit roast with an assortment of meats, jacket potato, salads and dessert
+                </p>
               </div>
               
               <div className="space-y-2">
@@ -91,6 +106,21 @@ const CateringExtras = ({
                   onChange={(e) => handleInputChange('dinnerTickets', parseInt(e.target.value) || 0)}
                   className="bg-white"
                 />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="dietaryRequirements">Dietary requirements (optional)</Label>
+                <Textarea
+                  id="dietaryRequirements"
+                  placeholder="Please specify any dietary requirements or allergies..."
+                  value={formData.catering.dietaryRequirements || ''}
+                  onChange={(e) => handleInputChange('dietaryRequirements', e.target.value)}
+                  className="bg-white"
+                  rows={2}
+                />
+                <p className="text-xs text-orange-600">
+                  Or email dietary requirements to: nzdoty@gmail.com
+                </p>
               </div>
               
               <div className="flex justify-between items-center pt-2 border-t border-orange-200">
