@@ -18,14 +18,14 @@ const FormHeader = ({
   
   return (
     <div className="bg-primary text-primary-foreground fixed top-0 left-0 right-0 z-50 shadow-lg">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col items-center justify-center space-y-4">
-          {/* Logo Banner */}
-          <div className="flex items-center justify-center w-full">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center">
             <img 
               src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
               alt="NZ Premier Show Dog of the Year 2025" 
-              className="h-24 md:h-32 w-auto max-w-full cursor-pointer" 
+              className="h-12 w-auto cursor-pointer" 
               loading="eager" 
               onClick={() => navigate('/')}
               onError={e => {
@@ -36,12 +36,20 @@ const FormHeader = ({
           </div>
           
           {/* Navigation Menu */}
-          <NavigationMenu className="max-w-full">
-            <NavigationMenuList className="flex-wrap justify-center gap-1">
+          <NavigationMenu className="hidden md:block">
+            <NavigationMenuList className="flex gap-2">
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={`${navigationMenuTriggerStyle()} ${isActive('/') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`}
                   onClick={() => navigate('/')}
+                >
+                  Home
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  className={`${navigationMenuTriggerStyle()} ${isActive('/entry') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`}
+                  onClick={() => navigate('/entry')}
                 >
                   Entry Form
                 </NavigationMenuLink>
@@ -81,18 +89,20 @@ const FormHeader = ({
             </NavigationMenuList>
           </NavigationMenu>
           
-          {/* Back to Home button (only shown on entry form) */}
-          {showBackToHome && (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={onBackToHome} 
-              className="flex items-center gap-2 bg-white/10 text-primary-foreground border-white/20 hover:bg-white/20 mt-2"
-            >
-              <Home className="w-4 h-4" />
-              Reset Form
-            </Button>
-          )}
+          {/* Mobile Menu or Reset Button */}
+          <div className="flex items-center">
+            {showBackToHome && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={onBackToHome} 
+                className="flex items-center gap-2 bg-white/10 text-primary-foreground border-white/20 hover:bg-white/20"
+              >
+                <Home className="w-4 h-4" />
+                Reset
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

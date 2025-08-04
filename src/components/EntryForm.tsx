@@ -25,6 +25,7 @@ const EntryForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [entryType, setEntryType] = useState<'competition' | 'catering' | null>(null);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showEntryTypeSelection, setShowEntryTypeSelection] = useState(true);
   const [formData, setFormData] = useState<FormData>({
     exhibitor: {
       firstName: '',
@@ -42,14 +43,12 @@ const EntryForm = () => {
   const getSteps = () => {
     if (entryType === 'catering') {
       return [
-        { number: 0, title: 'Welcome', component: WelcomeStep },
         { number: 1, title: 'Exhibitor Details', component: ExhibitorDetails },
         { number: 2, title: 'Catering & Extras', component: CateringExtras },
         { number: 3, title: 'Review & Submit', component: ReviewSubmit }
       ];
     }
     return [
-      { number: 0, title: 'Welcome', component: WelcomeStep },
       { number: 1, title: 'Exhibitor Details', component: ExhibitorDetails },
       { number: 2, title: 'Dog Entries', component: DogEntries },
       { number: 3, title: 'Catering & Extras', component: CateringExtras },
@@ -73,6 +72,7 @@ const EntryForm = () => {
 
   const handleEntryTypeSelection = (type: 'competition' | 'catering') => {
     setEntryType(type);
+    setShowEntryTypeSelection(false);
     setCurrentStep(1);
   };
 
@@ -89,7 +89,7 @@ const EntryForm = () => {
   };
 
   const goToStep = (step: number) => {
-    if (step === 0 || entryType) {
+    if (entryType && step >= 1) {
       setCurrentStep(step);
     }
   };
@@ -104,14 +104,13 @@ const EntryForm = () => {
   };
 
   const handleBackToHome = () => {
-    if (currentStep > 0) {
-      setShowResetDialog(true);
-    }
+    setShowResetDialog(true);
   };
 
   const confirmReset = () => {
     setCurrentStep(0);
     setEntryType(null);
+    setShowEntryTypeSelection(true);
     setFormData({
       exhibitor: {
         firstName: '',
@@ -128,29 +127,38 @@ const EntryForm = () => {
     setShowResetDialog(false);
   };
 
-  const progress = (currentStep / (steps.length - 1)) * 100;
+  const progress = entryType ? ((currentStep - 1) / (steps.length - 1)) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 pt-20">
       <FormHeader 
-        showBackToHome={currentStep > 0}
+        showBackToHome={!showEntryTypeSelection}
         onBackToHome={handleBackToHome}
       />
       
-      {/* Add padding top to account for fixed header with navigation */}
-      <div className="pt-40 container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          {currentStep === 0 ? (
+      <div className="container mx-auto px-4 pb-16">
+        {showEntryTypeSelection ? (
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Entry Form
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Choose your entry type to begin registration
+              </p>
+            </div>
             <WelcomeStep onSelectEntryType={handleEntryTypeSelection} />
-          ) : (
-            <Card className="shadow-card">
+          </div>
+        ) : (
+          <div className="max-w-4xl mx-auto">
+            <Card className="shadow-lg">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between mb-4">
                   <CardTitle className="text-2xl font-bold text-foreground">
-                    {steps[currentStep].title}
+                    {steps.find(s => s.number === currentStep)?.title}
                   </CardTitle>
                   <div className="text-sm text-muted-foreground">
-                    Step {currentStep} of {steps.length - 1}
+                    Step {currentStep} of {steps.length}
                     {entryType === 'catering' && (
                       <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded">
                         Catering Only
@@ -159,30 +167,25 @@ const EntryForm = () => {
                   </div>
                 </div>
                 
-                {currentStep > 0 && (
-                  <>
-                    <Progress value={progress} className="w-full" />
-                    
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {steps.filter(s => s.number > 0).map((step) => (
-                        <button
-                          key={step.number}
-                          onClick={() => goToStep(step.number)}
-                          disabled={step.number === 0}
-                          className={`text-xs px-3 py-1 rounded-full transition-smooth ${
-                            currentStep === step.number
-                              ? 'bg-primary text-primary-foreground'
-                              : currentStep > step.number
-                              ? 'bg-green-100 text-green-800 border border-green-200'
-                              : 'bg-muted text-muted-foreground'
-                          }`}
-                        >
-                          {step.number}. {step.title}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
+                <Progress value={progress} className="w-full" />
+                
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {steps.map((step) => (
+                    <button
+                      key={step.number}
+                      onClick={() => goToStep(step.number)}
+                      className={`text-xs px-3 py-1 rounded-full transition-all ${
+                        currentStep === step.number
+                          ? 'bg-primary text-primary-foreground'
+                          : currentStep > step.number
+                          ? 'bg-green-100 text-green-800 border border-green-200'
+                          : 'bg-muted text-muted-foreground'
+                      }`}
+                    >
+                      {step.number}. {step.title}
+                    </button>
+                  ))}
+                </div>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -231,7 +234,7 @@ const EntryForm = () => {
                     Previous
                   </Button>
 
-                  {currentStep < steps.length - 1 && (
+                  {currentStep < steps.length && (
                     <Button
                       onClick={nextStep}
                       className="flex items-center gap-2"
@@ -243,8 +246,8 @@ const EntryForm = () => {
                 </div>
               </CardContent>
             </Card>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
