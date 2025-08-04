@@ -11,7 +11,7 @@ const WelcomeStep = ({
 }: WelcomeStepProps) => {
   return <div className="space-y-6">
       {/* Welcome Section */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/10">
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/10 py-[100px]">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Award className="w-16 h-16 text-primary" />
