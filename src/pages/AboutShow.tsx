@@ -128,26 +128,6 @@ const AboutShow = () => {
             </Card>
           </div>
 
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
-                Show History
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground leading-relaxed">
-                The NZ Premier Show Dog of the Year has been New Zealand's most prestigious canine event since 1985. 
-                Each year, the finest dogs from across the country compete for the ultimate title. Our show celebrates 
-                the beauty, athleticism, and temperament that make each breed unique, while promoting responsible 
-                breeding practices and the human-canine bond.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mt-4">
-                With over 200 breeds eligible to compete and judges from around the world, this event showcases 
-                the very best of New Zealand's dog breeding community.
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
