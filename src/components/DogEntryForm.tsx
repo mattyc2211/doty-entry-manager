@@ -7,11 +7,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { CalendarIcon, Upload, Image, Check } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CalendarIcon, Upload, Image, Check, Trophy } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { DogEntry, EventEntry, DOG_BREEDS, EVENT_TYPES } from '@/types/form';
+import { DogEntry, EventEntry, DOG_BREEDS, EVENT_TYPES, QUALIFICATION_REQUIREMENTS } from '@/types/form';
 import photoGuidance from '@/assets/photo-guidance.png';
 import { toast } from '@/hooks/use-toast';
 
@@ -120,6 +120,26 @@ const DogEntryForm: React.FC<DogEntryFormProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* Qualification Criteria Card */}
+      <Card className="border-primary/20 bg-primary/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-primary">
+            <Trophy className="w-5 h-5" />
+            Qualification Requirements
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-sm text-muted-foreground mb-4">
+            Your dog must have qualified by winning at a show between 14 October 2024 - 14 October 2025:
+          </p>
+          {Object.entries(QUALIFICATION_REQUIREMENTS).map(([eventType, requirement]) => (
+            <div key={eventType} className="flex items-start gap-3">
+              <Badge variant="outline" className="shrink-0 mt-0.5">{eventType}</Badge>
+              <p className="text-sm text-muted-foreground">{requirement}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="pedigreeName">Pedigree Name *</Label>

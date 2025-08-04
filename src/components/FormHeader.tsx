@@ -35,6 +35,16 @@ const FormHeader = ({
                   Entry Form
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/qualified-participants') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/qualified-participants')}>
+                  Qualified Participants
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/about-show') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/about-show')}>
+                  About Show
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           

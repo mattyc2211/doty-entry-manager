@@ -18,7 +18,7 @@ const QualifiedParticipants = () => {
       region: "Auckland",
       qualificationShow: "Auckland Championship 2024",
       qualificationDate: "October 2024",
-      events: ["Confirmation", "Movement", "Temperament"]
+      events: ["Show Dog", "Puppy", "Neuter"]
     },
     {
       dogName: "Ch. Midnight Magic",
@@ -27,16 +27,16 @@ const QualifiedParticipants = () => {
       region: "Wellington",
       qualificationShow: "Wellington Premier 2024",
       qualificationDate: "September 2024",
-      events: ["Confirmation", "Movement"]
+      events: ["Show Dog", "Neuter"]
     },
     {
       dogName: "Ch. Golden Sunrise",
       breed: "Golden Retriever",
       owner: "Lisa Chen",
       region: "Christchurch",
-      qualificationShow: "Canterbury Classic 2024",
+      qualificationShow: "Canterbury Classic 2024", 
       qualificationDate: "November 2024",
-      events: ["Confirmation", "Temperament"]
+      events: ["Show Dog", "Puppy"]
     },
     {
       dogName: "Ch. Storm Shadow",
@@ -44,8 +44,8 @@ const QualifiedParticipants = () => {
       owner: "Michael Brown",
       region: "Hamilton",
       qualificationShow: "Waikato Regional 2024",
-      qualificationDate: "August 2024",
-      events: ["Confirmation", "Movement", "Temperament"]
+      qualificationDate: "August 2024", 
+      events: ["Show Dog", "Puppy", "Neuter"]
     },
     {
       dogName: "Ch. Crimson Elite",
@@ -54,7 +54,7 @@ const QualifiedParticipants = () => {
       region: "Tauranga",
       qualificationShow: "Bay of Plenty Show 2024",
       qualificationDate: "October 2024",
-      events: ["Confirmation"]
+      events: ["Show Dog"]
     },
     {
       dogName: "Ch. Thunder Strike",
@@ -62,8 +62,8 @@ const QualifiedParticipants = () => {
       owner: "James Rodriguez",
       region: "Dunedin",
       qualificationShow: "Otago Championship 2024",
-      qualificationDate: "September 2024",
-      events: ["Confirmation", "Movement"]
+      qualificationDate: "September 2024", 
+      events: ["Show Dog", "Neuter"]
     }
   ];
 
@@ -95,6 +95,35 @@ const QualifiedParticipants = () => {
               </Badge>
             </div>
           </div>
+
+          {/* Qualification Information */}
+          <Card className="shadow-card border-primary/20 bg-primary/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <Trophy className="w-5 h-5" />
+                How Dogs Qualify
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground">
+                Dogs listed below have qualified by winning at shows held between 14 October 2024 - 14 October 2025:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Badge variant="outline">Show Dog</Badge>
+                  <p className="text-sm text-muted-foreground">Won "BEST IN SHOW"</p>
+                </div>
+                <div className="space-y-2">
+                  <Badge variant="outline">Puppy</Badge>
+                  <p className="text-sm text-muted-foreground">Won "BABY/MINOR/PUPPY IN SHOW"</p>
+                </div>
+                <div className="space-y-2">
+                  <Badge variant="outline">Neuter</Badge>
+                  <p className="text-sm text-muted-foreground">Won "NEUTER BEST/RESERVE IN SHOW"</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Search and Filter */}
           <Card className="shadow-card">

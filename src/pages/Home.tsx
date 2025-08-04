@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Award, Calendar, Trophy, Users, Phone, Mail, ArrowRight } from 'lucide-react';
+import { Award, Calendar, CalendarCheck, Trophy, Users, Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FormHeader from '@/components/FormHeader';
 const Home = () => {
@@ -19,19 +19,33 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
             </div>
             
-            {/* Key Details */}
-            <div className="mb-10">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-4">
-                13 December 2025
+              {/* Key Details */}
+              <div className="mb-10">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                  Saturday - 13 December 2025
+                </div>
+                <div className="text-xl md:text-2xl text-muted-foreground mb-6">
+                  Purina Pro Plan Auckland Exhibition Centre, Ardmore
+                </div>
+                <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+                  New Zealand's most prestigious dog show competition. 
+                  Where champions are crowned and legends are born.
+                </p>
+                
+                {/* Important Dates */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <p className="flex items-center gap-2 text-lg">
+                    <Calendar className="w-5 h-5 text-primary" />
+                    <span className="font-semibold">Show Date:</span>
+                    Saturday - 13 December 2025
+                  </p>
+                  <p className="flex items-center gap-2 text-lg">
+                    <CalendarCheck className="w-5 h-5 text-primary" />
+                    <span className="font-semibold">Entries Close:</span>
+                    22 September 2025
+                  </p>
+                </div>
               </div>
-              <div className="text-xl md:text-2xl text-muted-foreground mb-6">
-                Ardmore Exhibition Centre, Auckland
-              </div>
-              <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-                New Zealand's most prestigious dog show competition. 
-                Where champions are crowned and legends are born.
-              </p>
-            </div>
             
             {/* Main CTA */}
             <Button size="lg" className="text-xl px-12 py-6 shadow-lg hover:shadow-xl transition-all duration-300" onClick={() => navigate('/entry')}>
@@ -84,14 +98,16 @@ const Home = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Show Date:</span>
-                  <span className="font-medium">13 December 2025</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Entries Close:</span>
-                  <span className="font-medium">22 September 2025</span>
-                </div>
+                <p className="flex items-center gap-2 text-muted-foreground">
+                  <Mail className="w-4 h-4" />
+                  <a href="mailto:entries@nzpremiershow.co.nz" className="hover:text-primary transition-colors">
+                    entries@nzpremiershow.co.nz
+                  </a>
+                </p>
+                <p className="flex items-center gap-2 text-muted-foreground">
+                  <MapPin className="w-4 h-4" />
+                  Purina Pro Plan Auckland Exhibition Centre, Ardmore
+                </p>
               </CardContent>
             </Card>
 
@@ -99,19 +115,21 @@ const Home = () => {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Phone className="w-5 h-5 text-primary mr-2" />
-                  Contact Information
+                  Qualification Information
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-muted-foreground" />
-                  <a href="mailto:nzdoty@gmail.com" className="text-primary hover:underline">
-                    nzdoty@gmail.com
-                  </a>
-                </div>
                 <p className="text-sm text-muted-foreground">
-                  Contact us for any questions about entries or the show
+                  <strong>Only qualified dogs can compete.</strong> Dogs must have won at shows between 14 October 2024 - 14 October 2025.
                 </p>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate('/qualified-participants')}
+                  className="w-full"
+                >
+                  View Qualified Participants
+                </Button>
               </CardContent>
             </Card>
           </div>

@@ -6,7 +6,7 @@ export interface ExhibitorData {
 }
 
 export interface EventEntry {
-  eventType: 'Show Dog of the Year' | 'Puppy of the Year' | 'Neuter of the Year';
+  eventType: 'Show Dog' | 'Puppy' | 'Neuter';
   qualifyingShow: string;
   qualifyingDate: string;
 }
@@ -104,7 +104,20 @@ export const DOG_BREEDS = [
 ];
 
 export const EVENT_TYPES = [
-  'Show Dog of the Year',
-  'Puppy of the Year',
-  'Neuter of the Year'
+  'Show Dog',
+  'Puppy', 
+  'Neuter'
 ] as const;
+
+// Qualification requirements by event type
+export const QUALIFICATION_REQUIREMENTS = {
+  'Show Dog': 'Must have won "BEST IN SHOW" at a qualifying show',
+  'Puppy': 'Must have won "BABY/MINOR/PUPPY IN SHOW" at a qualifying show',
+  'Neuter': 'Must have won "NEUTER BEST/RESERVE IN SHOW" at a qualifying show'
+};
+
+// Qualification period 
+export const QUALIFICATION_PERIOD = {
+  startDate: '2024-10-14',
+  endDate: '2025-10-14'
+};
