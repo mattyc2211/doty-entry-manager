@@ -58,20 +58,13 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           <CheckCircle className="w-16 h-16 text-success" />
         </div>
         
-        <div>
-          <h2 className="text-2xl font-bold text-success mb-2">
-            Entry Submitted Successfully!
-          </h2>
-          <p className="text-muted-foreground">
-            Your entry has been received and processed
-          </p>
-        </div>
-
         <Card className="max-w-md mx-auto">
           <CardHeader>
-            <CardTitle className="text-center">Submission Details</CardTitle>
+            <CardTitle className="text-center text-2xl font-bold text-primary">
+              {entryType === 'catering' ? 'Order Confirmed!' : 'Submission Confirmed!'}
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="text-center space-y-4">
             <div className="text-center">
               <p className="text-sm text-muted-foreground">Submission ID</p>
               <p className="text-xl font-mono font-bold text-primary">{submissionId}</p>
@@ -112,79 +105,92 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="w-5 h-5 text-primary" />
-            Exhibitor Details
+          <CardTitle className="text-xl">
+            {entryType === 'catering' ? 'Review Your Order' : 'Review Your Submission'}
           </CardTitle>
+          <p className="text-muted-foreground">
+            {entryType === 'catering' 
+              ? 'Please review all details before submitting your order'
+              : 'Please review all details before submitting your entry'
+            }
+          </p>
         </CardHeader>
-        <CardContent className="grid gap-2 md:grid-cols-2">
-          <div>
-            <p className="text-sm text-muted-foreground">Name</p>
-            <p className="font-medium">{exhibitor.firstName} {exhibitor.surname}</p>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-2">
+            <User className="w-5 h-5 text-primary" />
+            <h3 className="font-medium">Exhibitor Details</h3>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Email</p>
-            <p className="font-medium">{exhibitor.email}</p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Phone</p>
-            <p className="font-medium">{exhibitor.phone}</p>
+          <div className="grid gap-2 md:grid-cols-2 ml-7">
+            <div>
+              <p className="text-sm text-muted-foreground">Name</p>
+              <p className="font-medium">{exhibitor.firstName} {exhibitor.surname}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Email</p>
+              <p className="font-medium">{exhibitor.email}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Phone</p>
+              <p className="font-medium">{exhibitor.phone}</p>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Dog Entries ({dogs.length})</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {dogs.map((dog, index) => (
-            <div key={dog.id} className="border rounded-lg p-4 space-y-3">
-              <div className="flex items-center gap-3">
-                <Badge>Dog {index + 1}</Badge>
-                {dog.photoUrl && (
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20">
-                    <img 
-                      src={dog.photoUrl} 
-                      alt={dog.pedigreeName} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <h4 className="font-medium">{dog.pedigreeName}</h4>
-              </div>
-              
-              <div className="grid gap-2 md:grid-cols-3 text-sm">
-                <div>
-                  <p className="text-muted-foreground">DogsNZ Registration</p>
-                  <p>{dog.dogsNzRegistration}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Breed</p>
-                  <p>{dog.breed}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Photo</p>
-                  <p>{dog.photo ? '✓ Uploaded' : '✗ Missing'}</p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm text-muted-foreground mb-2">Events Entered</p>
-                <div className="space-y-2">
-                  {dog.events.map((event, i) => (
-                    <div key={i} className="flex items-center justify-between bg-muted p-2 rounded">
-                      <span className="font-medium">{event.eventType}</span>
-                      <div className="text-sm text-muted-foreground">
-                        {event.qualifyingShow} • {event.qualifyingDate}
-                      </div>
+      {/* Dog Entries */}
+      {entryType === 'competition' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Dog Entries ({dogs.length})</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {dogs.map((dog, index) => (
+              <div key={dog.id} className="border rounded-lg p-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Badge>Dog {index + 1}</Badge>
+                  {dog.photoUrl && (
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20">
+                      <img 
+                        src={dog.photoUrl} 
+                        alt={dog.pedigreeName} 
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                  ))}
+                  )}
+                  <h4 className="font-medium">{dog.pedigreeName}</h4>
+                </div>
+                
+                <div className="grid gap-2 md:grid-cols-3 text-sm">
+                  <div>
+                    <p className="text-muted-foreground">DogsNZ Registration</p>
+                    <p>{dog.dogsNzRegistration}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Breed</p>
+                    <p>{dog.breed}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Photo</p>
+                    <p>{dog.photo ? '✓ Uploaded' : '✗ Missing'}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2">Events Entered</p>
+                  <div className="space-y-2">
+                    {dog.events.map((event, i) => (
+                      <div key={i} className="flex items-center justify-between bg-muted p-2 rounded">
+                        <span className="font-medium">{event.eventType}</span>
+                        <div className="text-sm text-muted-foreground">
+                          {event.qualifyingShow} • {event.qualifyingDate}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </CardContent>
+            ))}
+          </CardContent>
         </Card>
       )}
 
@@ -250,7 +256,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           ) : (
             <>
               <Send className="w-4 h-4" />
-              Submit Entry
+              {entryType === 'catering' ? 'Submit Order' : 'Submit Entry'}
             </>
           )}
         </Button>
