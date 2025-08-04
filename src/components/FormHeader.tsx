@@ -15,7 +15,7 @@ const FormHeader = ({ showBackToHome = false, onBackToHome }: FormHeaderProps) =
           {/* Logo Banner */}
           <div className="flex items-center justify-center w-full">
             <img 
-              src="/nz-premier-logo.png" 
+              src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
               alt="NZ Premier Show Dog of the Year 2025" 
               className="h-24 md:h-32 w-auto max-w-full"
               loading="eager"
