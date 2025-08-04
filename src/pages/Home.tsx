@@ -14,28 +14,39 @@ const Home = () => {
       
       <div className="pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-8">
-              <Award className="w-16 h-16 text-primary" />
+          {/* Hero Section with Image */}
+          <div className="relative mb-16">
+            <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8">
+              <img 
+                src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
+                alt="Royal Canin New Zealand Premier Show featuring our international judges"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <div className="text-center text-white">
+                  <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                    New Zealand's Premier Dog Show
+                  </h1>
+                  <div className="text-xl md:text-2xl mb-2">
+                    <strong>Ardmore Exhibition Centre, Auckland</strong>
+                  </div>
+                  <div className="text-lg md:text-xl mb-4">
+                    13 December 2025
+                  </div>
+                  <div className="text-lg md:text-xl mb-8">
+                    Featuring the top dogs across the country
+                  </div>
+                  <Button 
+                    size="lg" 
+                    className="text-lg px-8 py-4 bg-primary hover:bg-primary/90"
+                    onClick={() => navigate('/entry')}
+                  >
+                    Start Your Entry
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </div>
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Welcome to New Zealand's Premier Dog Show
-            </h1>
-            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-              Join us for the most prestigious canine competition in New Zealand. 
-              Register your champion today and compete for the title of Show Dog of the Year 2025.
-            </p>
-            
-            {/* Main CTA */}
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-4 mb-16"
-              onClick={() => navigate('/entry')}
-            >
-              Start Your Entry
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
           </div>
 
           {/* Quick Navigation */}

@@ -31,13 +31,6 @@ const MeetJudges = () => {
             <p className="text-xl text-muted-foreground">World-class expertise from internationally recognized judges</p>
           </div>
 
-          <div className="mb-8">
-            <img 
-              src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
-              alt="Royal Canin New Zealand Premier Show Judges" 
-              className="w-full max-w-4xl mx-auto rounded-lg shadow-lg"
-            />
-          </div>
 
           <Card className="shadow-card mb-8">
             <CardContent className="p-6">
