@@ -11,23 +11,8 @@ const Home = () => {
       
       <div className="pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
-          {/* Hero Section - 2025 Show Dog of the Year */}
+          {/* Hero Section */}
           <div className="text-center mb-20">
-            {/* Year Badge */}
-            <div className="inline-block bg-primary/10 text-primary px-6 py-2 rounded-full text-lg font-semibold mb-6">
-              2025
-            </div>
-            
-            {/* Main Title */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Show Dog of the Year
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-muted-foreground mb-10">
-              Royal Canin New Zealand Premier Show
-            </p>
-            
             {/* Competition Image */}
             <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden mb-10">
               <img src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" alt="2025 Show Dog of the Year - Royal Canin New Zealand Premier Show" className="w-full h-full object-cover" />
