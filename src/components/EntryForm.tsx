@@ -95,6 +95,9 @@ const EntryForm = () => {
         dog.photo
       );
     }
+    if (stepNumber === 2 && entryType === 'catering') {
+      return formData.catering.dinnerTickets > 0 || formData.catering.extraCatalogues > 0;
+    }
     return true;
   };
 
