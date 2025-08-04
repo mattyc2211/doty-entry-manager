@@ -185,7 +185,7 @@ const WelcomeStep = ({
               <p>• Competition entry and judging</p>
               <p>• Show catalogue (1 per dog entry)</p>
               <p>• Certificate for all participants</p>
-              <p>• Professional photography of winners</p>
+              <p>📧 nzdoty@gmail.com</p>
               <p>📧 nzdoty@gmail.com</p>
             </div>
           </div>
