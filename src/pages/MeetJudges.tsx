@@ -7,28 +7,16 @@ import { Award, Globe, MapPin } from 'lucide-react';
 const MeetJudges = () => {
   const judges = [
     {
-      name: "Sarah Mitchell",
-      country: "New Zealand",
-      specialties: ["Working Group", "Herding Group"],
-      experience: "25 years",
-      achievements: ["FCI International Judge", "ANKC All Breeds Judge"],
-      bio: "Sarah has been judging for over two decades and specializes in working and herding breeds. She has judged at prestigious shows across Australia and New Zealand."
+      name: "Linda Stevens",
+      country: "Australia"
     },
     {
-      name: "Dr. James Robertson", 
-      country: "Australia",
-      specialties: ["Toy Group", "Non-Sporting Group"],
-      experience: "30 years",
-      achievements: ["AKC Licensed Judge", "Kennel Club International Judge"],
-      bio: "A veterinarian by training, Dr. Robertson brings both medical expertise and breed knowledge to his judging. He has awarded Best in Show at major international events."
+      name: "Yogesh Tuteja", 
+      country: "India"
     },
     {
-      name: "Helena Andersson",
-      country: "Sweden", 
-      specialties: ["Sporting Group", "Hound Group"],
-      experience: "20 years",
-      achievements: ["FCI Judge", "European Dog Show Judge"],
-      bio: "Helena is renowned for her expertise in sporting and hound breeds. She has judged at Crufts and numerous European championship shows."
+      name: "Kim Tosi",
+      country: "Australia"
     }
   ];
 
@@ -38,10 +26,30 @@ const MeetJudges = () => {
       
       <div className="pt-40 pb-8 container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-foreground mb-4">Meet Our Judges</h1>
             <p className="text-xl text-muted-foreground">World-class expertise from internationally recognized judges</p>
           </div>
+
+          <div className="mb-8">
+            <img 
+              src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
+              alt="Royal Canin New Zealand Premier Show Judges" 
+              className="w-full max-w-4xl mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+
+          <Card className="shadow-card mb-8">
+            <CardContent className="p-6">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-foreground mb-2">Judge Information Coming Soon</h3>
+                <p className="text-muted-foreground">
+                  Detailed information about our international judges will be available shortly. 
+                  Please check back for updates on their experience, specialties, and achievements.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {judges.map((judge, index) => (
@@ -56,43 +64,8 @@ const MeetJudges = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                      <Award className="w-4 h-4 text-primary" />
-                      Experience
-                    </h4>
-                    <p className="text-muted-foreground">{judge.experience}</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Specialties</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {judge.specialties.map((specialty, i) => (
-                        <Badge key={i} variant="outline" className="text-xs">
-                          {specialty}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                      <Globe className="w-4 h-4 text-primary" />
-                      Achievements
-                    </h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      {judge.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-center gap-2">
-                          <div className="w-1 h-1 bg-primary rounded-full flex-shrink-0"></div>
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">About</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{judge.bio}</p>
+                  <div className="text-center py-4">
+                    <p className="text-muted-foreground italic">More details to follow</p>
                   </div>
                 </CardContent>
               </Card>
