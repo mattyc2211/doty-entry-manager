@@ -88,12 +88,6 @@ const CateringExtras = ({
                 </Badge>
               </div>
               
-              <div className="bg-white rounded-lg border border-orange-200 p-3 space-y-2">
-                <p className="text-sm font-medium text-orange-900">Menu includes:</p>
-                <p className="text-sm text-orange-700">
-                  Spit roast with an assortment of meats, jacket potato, salads and dessert
-                </p>
-              </div>
               
               <div className="space-y-2">
                 <Label htmlFor="dinnerTickets">Number of tickets</Label>
@@ -246,16 +240,6 @@ const CateringExtras = ({
         </CardContent>
       </Card>
 
-      <div className="flex justify-end">
-        <Button 
-          onClick={nextStep}
-          disabled={!canContinue}
-          size="lg"
-          className="min-w-[200px]"
-        >
-          {isCateringOnly ? 'Review Order' : 'Review Submission'}
-        </Button>
-      </div>
     </div>
   );
 };
