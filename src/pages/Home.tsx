@@ -89,28 +89,7 @@ const Home = () => {
           </div>
 
           {/* Essential Information */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Mail className="w-5 h-5 text-primary mr-2" />
-                  Contact Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="flex items-center gap-2 text-muted-foreground">
-                  <Mail className="w-4 h-4" />
-                  <a href="mailto:entries@nzpremiershow.co.nz" className="hover:text-primary transition-colors">
-                    entries@nzpremiershow.co.nz
-                  </a>
-                </p>
-                <p className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  Purina Pro Plan Auckland Exhibition Centre, Ardmore
-                </p>
-              </CardContent>
-            </Card>
-
+          <div className="grid md:grid-cols-1 gap-8 mb-16">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
