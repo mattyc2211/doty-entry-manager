@@ -3,29 +3,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import FormHeader from '@/components/FormHeader';
 import { Award, Globe, MapPin } from 'lucide-react';
-import lindaStevens from '@/assets/linda-stevens.jpg';
-import yogeshTuteja from '@/assets/yogesh-tuteja.jpg';
-import kimTosi from '@/assets/kim-tosi.jpg';
 
 const MeetJudges = () => {
   const judges = [
     {
       name: "Linda Stevens",
-      country: "Australia",
-      flag: "🇦🇺",
-      image: lindaStevens
+      country: "Australia"
     },
     {
       name: "Yogesh Tuteja", 
-      country: "India",
-      flag: "🇮🇳",
-      image: yogeshTuteja
+      country: "India"
     },
     {
       name: "Kim Tosi",
-      country: "Australia",
-      flag: "🇦🇺",
-      image: kimTosi
+      country: "Australia"
     }
   ];
 
@@ -41,29 +32,34 @@ const MeetJudges = () => {
           </div>
 
 
+          <Card className="shadow-card mb-8">
+            <CardContent className="p-6">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-foreground mb-2">Judge Information Coming Soon</h3>
+                <p className="text-muted-foreground">
+                  Detailed information about our international judges will be available shortly. 
+                  Please check back for updates on their experience, specialties, and achievements.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {judges.map((judge, index) => (
-              <Card key={index} className="shadow-card hover:shadow-lg transition-shadow duration-300">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto mb-4">
-                    <img 
-                      src={judge.image} 
-                      alt={`${judge.name} - Judge`}
-                      className="w-32 h-32 rounded-full object-cover mx-auto shadow-md"
-                    />
+              <Card key={index} className="shadow-card">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-xl">{judge.name}</CardTitle>
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {judge.country}
+                    </Badge>
                   </div>
-                  <CardTitle className="text-xl mb-2">{judge.name}</CardTitle>
-                  <Badge variant="secondary" className="flex items-center gap-1 w-fit mx-auto">
-                    <span className="text-lg">{judge.flag}</span>
-                    <MapPin className="w-3 h-3" />
-                    {judge.country}
-                  </Badge>
                 </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-muted-foreground">
-                    International dog show judge with extensive experience in breed standards and conformation.
-                  </p>
+                <CardContent className="space-y-4">
+                  <div className="text-center py-4">
+                    <p className="text-muted-foreground italic">More details to follow</p>
+                  </div>
                 </CardContent>
               </Card>
             ))}
