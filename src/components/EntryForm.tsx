@@ -102,7 +102,7 @@ const EntryForm = () => {
   };
 
   const nextStep = () => {
-    if (currentStep < steps.length - 1 && isStepValid(currentStep)) {
+    if (currentStep < steps.length && isStepValid(currentStep)) {
       setCurrentStep(currentStep + 1);
     }
   };
