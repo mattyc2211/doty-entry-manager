@@ -35,11 +35,6 @@ const FormHeader = ({
                   Entry Form
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/about') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/about')}>
-                  About Show
-                </NavigationMenuLink>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           

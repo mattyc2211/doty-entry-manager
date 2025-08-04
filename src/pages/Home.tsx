@@ -25,7 +25,7 @@ const Home = () => {
             
             
             {/* Competition Image */}
-            <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden mb-10 shadow-2xl">
+            <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden my-10">
               <img src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" alt="2025 Show Dog of the Year - Royal Canin New Zealand Premier Show" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
             </div>
