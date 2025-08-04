@@ -142,7 +142,7 @@ const CateringExtras = ({
                 <div>
                   <p className="font-medium">Show Catalogue</p>
                   <p className="text-sm text-muted-foreground">
-                    {!isCateringOnly ? 'Extra copies (1 included per dog)' : 'Per catalogue'}
+                    {!isCateringOnly ? 'Extra copies (1 included per exhibitor)' : 'Per catalogue'}
                   </p>
                 </div>
                 <Badge variant="secondary" className="bg-blue-100 text-blue-800">

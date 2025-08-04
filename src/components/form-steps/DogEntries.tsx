@@ -193,15 +193,6 @@ const DogEntries: React.FC<DogEntriesProps> = ({
         </CardContent>
       </Card>
 
-      <div className="flex justify-end">
-        <Button
-          onClick={handleContinue}
-          disabled={!isValid()}
-          className="min-w-[120px]"
-        >
-          Continue
-        </Button>
-      </div>
     </div>
   );
 };
