@@ -186,7 +186,7 @@ const WelcomeStep = ({
               <p>• Show catalogue (1 per dog entry)</p>
               <p>• Certificate for all participants</p>
               <p>• Professional photography of winners</p>
-              <p>• Access to grooming and warm-up areas</p>
+              <p>📧 nzdoty@gmail.com</p>
             </div>
           </div>
         </CardContent>
