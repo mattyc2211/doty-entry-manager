@@ -105,15 +105,6 @@ const ExhibitorDetails: React.FC<ExhibitorDetailsProps> = ({
         </CardContent>
       </Card>
 
-      <div className="flex justify-end">
-        <Button 
-          type="submit" 
-          disabled={!isValid()}
-          className="min-w-[120px]"
-        >
-          Continue
-        </Button>
-      </div>
     </form>
   );
 };

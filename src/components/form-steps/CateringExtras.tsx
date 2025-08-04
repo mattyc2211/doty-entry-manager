@@ -70,10 +70,10 @@ const CateringExtras = ({
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-orange-900">
               <Utensils className="w-5 h-5" />
-              Dinner Tickets
+              Catering
             </CardTitle>
             <p className="text-sm text-orange-700">
-              Back by popular demand from last year! Join us for our celebration dinner.
+              Menu includes: Spit roast with an assortment of meats, jacket potato, salads and dessert
             </p>
           </CardHeader>
           <CardContent>
@@ -232,13 +232,15 @@ const CateringExtras = ({
       {/* Payment Information */}
       <Card className="bg-muted/50">
         <CardContent className="pt-6">
-          <div className="text-center space-y-2">
-            <h4 className="font-medium">Payment Information</h4>
-            <p className="text-sm text-muted-foreground">
-              Payment is made via bank transfer after submission. Bank details will be provided in your confirmation email.
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Entry is confirmed once payment is received
+          <div className="space-y-2">
+            <h4 className="font-medium text-center">Payment Information</h4>
+            <div className="bg-muted p-3 rounded space-y-1 text-sm">
+              <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+              <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
+              <p><strong>Reference:</strong> Use your surname</p>
+            </div>
+            <p className="text-xs text-muted-foreground text-center">
+              Entry will not be accepted until payment is made
             </p>
           </div>
         </CardContent>

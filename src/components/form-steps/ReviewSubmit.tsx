@@ -82,13 +82,12 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
               <p className="text-2xl font-bold text-primary">${total}</p>
             </div>
 
-            <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm">
               <h4 className="font-medium">Bank Transfer Details:</h4>
               <div className="bg-muted p-3 rounded space-y-1">
-                <p><strong>Account Name:</strong> New Zealand Dog of the Year</p>
-                <p><strong>Bank:</strong> ANZ Bank</p>
-                <p><strong>Account Number:</strong> 01-0123-0123456-00</p>
-                <p><strong>Reference:</strong> {exhibitor.surname}-{entryType}</p>
+                <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+                <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
+                <p><strong>Reference:</strong> {exhibitor.surname}</p>
               </div>
               <p className="text-xs text-muted-foreground">
                 Entry will not be accepted until payment is received
@@ -254,10 +253,9 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           <div className="space-y-2 text-sm">
             <h4 className="font-medium">Bank Transfer Details:</h4>
             <div className="bg-muted p-3 rounded space-y-1">
-              <p><strong>Account Name:</strong> New Zealand Dog of the Year</p>
-              <p><strong>Bank:</strong> ANZ Bank</p>
-              <p><strong>Account Number:</strong> 01-0123-0123456-00</p>
-              <p><strong>Reference:</strong> {exhibitor.surname}-{entryType}</p>
+              <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+              <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
+              <p><strong>Reference:</strong> {exhibitor.surname}</p>
             </div>
           </div>
         </CardContent>
