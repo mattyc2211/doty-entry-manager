@@ -4,12 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Award, Calendar, Trophy, Users, Phone, Mail, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FormHeader from '@/components/FormHeader';
-
 const Home = () => {
   const navigate = useNavigate();
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+  return <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <FormHeader />
       
       <div className="pt-32 pb-16">
@@ -22,24 +19,14 @@ const Home = () => {
             </div>
             
             {/* Main Title */}
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-primary via-primary/90 to-primary/80 bg-clip-text text-transparent mb-6 leading-tight">
-              SHOW DOG
-              <br />
-              OF THE YEAR
-            </h1>
+            
             
             {/* Subtitle */}
-            <div className="text-2xl md:text-3xl font-semibold text-foreground mb-8">
-              Royal Canin New Zealand Premier Show
-            </div>
+            
             
             {/* Competition Image */}
             <div className="relative h-[250px] md:h-[300px] rounded-xl overflow-hidden mb-10 shadow-2xl">
-              <img 
-                src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
-                alt="2025 Show Dog of the Year - Royal Canin New Zealand Premier Show"
-                className="w-full h-full object-cover"
-              />
+              <img src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" alt="2025 Show Dog of the Year - Royal Canin New Zealand Premier Show" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
             </div>
             
@@ -58,11 +45,7 @@ const Home = () => {
             </div>
             
             {/* Main CTA */}
-            <Button 
-              size="lg" 
-              className="text-xl px-12 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => navigate('/entry')}
-            >
+            <Button size="lg" className="text-xl px-12 py-6 shadow-lg hover:shadow-xl transition-all duration-300" onClick={() => navigate('/entry')}>
               <Trophy className="w-6 h-6 mr-3" />
               Enter the Competition
               <ArrowRight className="w-6 h-6 ml-3" />
@@ -145,8 +128,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Home;
