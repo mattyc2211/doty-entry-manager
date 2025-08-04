@@ -142,7 +142,7 @@ const CateringExtras = ({
                 <div>
                   <p className="font-medium">Show Catalogue</p>
                   <p className="text-sm text-muted-foreground">
-                    {!isCateringOnly ? 'Extra copies (1 included per exhibitor)' : 'Per catalogue'}
+                    {!isCateringOnly ? 'Extra copies (1 included per handler)' : 'Per catalogue'}
                   </p>
                 </div>
                 <Badge variant="secondary" className="bg-blue-100 text-blue-800">
@@ -234,7 +234,7 @@ const CateringExtras = ({
               <p><strong>Reference:</strong> Use your surname</p>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Entry will not be accepted until payment is made
+              Order will not be processed until payment is made
             </p>
           </div>
         </CardContent>
