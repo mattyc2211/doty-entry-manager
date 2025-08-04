@@ -3,14 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, Calendar, DollarSign, Award, Users, Camera, CreditCard } from 'lucide-react';
-
 interface WelcomeStepProps {
   onSelectEntryType: (type: 'competition' | 'catering') => void;
 }
-
-const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
-  return (
-    <div className="space-y-6">
+const WelcomeStep = ({
+  onSelectEntryType
+}: WelcomeStepProps) => {
+  return <div className="space-y-6">
       {/* Welcome Section */}
       <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/10">
         <CardHeader className="text-center">
@@ -20,10 +19,7 @@ const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
           <CardTitle className="text-3xl font-bold text-primary mb-2">
             Welcome to NZ Premier Show Dog of the Year 2025
           </CardTitle>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join New Zealand's most prestigious dog show competition. Showcase your dog's excellence 
-            and compete for the ultimate title of Show Dog of the Year.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Join New Zealand's Premier dog show competition. Showcase your dog's excellence and compete for the ultimate title of Show Dog of the Year.</p>
         </CardHeader>
       </Card>
 
@@ -54,11 +50,7 @@ const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
                 <span className="text-sm text-muted-foreground">Dinner & catalogues</span>
               </div>
             </div>
-            <Button 
-              onClick={() => onSelectEntryType('competition')}
-              className="w-full group-hover:bg-primary group-hover:text-primary-foreground"
-              variant="outline"
-            >
+            <Button onClick={() => onSelectEntryType('competition')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
               Start Competition Entry
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -90,11 +82,7 @@ const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
                 <span className="text-sm text-muted-foreground">Skip registration</span>
               </div>
             </div>
-            <Button 
-              onClick={() => onSelectEntryType('catering')}
-              className="w-full group-hover:bg-primary group-hover:text-primary-foreground"
-              variant="outline"
-            >
+            <Button onClick={() => onSelectEntryType('catering')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
               Purchase Extras Only
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -115,16 +103,13 @@ const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-orange-700">Entries Close:</span>
-                <span className="font-medium text-orange-900">March 15, 2025</span>
+                <span className="font-medium text-orange-900">22 Septmeber 2025</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-orange-700">Show Date:</span>
-                <span className="font-medium text-orange-900">April 5-6, 2025</span>
+                <span className="font-medium text-orange-900">13 December 2025</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-orange-700">Late Entries:</span>
-                <span className="font-medium text-orange-900">+$10 fee</span>
-              </div>
+              
             </div>
           </CardContent>
         </Card>
@@ -223,8 +208,6 @@ const WelcomeStep = ({ onSelectEntryType }: WelcomeStepProps) => {
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>;
 };
-
 export default WelcomeStep;
