@@ -137,8 +137,8 @@ const EntryForm = () => {
         onBackToHome={handleBackToHome}
       />
       
-      {/* Add padding top to account for fixed header */}
-      <div className="pt-24 container mx-auto px-4 py-8">
+      {/* Add padding top to account for fixed header with navigation */}
+      <div className="pt-40 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {currentStep === 0 ? (
             <WelcomeStep onSelectEntryType={handleEntryTypeSelection} />
