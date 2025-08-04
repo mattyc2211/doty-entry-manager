@@ -111,7 +111,7 @@ export const EVENT_TYPES = [
 
 // Qualification requirements by event type
 export const QUALIFICATION_REQUIREMENTS = {
-  'Show Dog': 'Must have won "BEST IN SHOW" at a qualifying show',
+  'Show Dog': 'Must have won "BEST IN SHOW" at a qualifying show OR "RESERVE IN SHOW" at an all breeds qualifying show',
   'Puppy': 'Must have won "BABY/MINOR/PUPPY IN SHOW" at a qualifying show',
   'Neuter': 'Must have won "NEUTER BEST/RESERVE IN SHOW" at a qualifying show'
 };
