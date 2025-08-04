@@ -3,7 +3,7 @@ import royalCaninLogo from '@/assets/royal-canin-logo.png';
 
 const FormHeader = () => {
   return (
-    <div className="bg-primary text-primary-foreground">
+    <div className="bg-primary text-primary-foreground fixed top-0 left-0 right-0 z-50 shadow-lg">
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">

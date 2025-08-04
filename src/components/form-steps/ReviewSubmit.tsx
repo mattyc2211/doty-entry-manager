@@ -138,8 +138,17 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
         <CardContent className="space-y-4">
           {dogs.map((dog, index) => (
             <div key={dog.id} className="border rounded-lg p-4 space-y-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Badge>Dog {index + 1}</Badge>
+                {dog.photoUrl && (
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20">
+                    <img 
+                      src={dog.photoUrl} 
+                      alt={dog.pedigreeName} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <h4 className="font-medium">{dog.pedigreeName}</h4>
               </div>
               

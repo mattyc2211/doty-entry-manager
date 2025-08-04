@@ -78,7 +78,8 @@ const EntryForm = () => {
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
       <FormHeader />
       
-      <div className="container mx-auto px-4 py-8">
+      {/* Add padding top to account for fixed header */}
+      <div className="pt-24 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-card">
             <CardHeader className="pb-4">
