@@ -25,16 +25,16 @@ const WelcomeStep = ({
           <CardContent>
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-2">
-                <Badge variant="outline">Dog Registration</Badge>
-                <span className="text-sm text-muted-foreground">Required</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <Badge variant="outline">Event Entry</Badge>
-                <span className="text-sm text-muted-foreground">$30 per event</span>
+                <span className="text-sm text-muted-foreground">$30 each</span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="outline">Optional Extras</Badge>
-                <span className="text-sm text-muted-foreground">Dinner & catalogues</span>
+                <Badge variant="outline">Show Catalogues</Badge>
+                <span className="text-sm text-muted-foreground">Included</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline">Dinner Tickets</Badge>
+                <span className="text-sm text-muted-foreground">$45 each (optional)</span>
               </div>
             </div>
             <Button onClick={() => onSelectEntryType('competition')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
@@ -65,8 +65,8 @@ const WelcomeStep = ({
                 <span className="text-sm text-muted-foreground">$10 each</span>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="outline">No Dog Entry</Badge>
-                <span className="text-sm text-muted-foreground">Skip registration</span>
+                <Badge variant="outline">No Competition</Badge>
+                <span className="text-sm text-muted-foreground">Events only</span>
               </div>
             </div>
             <Button onClick={() => onSelectEntryType('catering')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
