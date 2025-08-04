@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ExhibitorDetails from './form-steps/ExhibitorDetails';
 import DogEntries from './form-steps/DogEntries';
@@ -14,6 +24,7 @@ import { FormData, ExhibitorData, DogEntry, CateringData } from '@/types/form';
 const EntryForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [entryType, setEntryType] = useState<'competition' | 'catering' | null>(null);
+  const [showResetDialog, setShowResetDialog] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     exhibitor: {
       firstName: '',
@@ -92,11 +103,39 @@ const EntryForm = () => {
     return eventCost + dinnerCost + catalogueCost;
   };
 
+  const handleBackToHome = () => {
+    if (currentStep > 0) {
+      setShowResetDialog(true);
+    }
+  };
+
+  const confirmReset = () => {
+    setCurrentStep(0);
+    setEntryType(null);
+    setFormData({
+      exhibitor: {
+        firstName: '',
+        surname: '',
+        email: '',
+        phone: ''
+      },
+      dogs: [],
+      catering: {
+        dinnerTickets: 0,
+        extraCatalogues: 0
+      }
+    });
+    setShowResetDialog(false);
+  };
+
   const progress = (currentStep / (steps.length - 1)) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
-      <FormHeader />
+      <FormHeader 
+        showBackToHome={currentStep > 0}
+        onBackToHome={handleBackToHome}
+      />
       
       {/* Add padding top to account for fixed header */}
       <div className="pt-24 container mx-auto px-4 py-8">
@@ -207,6 +246,24 @@ const EntryForm = () => {
           )}
         </div>
       </div>
+
+      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Return to Home?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will clear all your entered information and return you to the welcome page. 
+              Are you sure you want to continue?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmReset}>
+              Yes, go to Home
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

@@ -1,7 +1,14 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Home } from 'lucide-react';
 import nzPremierLogo from '@/assets/nz-premier-logo.png';
 
-const FormHeader = () => {
+interface FormHeaderProps {
+  showBackToHome?: boolean;
+  onBackToHome?: () => void;
+}
+
+const FormHeader = ({ showBackToHome = false, onBackToHome }: FormHeaderProps) => {
   return (
     <div className="bg-primary text-primary-foreground fixed top-0 left-0 right-0 z-50 shadow-lg">
       <div className="container mx-auto px-4 py-6">
@@ -22,6 +29,18 @@ const FormHeader = () => {
               </p>
             </div>
           </div>
+          
+          {showBackToHome && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onBackToHome}
+              className="flex items-center gap-2 bg-white/10 text-primary-foreground border-white/20 hover:bg-white/20"
+            >
+              <Home className="w-4 h-4" />
+              Back to Home
+            </Button>
+          )}
         </div>
       </div>
     </div>
