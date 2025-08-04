@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Home } from 'lucide-react';
-import nzPremierLogo from '@/assets/nz-premier-logo.png';
 
 interface FormHeaderProps {
   showBackToHome?: boolean;
@@ -15,9 +14,14 @@ const FormHeader = ({ showBackToHome = false, onBackToHome }: FormHeaderProps) =
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
-              src={nzPremierLogo} 
+              src="/nz-premier-logo.png" 
               alt="NZ Premier Show Dog of the Year" 
               className="h-16 w-auto"
+              loading="eager"
+              onError={(e) => {
+                console.error('Logo failed to load');
+                e.currentTarget.style.display = 'none';
+              }}
             />
             <div className="border-l border-primary-glow h-12 mx-4" />
             <div>
