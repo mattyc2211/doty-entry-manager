@@ -54,6 +54,11 @@ const FormHeader = ({
                   About Show
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/sponsors') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/sponsors')}>
+                  Sponsors
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           
@@ -102,6 +107,13 @@ const FormHeader = ({
                     onClick={() => handleNavigation('/about-show')}
                   >
                     About Show
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    className={`justify-start ${isActive('/sponsors') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground`}
+                    onClick={() => handleNavigation('/sponsors')}
+                  >
+                    Sponsors
                   </Button>
                 </div>
               </SheetContent>

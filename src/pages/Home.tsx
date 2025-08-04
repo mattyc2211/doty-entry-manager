@@ -93,8 +93,8 @@ const Home = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Calendar className="w-5 h-5 text-primary mr-2" />
-                  Important Dates
+                  <Mail className="w-5 h-5 text-primary mr-2" />
+                  Contact Information
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">

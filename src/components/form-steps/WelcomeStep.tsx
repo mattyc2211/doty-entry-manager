@@ -78,29 +78,7 @@ const WelcomeStep = ({
       </div>
 
       {/* Important Information */}
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card className="border-orange-200 bg-orange-50">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-orange-600" />
-              <CardTitle className="text-lg text-orange-900">Important Dates</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-orange-700">Entries Close:</span>
-                <span className="font-medium text-orange-900">22 Septmeber 2025</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-orange-700">Show Date:</span>
-                <span className="font-medium text-orange-900">13 December 2025</span>
-              </div>
-              
-            </div>
-          </CardContent>
-        </Card>
-
+      <div className="grid md:grid-cols-2 gap-4">
         <Card className="border-blue-200 bg-blue-50">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
