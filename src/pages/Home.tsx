@@ -15,38 +15,37 @@ const Home = () => {
       <div className="pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Hero Section with Image */}
-          <div className="relative mb-16">
+          <div className="text-center mb-16">
             <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8">
               <img 
                 src="/lovable-uploads/5f3a049a-ea83-488a-82c1-3554b63b2466.png" 
                 alt="Royal Canin New Zealand Premier Show featuring our international judges"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <div className="text-center text-white">
-                  <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                    New Zealand's Premier Dog Show
-                  </h1>
-                  <div className="text-xl md:text-2xl mb-2">
-                    <strong>Ardmore Exhibition Centre, Auckland</strong>
-                  </div>
-                  <div className="text-lg md:text-xl mb-4">
-                    13 December 2025
-                  </div>
-                  <div className="text-lg md:text-xl mb-8">
-                    Featuring the top dogs across the country
-                  </div>
-                  <Button 
-                    size="lg" 
-                    className="text-lg px-8 py-4 bg-primary hover:bg-primary/90"
-                    onClick={() => navigate('/entry')}
-                  >
-                    Start Your Entry
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </div>
-              </div>
             </div>
+            
+            {/* Key Information */}
+            <div className="mb-8">
+              <div className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                Ardmore Exhibition Centre, Auckland
+              </div>
+              <div className="text-xl md:text-2xl text-muted-foreground mb-6">
+                13 December 2025
+              </div>
+              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Featuring the top dogs across the country
+              </p>
+            </div>
+            
+            {/* Main CTA */}
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-4"
+              onClick={() => navigate('/entry')}
+            >
+              Start Your Entry
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
           </div>
 
           {/* Quick Navigation */}
