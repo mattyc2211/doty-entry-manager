@@ -38,18 +38,39 @@ const CateringExtras = ({
     }
   };
 
-  // Calculate costs
+  const handleNumberInputChange = (field: keyof CateringData, inputValue: string) => {
+    if (inputValue === '') {
+      // Allow empty string temporarily for user input
+      updateCateringData({
+        ...formData.catering,
+        [field]: ''
+      });
+    } else {
+      const numValue = parseInt(inputValue);
+      if (!isNaN(numValue) && numValue >= 0) {
+        updateCateringData({
+          ...formData.catering,
+          [field]: numValue
+        });
+      }
+    }
+  };
+
+  // Calculate costs - handle string values during input
   const eventCost = formData.dogs.reduce((total, dog) => {
     return total + (dog.events.length * 30);
   }, 0);
   
-  const dinnerCost = formData.catering.dinnerTickets * 45;
-  const catalogueCost = formData.catering.extraCatalogues * 10;
+  const dinnerTickets = typeof formData.catering.dinnerTickets === 'string' ? 0 : formData.catering.dinnerTickets;
+  const extraCatalogues = typeof formData.catering.extraCatalogues === 'string' ? 0 : formData.catering.extraCatalogues;
+  
+  const dinnerCost = dinnerTickets * 45;
+  const catalogueCost = extraCatalogues * 10;
   const totalCost = eventCost + dinnerCost + catalogueCost;
 
   // For catering-only, require at least one item
   const canContinue = isCateringOnly 
-    ? (formData.catering.dinnerTickets > 0 || formData.catering.extraCatalogues > 0)
+    ? (dinnerTickets > 0 || extraCatalogues > 0)
     : true;
 
   return (
@@ -97,7 +118,7 @@ const CateringExtras = ({
                   min="0"
                   max="20"
                   value={formData.catering.dinnerTickets}
-                  onChange={(e) => handleInputChange('dinnerTickets', parseInt(e.target.value) || 0)}
+                  onChange={(e) => handleNumberInputChange('dinnerTickets', e.target.value)}
                   className="bg-white"
                 />
               </div>
@@ -160,7 +181,7 @@ const CateringExtras = ({
                   min="0"
                   max="50"
                   value={formData.catering.extraCatalogues}
-                  onChange={(e) => handleInputChange('extraCatalogues', parseInt(e.target.value) || 0)}
+                  onChange={(e) => handleNumberInputChange('extraCatalogues', e.target.value)}
                   className="bg-white"
                 />
               </div>
@@ -193,14 +214,14 @@ const CateringExtras = ({
             
             {dinnerCost > 0 && (
               <div className="flex justify-between items-center">
-                <span>Dinner Tickets ({formData.catering.dinnerTickets} × $45.00)</span>
+                <span>Dinner Tickets ({dinnerTickets} × $45.00)</span>
                 <span className="font-medium">${dinnerCost.toFixed(2)}</span>
               </div>
             )}
             
             {catalogueCost > 0 && (
               <div className="flex justify-between items-center">
-                <span>Extra Catalogues ({formData.catering.extraCatalogues} × $10.00)</span>
+                <span>Extra Catalogues ({extraCatalogues} × $10.00)</span>
                 <span className="font-medium">${catalogueCost.toFixed(2)}</span>
               </div>
             )}

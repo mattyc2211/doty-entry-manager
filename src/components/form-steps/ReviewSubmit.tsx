@@ -11,11 +11,13 @@ interface ReviewSubmitProps {
   formData: FormData;
   calculateTotal: () => number;
   entryType: 'competition' | 'catering';
+  onSubmissionSuccess: () => void;
 }
 const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
   formData,
   calculateTotal,
-  entryType
+  entryType,
+  onSubmissionSuccess
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -32,6 +34,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
       const id = await submitFormData(formData, entryType);
       setSubmissionId(id);
       setSubmitted(true);
+      onSubmissionSuccess();
       toast({
         title: "Entry submitted successfully!",
         description: `Your submission ID is ${id}`,

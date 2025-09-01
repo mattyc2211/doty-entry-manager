@@ -26,6 +26,7 @@ const EntryForm = () => {
   const [entryType, setEntryType] = useState<'competition' | 'catering' | null>(null);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [showEntryTypeSelection, setShowEntryTypeSelection] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     exhibitor: {
       firstName: '',
@@ -146,6 +147,7 @@ const EntryForm = () => {
     setCurrentStep(0);
     setEntryType(null);
     setShowEntryTypeSelection(true);
+    setSubmitted(false);
     setFormData({
       exhibitor: {
         firstName: '',
@@ -160,6 +162,10 @@ const EntryForm = () => {
       }
     });
     setShowResetDialog(false);
+  };
+
+  const onSubmissionSuccess = () => {
+    setSubmitted(true);
   };
 
   const progress = entryType ? ((currentStep - 1) / (steps.length - 1)) * 100 : 0;
@@ -265,31 +271,45 @@ const EntryForm = () => {
                     formData={formData}
                     calculateTotal={calculateTotal}
                     entryType={entryType || 'competition'}
+                    onSubmissionSuccess={onSubmissionSuccess}
                   />
                 )}
 
-                <div className="flex justify-between pt-6 border-t border-border">
-                  <Button
-                    variant="outline"
-                    onClick={prevStep}
-                    disabled={currentStep <= 1}
-                    className="flex items-center gap-2"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    Previous
-                  </Button>
-
-                  {currentStep < steps.length && (
+                {!submitted && (
+                  <div className="flex justify-between pt-6 border-t border-border">
                     <Button
-                      onClick={nextStep}
-                      disabled={!isStepValid(currentStep)}
+                      variant="outline"
+                      onClick={prevStep}
+                      disabled={currentStep <= 1}
                       className="flex items-center gap-2"
                     >
-                      Next
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronLeft className="w-4 h-4" />
+                      Previous
                     </Button>
-                  )}
-                </div>
+
+                    {currentStep < steps.length && (
+                      <Button
+                        onClick={nextStep}
+                        disabled={!isStepValid(currentStep)}
+                        className="flex items-center gap-2"
+                      >
+                        Next
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                )}
+
+                {submitted && (
+                  <div className="flex justify-center pt-6 border-t border-border">
+                    <Button
+                      onClick={confirmReset}
+                      className="flex items-center gap-2"
+                    >
+                      Start New Entry
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
