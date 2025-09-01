@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          id: string
+          password: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          password: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          password?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
       dog_entries: {
         Row: {
           breed: string
@@ -137,7 +161,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      verify_admin_credentials: {
+        Args: { password_input: string; username_input: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

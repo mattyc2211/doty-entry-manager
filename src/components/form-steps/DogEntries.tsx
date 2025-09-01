@@ -73,7 +73,7 @@ const DogEntries: React.FC<DogEntriesProps> = ({
       dog.breed &&
       dog.events.length > 0 &&
       dog.events.every(event => 
-        event.qualifyingShow.trim() && event.qualifyingDate
+        event.qualifyingShow.trim()
       ) &&
       dog.photo
     );
@@ -193,6 +193,16 @@ const DogEntries: React.FC<DogEntriesProps> = ({
         </CardContent>
       </Card>
 
+      <div className="flex justify-end">
+        <Button
+          onClick={handleContinue}
+          disabled={!isValid()}
+          size="lg"
+          className="min-w-[150px]"
+        >
+          Continue
+        </Button>
+      </div>
     </div>
   );
 };

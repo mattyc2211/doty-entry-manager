@@ -92,6 +92,13 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
             <div className="text-xs text-muted-foreground text-center">
               A confirmation email has been sent to {exhibitor.email}
             </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4">
+              <p className="text-sm text-yellow-800 font-medium">
+                ⚠️ Important: You cannot modify your submission after submission. 
+                To make any changes, please email the secretary at nzdoty@gmail.com
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>;
@@ -163,8 +170,8 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
                   <div className="space-y-2">
                     {dog.events.map((event, i) => <div key={i} className="flex items-center justify-between bg-muted p-2 rounded">
                         <span className="font-medium">{event.eventType}</span>
-                        <div className="text-sm text-muted-foreground">
-                          {event.qualifyingShow} • {event.qualifyingDate}
+                         <div className="text-sm text-muted-foreground">
+                          {event.qualifyingShow}
                         </div>
                       </div>)}
                   </div>

@@ -132,7 +132,7 @@ export const submitFormData = async (formData: FormData, entryType: 'competition
             dog_entry_id: dogEntry.id,
             event_type: event.eventType,
             qualifying_show: event.qualifyingShow,
-            qualifying_date: event.qualifyingDate,
+            qualifying_date: new Date().toISOString().split('T')[0], // Default date since not required in form
           }]);
 
         if (eventError) {

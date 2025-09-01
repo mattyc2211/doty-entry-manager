@@ -8,7 +8,6 @@ export interface ExhibitorData {
 export interface EventEntry {
   eventType: 'Show Dog' | 'Puppy' | 'Neuter';
   qualifyingShow: string;
-  qualifyingDate: string;
 }
 
 export interface DogEntry {

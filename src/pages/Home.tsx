@@ -4,10 +4,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Award, Calendar, CalendarCheck, Trophy, Users, Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FormHeader from '@/components/FormHeader';
+import AdminNavButton from '@/components/AdminNavButton';
 const Home = () => {
   const navigate = useNavigate();
   return <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <FormHeader />
+      
+      {/* Admin Nav Button */}
+      <div className="fixed top-4 right-4 z-50">
+        <AdminNavButton />
+      </div>
       
       <div className="pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">

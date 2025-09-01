@@ -90,7 +90,7 @@ const EntryForm = () => {
         dog.breed &&
         dog.events.length > 0 &&
         dog.events.every(event => 
-          event.qualifyingShow.trim() && event.qualifyingDate
+          event.qualifyingShow.trim()
         ) &&
         dog.photo
       );

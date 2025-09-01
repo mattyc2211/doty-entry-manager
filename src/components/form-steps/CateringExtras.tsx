@@ -25,10 +25,10 @@ const CateringExtras = ({
 }: CateringExtrasProps) => {
   const handleInputChange = (field: keyof CateringData, value: number | string) => {
     if (typeof value === 'number') {
-      const newValue = Math.max(0, value);
+      // Allow any number including 0, don't force minimum value
       updateCateringData({
         ...formData.catering,
-        [field]: newValue
+        [field]: value >= 0 ? value : 0
       });
     } else {
       updateCateringData({
