@@ -93,7 +93,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
             </div>
 
             <div className="text-xs text-muted-foreground text-center">
-              A confirmation email has been sent to {exhibitor.email}
+              A confirmation email will be sent to {exhibitor.email} once payment has been received
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4">
