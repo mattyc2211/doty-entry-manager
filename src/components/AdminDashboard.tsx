@@ -5,9 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { LogOut, Search, Download, Users, DollarSign, Trophy, Utensils, ImageIcon } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LogOut, Search, Download, Users, DollarSign, Trophy, Utensils, ImageIcon, BarChart3 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { AnalyticsOverview } from './analytics/AnalyticsOverview';
+import { AnalyticsCharts } from './analytics/AnalyticsCharts';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -249,48 +252,61 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       </div>
 
       <div className="container mx-auto px-4 py-6 space-y-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Users className="w-8 h-8 text-primary" />
-              <div>
-                <p className="text-sm text-muted-foreground">Total Submissions</p>
-                <p className="text-2xl font-bold">{stats.totalSubmissions}</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <DollarSign className="w-8 h-8 text-green-600" />
-              <div>
-                <p className="text-sm text-muted-foreground">Total Revenue</p>
-                <p className="text-2xl font-bold">${stats.totalRevenue}</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Trophy className="w-8 h-8 text-orange-600" />
-              <div>
-                <p className="text-sm text-muted-foreground">Dogs Entered</p>
-                <p className="text-2xl font-bold">{stats.totalDogs}</p>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="p-4 flex items-center gap-3">
-              <Utensils className="w-8 h-8 text-blue-600" />
-              <div>
-                <p className="text-sm text-muted-foreground">Total Events</p>
-                <p className="text-2xl font-bold">{stats.totalEvents}</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <Tabs defaultValue="submissions" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="submissions" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Submissions
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              Analytics
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="submissions" className="space-y-6">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="p-4 flex items-center gap-3">
+                  <Users className="w-8 h-8 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Submissions</p>
+                    <p className="text-2xl font-bold">{stats.totalSubmissions}</p>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-4 flex items-center gap-3">
+                  <DollarSign className="w-8 h-8 text-green-600" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Revenue</p>
+                    <p className="text-2xl font-bold">${stats.totalRevenue}</p>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-4 flex items-center gap-3">
+                  <Trophy className="w-8 h-8 text-orange-600" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Dogs Entered</p>
+                    <p className="text-2xl font-bold">{stats.totalDogs}</p>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-4 flex items-center gap-3">
+                  <Utensils className="w-8 h-8 text-blue-600" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Total Events</p>
+                    <p className="text-2xl font-bold">{stats.totalEvents}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
         {/* Controls */}
         <div className="flex flex-col sm:flex-row gap-4 justify-between">
