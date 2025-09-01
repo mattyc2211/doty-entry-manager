@@ -35,20 +35,7 @@ const WelcomeStep = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="text-center p-6 border rounded-lg bg-muted/30">
-                  <Clock className="w-12 h-12 text-primary mx-auto mb-3" />
-                  <p className="font-semibold text-foreground mb-2 text-lg">Entries Open</p>
-                  <p className="text-muted-foreground text-lg">{formatDate(ENTRY_STATUS.openDate)}</p>
-                </div>
-                <div className="text-center p-6 border rounded-lg bg-muted/30">
-                  <Calendar className="w-12 h-12 text-primary mx-auto mb-3" />
-                  <p className="font-semibold text-foreground mb-2 text-lg">Entries Close</p>
-                  <p className="text-muted-foreground text-lg">{formatDate(ENTRY_STATUS.closeDate)}</p>
-                </div>
-              </div>
-              
-              <div className="space-y-6 pt-6 border-t">
+              <div className="space-y-6">
                 <h3 className="font-semibold text-foreground text-center text-xl">What will be available when entries open:</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4 p-4 border rounded-lg">
