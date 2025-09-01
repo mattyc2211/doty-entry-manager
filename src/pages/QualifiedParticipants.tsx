@@ -125,15 +125,13 @@ const QualifiedParticipants = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  If you have any questions about whether your dog qualifies or need clarification on the requirements, please visit:
+                  If you have any questions about whether your dog qualifies or need clarification on the requirements, please email:
                 </p>
                 <a 
-                  href="https://www.nzdogoftheyear.info" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                  href="mailto:nzdoty@gmail.com?subject=Qualification Question - NZ Premier Dog Show 2025"
                   className="text-primary hover:text-primary/80 font-medium underline"
                 >
-                  www.nzdogoftheyear.info
+                  nzdoty@gmail.com
                 </a>
               </CardContent>
             </Card>
