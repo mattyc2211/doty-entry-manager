@@ -25,7 +25,8 @@ const Home = () => {
                   Saturday - 13 December 2025
                 </div>
                 <div className="text-xl md:text-2xl text-muted-foreground mb-6">
-                  Purina Pro Plan Auckland Exhibition Centre, Ardmore
+                  Purina Pro Plan Auckland Exhibition Centre<br />
+                  743 Papakura-Clevedon Road, Ardmore
                 </div>
                 <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
                   New Zealand's most prestigious dog show competition. 
@@ -41,8 +42,8 @@ const Home = () => {
                   </p>
                   <p className="flex items-center gap-2 text-lg">
                     <CalendarCheck className="w-5 h-5 text-primary" />
-                    <span className="font-semibold">Entries Close:</span>
-                    22 September 2025
+                    <span className="font-semibold">Entries Closed:</span>
+                    17 October 2025
                   </p>
                 </div>
               </div>

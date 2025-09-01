@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { CheckCircle, User, Calendar, DollarSign, Send } from 'lucide-react';
 import { FormData } from '@/types/form';
 import { toast } from '@/hooks/use-toast';
+import { submitFormData } from '@/lib/database';
 interface ReviewSubmitProps {
   formData: FormData;
   calculateTotal: () => number;
@@ -28,19 +29,18 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const id = `NZ${Date.now().toString().slice(-6)}`;
+      const id = await submitFormData(formData, entryType);
       setSubmissionId(id);
       setSubmitted(true);
       toast({
         title: "Entry submitted successfully!",
-        description: `Your submission ID is ${id}`
+        description: `Your submission ID is ${id}`,
       });
     } catch (error) {
+      console.error('Submission error:', error);
       toast({
         title: "Submission failed",
-        description: "Please try again or contact support",
+        description: error instanceof Error ? error.message : "Please try again or contact support",
         variant: "destructive"
       });
     } finally {
@@ -202,7 +202,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
         <CardContent className="space-y-3">
           {entryType === 'competition' && <div className="flex justify-between">
               <span>Dog entries ({dogs.reduce((total, dog) => total + dog.events.length, 0)} events)</span>
-              <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 30}</span>
+              <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 45}</span>
             </div>}
           <div className="flex justify-between">
             <span>Dinner tickets</span>

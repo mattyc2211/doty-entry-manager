@@ -131,7 +131,7 @@ const EntryForm = () => {
 
   const calculateTotal = () => {
     const eventCost = formData.dogs.reduce((total, dog) => {
-      return total + (dog.events.length * 30);
+      return total + (dog.events.length * 45);
     }, 0);
     const dinnerCost = formData.catering.dinnerTickets * 45;
     const catalogueCost = formData.catering.extraCatalogues * 10;

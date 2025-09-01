@@ -14,7 +14,124 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dog_entries: {
+        Row: {
+          breed: string
+          created_at: string
+          dogs_nz_registration: string
+          id: string
+          pedigree_name: string
+          photo_url: string | null
+          submission_id: string
+        }
+        Insert: {
+          breed: string
+          created_at?: string
+          dogs_nz_registration: string
+          id?: string
+          pedigree_name: string
+          photo_url?: string | null
+          submission_id: string
+        }
+        Update: {
+          breed?: string
+          created_at?: string
+          dogs_nz_registration?: string
+          id?: string
+          pedigree_name?: string
+          photo_url?: string | null
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dog_entries_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_entries: {
+        Row: {
+          created_at: string
+          dog_entry_id: string
+          event_type: string
+          id: string
+          qualifying_date: string
+          qualifying_show: string
+        }
+        Insert: {
+          created_at?: string
+          dog_entry_id: string
+          event_type: string
+          id?: string
+          qualifying_date: string
+          qualifying_show: string
+        }
+        Update: {
+          created_at?: string
+          dog_entry_id?: string
+          event_type?: string
+          id?: string
+          qualifying_date?: string
+          qualifying_show?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_entries_dog_entry_id_fkey"
+            columns: ["dog_entry_id"]
+            isOneToOne: false
+            referencedRelation: "dog_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      submissions: {
+        Row: {
+          created_at: string
+          dietary_requirements: string | null
+          dinner_tickets: number | null
+          exhibitor_email: string
+          exhibitor_first_name: string
+          exhibitor_phone: string
+          exhibitor_surname: string
+          extra_catalogues: number | null
+          id: string
+          submission_id: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dietary_requirements?: string | null
+          dinner_tickets?: number | null
+          exhibitor_email: string
+          exhibitor_first_name: string
+          exhibitor_phone: string
+          exhibitor_surname: string
+          extra_catalogues?: number | null
+          id?: string
+          submission_id: string
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dietary_requirements?: string | null
+          dinner_tickets?: number | null
+          exhibitor_email?: string
+          exhibitor_first_name?: string
+          exhibitor_phone?: string
+          exhibitor_surname?: string
+          extra_catalogues?: number | null
+          id?: string
+          submission_id?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
