@@ -111,6 +111,114 @@ export type Database = {
           },
         ]
       }
+      form_abandonment: {
+        Row: {
+          abandoned_step: string
+          entry_type: string | null
+          id: string
+          last_active_field: string | null
+          session_id: string
+          time_before_abandonment_seconds: number | null
+          timestamp: string
+        }
+        Insert: {
+          abandoned_step: string
+          entry_type?: string | null
+          id?: string
+          last_active_field?: string | null
+          session_id: string
+          time_before_abandonment_seconds?: number | null
+          timestamp?: string
+        }
+        Update: {
+          abandoned_step?: string
+          entry_type?: string | null
+          id?: string
+          last_active_field?: string | null
+          session_id?: string
+          time_before_abandonment_seconds?: number | null
+          timestamp?: string
+        }
+        Relationships: []
+      }
+      form_analytics: {
+        Row: {
+          action: string
+          entry_type: string | null
+          error_field: string | null
+          error_message: string | null
+          form_step: string
+          id: string
+          session_id: string
+          step_duration_seconds: number | null
+          timestamp: string
+          total_form_duration_seconds: number | null
+        }
+        Insert: {
+          action: string
+          entry_type?: string | null
+          error_field?: string | null
+          error_message?: string | null
+          form_step: string
+          id?: string
+          session_id: string
+          step_duration_seconds?: number | null
+          timestamp?: string
+          total_form_duration_seconds?: number | null
+        }
+        Update: {
+          action?: string
+          entry_type?: string | null
+          error_field?: string | null
+          error_message?: string | null
+          form_step?: string
+          id?: string
+          session_id?: string
+          step_duration_seconds?: number | null
+          timestamp?: string
+          total_form_duration_seconds?: number | null
+        }
+        Relationships: []
+      }
+      page_views: {
+        Row: {
+          browser: string | null
+          device_type: string | null
+          duration_seconds: number | null
+          id: string
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          session_id: string
+          timestamp: string
+          user_agent: string | null
+        }
+        Insert: {
+          browser?: string | null
+          device_type?: string | null
+          duration_seconds?: number | null
+          id?: string
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id: string
+          timestamp?: string
+          user_agent?: string | null
+        }
+        Update: {
+          browser?: string | null
+          device_type?: string | null
+          duration_seconds?: number | null
+          id?: string
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id?: string
+          timestamp?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           created_at: string
@@ -156,11 +264,73 @@ export type Database = {
         }
         Relationships: []
       }
+      user_sessions: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          device_type: string | null
+          ended_at: string | null
+          form_abandoned_at_step: string | null
+          form_completed: boolean | null
+          id: string
+          pages_visited: number | null
+          screen_resolution: string | null
+          session_id: string
+          started_at: string
+          submission_id: string | null
+          total_duration_seconds: number | null
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          ended_at?: string | null
+          form_abandoned_at_step?: string | null
+          form_completed?: boolean | null
+          id?: string
+          pages_visited?: number | null
+          screen_resolution?: string | null
+          session_id: string
+          started_at?: string
+          submission_id?: string | null
+          total_duration_seconds?: number | null
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          ended_at?: string | null
+          form_abandoned_at_step?: string | null
+          form_completed?: boolean | null
+          id?: string
+          pages_visited?: number | null
+          screen_resolution?: string | null
+          session_id?: string
+          started_at?: string
+          submission_id?: string | null
+          total_duration_seconds?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_analytics_summary: {
+        Args: { end_date?: string; start_date?: string }
+        Returns: {
+          avg_session_duration: number
+          form_completion_rate: number
+          most_abandoned_step: string
+          peak_hour: number
+          total_page_views: number
+          total_sessions: number
+        }[]
+      }
       verify_admin_credentials: {
         Args: { password_input: string; username_input: string }
         Returns: boolean
