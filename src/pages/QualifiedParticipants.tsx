@@ -64,22 +64,9 @@ const QualifiedParticipants = () => {
                           {requirements.title}
                         </h3>
                         <div className="space-y-3">
-                          <p className="text-sm font-medium text-muted-foreground mb-3">
-                            To qualify, your dog must have achieved ONE of the following wins:
+                          <p className="text-muted-foreground leading-relaxed">
+                            {requirements.requirement}
                           </p>
-                          <ul className="space-y-2">
-                            {requirements.requirements.map((requirement, index) => (
-                              <li key={index} className="flex items-start gap-3">
-                                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                                <span className="text-muted-foreground">{requirement}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="mt-4 p-3 bg-accent/10 rounded-lg">
-                            <p className="text-sm text-muted-foreground italic">
-                              {requirements.note}
-                            </p>
-                          </div>
                         </div>
                       </div>
                     );
