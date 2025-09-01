@@ -46,7 +46,7 @@ const FormHeader = ({
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/qualified-participants') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground border-white/20`} onClick={() => navigate('/qualified-participants')}>
-                  Qualified Participants
+                Qualification Requirements
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -99,7 +99,7 @@ const FormHeader = ({
                     className={`justify-start ${isActive('/qualified-participants') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/20'} text-primary-foreground`}
                     onClick={() => handleNavigation('/qualified-participants')}
                   >
-                    Qualified Participants
+                    Qualification Requirements
                   </Button>
                   <Button 
                     variant="ghost" 

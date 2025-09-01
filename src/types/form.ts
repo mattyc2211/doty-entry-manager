@@ -111,10 +111,43 @@ export const EVENT_TYPES = [
 
 // Qualification requirements by event type
 export const QUALIFICATION_REQUIREMENTS = {
-  'Show Dog': 'Must have won "BEST IN SHOW" at a qualifying show OR "RESERVE IN SHOW" at an all breeds qualifying show',
-  'Puppy': 'Must have won "BABY/MINOR/PUPPY IN SHOW" at a qualifying show',
-  'Neuter': 'Must have won "NEUTER BEST/RESERVE IN SHOW" at a qualifying show'
-};
+  'Show Dog': {
+    title: 'Show Dog of the Year',
+    requirements: [
+      'Must have won Best of Breed at an All Breeds Championship Show',
+      'Must have won Best of Breed at a Breed Specialty Championship Show', 
+      'Must have won Runner Up Best in Group at an All Breeds Championship Show',
+      'Must have won Best in Group at an All Breeds Championship Show',
+      'Must have won Runner Up Best in Show at an All Breeds Championship Show',
+      'Must have won Best in Show at an All Breeds Championship Show'
+    ],
+    note: 'All wins must be achieved during the qualification period (October 14, 2024 - October 14, 2025)'
+  },
+  'Puppy': {
+    title: 'Puppy of the Year', 
+    requirements: [
+      'Must have won Best Puppy in Breed at an All Breeds Championship Show',
+      'Must have won Best Puppy in Breed at a Breed Specialty Championship Show',
+      'Must have won Runner Up Best Puppy in Group at an All Breeds Championship Show', 
+      'Must have won Best Puppy in Group at an All Breeds Championship Show',
+      'Must have won Runner Up Best Puppy in Show at an All Breeds Championship Show',
+      'Must have won Best Puppy in Show at an All Breeds Championship Show'
+    ],
+    note: 'All wins must be achieved during the qualification period (October 14, 2024 - October 14, 2025)'
+  },
+  'Neuter': {
+    title: 'Neuter of the Year',
+    requirements: [
+      'Must have won Best Neuter in Breed at an All Breeds Championship Show',
+      'Must have won Best Neuter in Breed at a Breed Specialty Championship Show',
+      'Must have won Runner Up Best Neuter in Group at an All Breeds Championship Show',
+      'Must have won Best Neuter in Group at an All Breeds Championship Show', 
+      'Must have won Runner Up Best Neuter in Show at an All Breeds Championship Show',
+      'Must have won Best Neuter in Show at an All Breeds Championship Show'
+    ],
+    note: 'All wins must be achieved during the qualification period (October 14, 2024 - October 14, 2025)'
+  }
+} as const;
 
 // Qualification period 
 export const QUALIFICATION_PERIOD = {

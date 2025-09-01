@@ -135,7 +135,7 @@ const DogEntryForm: React.FC<DogEntryFormProps> = ({
           {Object.entries(QUALIFICATION_REQUIREMENTS).map(([eventType, requirement]) => (
             <div key={eventType} className="flex items-start gap-3">
               <Badge variant="outline" className="shrink-0 mt-0.5">{eventType}</Badge>
-              <p className="text-sm text-muted-foreground">{requirement}</p>
+              <p className="text-sm text-muted-foreground">{requirement.requirements.join(' OR ')}</p>
             </div>
           ))}
         </CardContent>

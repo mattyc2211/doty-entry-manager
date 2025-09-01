@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import FormHeader from '@/components/FormHeader';
-import { Calendar, Trophy, Info } from 'lucide-react';
+import { Calendar, Trophy, MapPin, DollarSign, Phone } from 'lucide-react';
 import { QUALIFICATION_REQUIREMENTS, QUALIFICATION_PERIOD, EVENT_TYPES } from '@/types/form';
 
 const QualifiedParticipants = () => {
@@ -12,26 +12,36 @@ const QualifiedParticipants = () => {
       <div className="pt-40 pb-8 container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Qualified Participants</h1>
-            <p className="text-xl text-muted-foreground">Dogs qualified for the 2025 Premier Show</p>
+            <h1 className="text-4xl font-bold text-foreground mb-4">Qualification Requirements</h1>
+            <p className="text-xl text-muted-foreground">Eligibility criteria for the 2025 NZ Premier Dog Show</p>
           </div>
 
           <div className="space-y-8">
-            {/* Qualification Period */}
-            <Card className="shadow-card">
+            {/* Important Dates */}
+            <Card className="shadow-card border-primary/20">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-primary">
                   <Calendar className="w-6 h-6" />
-                  Qualification Period
+                  Important Dates
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-lg font-semibold text-foreground mb-2">
-                  October 14, 2024 - October 14, 2025
-                </p>
-                <p className="text-muted-foreground">
-                  Dogs must have achieved their qualifying wins during this period to be eligible for the 2025 Premier Show.
-                </p>
+              <CardContent className="space-y-4">
+                <div className="bg-primary/5 p-4 rounded-lg">
+                  <p className="text-lg font-semibold text-foreground mb-2">
+                    Qualification Period: October 14, 2024 - October 14, 2025
+                  </p>
+                  <p className="text-muted-foreground">
+                    All qualifying wins must be achieved during this period.
+                  </p>
+                </div>
+                <div className="bg-accent/10 p-4 rounded-lg">
+                  <p className="text-lg font-semibold text-foreground mb-2">
+                    Entries Close: October 17, 2025
+                  </p>
+                  <p className="text-muted-foreground">
+                    All entries must be submitted by this date.
+                  </p>
+                </div>
               </CardContent>
             </Card>
 
@@ -44,32 +54,100 @@ const QualifiedParticipants = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-6">
-                  {EVENT_TYPES.map((eventType) => (
-                    <div key={eventType} className="border-l-4 border-primary pl-4">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{eventType}</h3>
-                      <p className="text-muted-foreground">
-                        {QUALIFICATION_REQUIREMENTS[eventType]}
-                      </p>
-                    </div>
-                  ))}
+                <div className="space-y-8">
+                  {EVENT_TYPES.map((eventType) => {
+                    const requirements = QUALIFICATION_REQUIREMENTS[eventType];
+                    return (
+                      <div key={eventType} className="border border-border rounded-lg p-6">
+                        <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                          <Trophy className="w-5 h-5 text-primary" />
+                          {requirements.title}
+                        </h3>
+                        <div className="space-y-3">
+                          <p className="text-sm font-medium text-muted-foreground mb-3">
+                            To qualify, your dog must have achieved ONE of the following wins:
+                          </p>
+                          <ul className="space-y-2">
+                            {requirements.requirements.map((requirement, index) => (
+                              <li key={index} className="flex items-start gap-3">
+                                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                <span className="text-muted-foreground">{requirement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="mt-4 p-3 bg-accent/10 rounded-lg">
+                            <p className="text-sm text-muted-foreground italic">
+                              {requirements.note}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
 
-            {/* Participant List Status */}
+            {/* Entry Information */}
             <Card className="shadow-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-primary">
-                  <Info className="w-6 h-6" />
-                  Qualified Participants List
+                  <DollarSign className="w-6 h-6" />
+                  Entry Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <p className="font-semibold text-foreground">Entry Fee</p>
+                    <p className="text-muted-foreground">$30 per dog per event</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-semibold text-foreground">Dinner Tickets</p>
+                    <p className="text-muted-foreground">$45 per person</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Venue Information */}
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <MapPin className="w-6 h-6" />
+                  Venue Information
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
-                  The list of qualified participants will be updated regularly as entries are received and processed. 
-                  Please check back periodically to see the latest qualified dogs for each category.
+                <div className="space-y-3">
+                  <div>
+                    <p className="font-semibold text-foreground">Papakura Exhibition Centre</p>
+                    <p className="text-muted-foreground">243 Papakura Clevedon Road, Ardmore, Auckland</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Contact Information */}
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <Phone className="w-6 h-6" />
+                  Questions About Qualification?
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  If you have any questions about whether your dog qualifies or need clarification on the requirements, please visit:
                 </p>
+                <a 
+                  href="https://www.nzdogoftheyear.info" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 font-medium underline"
+                >
+                  www.nzdogoftheyear.info
+                </a>
               </CardContent>
             </Card>
           </div>
