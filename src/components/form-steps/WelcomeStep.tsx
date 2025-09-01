@@ -2,80 +2,167 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Calendar, DollarSign, Award, Users, Camera, CreditCard } from 'lucide-react';
+import { ArrowRight, Calendar, DollarSign, Award, Users, Camera, CreditCard, Clock } from 'lucide-react';
+import { ENTRY_STATUS } from '@/types/form';
 interface WelcomeStepProps {
   onSelectEntryType: (type: 'competition' | 'catering') => void;
 }
 const WelcomeStep = ({
   onSelectEntryType
 }: WelcomeStepProps) => {
-  return <div className="space-y-6">
-      {/* Entry Type Selection */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/40">
-          <CardHeader>
-            <div className="flex items-center gap-3 mb-2">
-              <Users className="w-8 h-8 text-primary" />
-              <CardTitle className="text-xl">Competition Entry</CardTitle>
-            </div>
-            <p className="text-muted-foreground">
-              Enter your dog(s) in the competition with optional catering and catalogues
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Event Entry</Badge>
-                <span className="text-sm text-muted-foreground">$30 each</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Show Catalogues</Badge>
-                <span className="text-sm text-muted-foreground">Included</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Dinner Tickets</Badge>
-                <span className="text-sm text-muted-foreground">$45 each (optional)</span>
-              </div>
-            </div>
-            <Button onClick={() => onSelectEntryType('competition')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
-              Start Competition Entry
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </CardContent>
-        </Card>
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-NZ', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
 
-        <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/40">
-          <CardHeader>
-            <div className="flex items-center gap-3 mb-2">
-              <DollarSign className="w-8 h-8 text-primary" />
-              <CardTitle className="text-xl">Catering & Catalogues Only</CardTitle>
-            </div>
-            <p className="text-muted-foreground">
-              Purchase dinner tickets and show catalogues without entering dogs
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Dinner Tickets</Badge>
-                <span className="text-sm text-muted-foreground">$45 each</span>
+  return <div className="space-y-6">
+      {!ENTRY_STATUS.isOpen ? (
+        // Entries Not Open Yet
+        <div className="text-center space-y-6">
+          <div>
+            <h2 className="text-3xl font-bold text-foreground mb-4">Entries Not Open Yet</h2>
+            <p className="text-xl text-muted-foreground">The 2025 Premier Show entries will be available soon</p>
+          </div>
+          
+          <Card className="shadow-lg max-w-3xl mx-auto">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-center gap-2 text-primary text-2xl">
+                <Calendar className="w-8 h-8" />
+                Entry Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="text-center p-6 border rounded-lg bg-muted/30">
+                  <Clock className="w-12 h-12 text-primary mx-auto mb-3" />
+                  <p className="font-semibold text-foreground mb-2 text-lg">Entries Open</p>
+                  <p className="text-muted-foreground text-lg">{formatDate(ENTRY_STATUS.openDate)}</p>
+                </div>
+                <div className="text-center p-6 border rounded-lg bg-muted/30">
+                  <Calendar className="w-12 h-12 text-primary mx-auto mb-3" />
+                  <p className="font-semibold text-foreground mb-2 text-lg">Entries Close</p>
+                  <p className="text-muted-foreground text-lg">{formatDate(ENTRY_STATUS.closeDate)}</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Show Catalogues</Badge>
-                <span className="text-sm text-muted-foreground">$10 each</span>
+              
+              <div className="space-y-6 pt-6 border-t">
+                <h3 className="font-semibold text-foreground text-center text-xl">What will be available when entries open:</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-4 p-4 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-6 h-6 text-primary" />
+                      <span className="font-semibold text-lg">Competition Entry</span>
+                    </div>
+                    <div className="space-y-2 ml-9">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Event Entry</Badge>
+                        <span className="text-sm text-muted-foreground">$30 each</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Show Catalogues</Badge>
+                        <span className="text-sm text-muted-foreground">Included</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Dinner Tickets</Badge>
+                        <span className="text-sm text-muted-foreground">$45 each (optional)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4 p-4 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="w-6 h-6 text-primary" />
+                      <span className="font-semibold text-lg">Catering & Catalogues Only</span>
+                    </div>
+                    <div className="space-y-2 ml-9">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Dinner Tickets</Badge>
+                        <span className="text-sm text-muted-foreground">$45 each</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">Show Catalogues</Badge>
+                        <span className="text-sm text-muted-foreground">$10 each</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">No Competition</Badge>
-                <span className="text-sm text-muted-foreground">Events only</span>
-              </div>
-            </div>
-            <Button onClick={() => onSelectEntryType('catering')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
-              Purchase Extras Only
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
+      ) : (
+        // Original entry type selection (when entries are open)
+        <div>
+          {/* Entry Type Selection */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/40">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <Users className="w-8 h-8 text-primary" />
+                  <CardTitle className="text-xl">Competition Entry</CardTitle>
+                </div>
+                <p className="text-muted-foreground">
+                  Enter your dog(s) in the competition with optional catering and catalogues
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Event Entry</Badge>
+                    <span className="text-sm text-muted-foreground">$30 each</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Show Catalogues</Badge>
+                    <span className="text-sm text-muted-foreground">Included</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Dinner Tickets</Badge>
+                    <span className="text-sm text-muted-foreground">$45 each (optional)</span>
+                  </div>
+                </div>
+                <Button onClick={() => onSelectEntryType('competition')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
+                  Start Competition Entry
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-primary/40">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <DollarSign className="w-8 h-8 text-primary" />
+                  <CardTitle className="text-xl">Catering & Catalogues Only</CardTitle>
+                </div>
+                <p className="text-muted-foreground">
+                  Purchase dinner tickets and show catalogues without entering dogs
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Dinner Tickets</Badge>
+                    <span className="text-sm text-muted-foreground">$45 each</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Show Catalogues</Badge>
+                    <span className="text-sm text-muted-foreground">$10 each</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">No Competition</Badge>
+                    <span className="text-sm text-muted-foreground">Events only</span>
+                  </div>
+                </div>
+                <Button onClick={() => onSelectEntryType('catering')} className="w-full group-hover:bg-primary group-hover:text-primary-foreground" variant="outline">
+                  Purchase Extras Only
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
 
       {/* Important Information */}
       <div className="grid md:grid-cols-2 gap-4">

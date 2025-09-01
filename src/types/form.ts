@@ -121,3 +121,10 @@ export const QUALIFICATION_PERIOD = {
   startDate: '2024-10-14',
   endDate: '2025-10-14'
 };
+
+// Entry status configuration
+export const ENTRY_STATUS = {
+  isOpen: false,
+  openDate: new Date('2025-02-01'), // When entries will open
+  closeDate: new Date('2025-03-15'), // When entries will close
+} as const;
