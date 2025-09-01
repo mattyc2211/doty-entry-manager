@@ -468,6 +468,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             )}
           </CardContent>
         </Card>
+          </TabsContent>
+
+          <TabsContent value="analytics" className="space-y-6">
+            <AnalyticsOverview />
+            <AnalyticsCharts />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

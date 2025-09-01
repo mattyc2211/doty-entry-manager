@@ -20,6 +20,8 @@ import ReviewSubmit from './form-steps/ReviewSubmit';
 import WelcomeStep from './form-steps/WelcomeStep';
 import FormHeader from './FormHeader';
 import { FormData, ExhibitorData, DogEntry, CateringData } from '@/types/form';
+import { useFormStepTracking } from '@/hooks/useFormStepTracking';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 const EntryForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -27,6 +29,13 @@ const EntryForm = () => {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [showEntryTypeSelection, setShowEntryTypeSelection] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  
+  // Analytics tracking hooks
+  const { trackFormCompletion, trackFormAbandonment } = useAnalytics();
+  const { trackStepNavigation, trackFormError } = useFormStepTracking(
+    currentStep > 0 ? `step_${currentStep}` : 'welcome',
+    entryType || undefined
+  );
   const [formData, setFormData] = useState<FormData>({
     exhibitor: {
       firstName: '',
@@ -104,12 +113,14 @@ const EntryForm = () => {
 
   const nextStep = () => {
     if (currentStep < steps.length && isStepValid(currentStep)) {
+      trackStepNavigation('next');
       setCurrentStep(currentStep + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
+      trackStepNavigation('prev');
       setCurrentStep(currentStep - 1);
     }
   };
@@ -164,7 +175,8 @@ const EntryForm = () => {
     setShowResetDialog(false);
   };
 
-  const onSubmissionSuccess = () => {
+  const onSubmissionSuccess = (submissionId: string) => {
+    trackFormCompletion(submissionId);
     setSubmitted(true);
   };
 
