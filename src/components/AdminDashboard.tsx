@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { LogOut, Search, Download, Users, DollarSign, Trophy, Utensils } from 'lucide-react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { LogOut, Search, Download, Users, DollarSign, Trophy, Utensils, ImageIcon } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
@@ -147,6 +148,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
           'Dog Name': 'Catering Only',
           'Registration Number': 'N/A',
           'Breed': 'N/A',
+          'Photo URL': 'N/A',
           'Event Type': 'N/A',
           'Qualifying Show': 'N/A',
           'Dinner Tickets': sub.dinner_tickets,
@@ -168,6 +170,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
               'Dog Name': dog.pedigree_name,
               'Registration Number': dog.dogs_nz_registration,
               'Breed': dog.breed,
+              'Photo URL': dog.photo_url || 'No photo',
               'Event Type': 'None',
               'Qualifying Show': 'None',
               'Dinner Tickets': sub.dinner_tickets,
@@ -187,6 +190,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                 'Dog Name': dog.pedigree_name,
                 'Registration Number': dog.dogs_nz_registration,
                 'Breed': dog.breed,
+                'Photo URL': dog.photo_url || 'No photo',
                 'Event Type': event.event_type,
                 'Qualifying Show': event.qualifying_show,
                 'Dinner Tickets': sub.dinner_tickets,
@@ -354,30 +358,69 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                           <div className="space-y-2">
                             {submission.dogs.map((dog, idx) => (
                               <div key={dog.id} className="border rounded-lg p-2 bg-muted/20">
-                                <div className="space-y-1">
-                                  <div className="font-medium text-sm text-primary">
-                                    {dog.pedigree_name}
-                                  </div>
-                                  <div className="text-xs text-muted-foreground space-y-0.5">
-                                    <div><strong>Reg:</strong> {dog.dogs_nz_registration}</div>
-                                    <div><strong>Breed:</strong> {dog.breed}</div>
-                                  </div>
-                                  <div className="space-y-1">
-                                    {dog.events.map((event, eventIdx) => (
-                                      <div key={eventIdx} className="text-xs">
-                                        <Badge variant="secondary" className="text-xs mr-2">
-                                          {event.event_type}
-                                        </Badge>
-                                        <span className="text-muted-foreground">
-                                          at {event.qualifying_show}
-                                        </span>
+                                <div className="flex gap-3">
+                                  {/* Photo thumbnail */}
+                                  <div className="flex-shrink-0">
+                                    {dog.photo_url ? (
+                                      <Dialog>
+                                        <DialogTrigger asChild>
+                                          <div className="cursor-pointer group">
+                                            <img 
+                                              src={dog.photo_url} 
+                                              alt={`${dog.pedigree_name} photo`}
+                                              className="w-12 h-12 object-cover rounded border group-hover:opacity-80 transition-opacity"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.style.display = 'none';
+                                                target.nextElementSibling?.classList.remove('hidden');
+                                              }}
+                                            />
+                                            <div className="hidden w-12 h-12 bg-muted rounded border flex items-center justify-center">
+                                              <ImageIcon className="w-4 h-4 text-muted-foreground" />
+                                            </div>
+                                          </div>
+                                        </DialogTrigger>
+                                        <DialogContent className="max-w-2xl">
+                                          <img 
+                                            src={dog.photo_url} 
+                                            alt={`${dog.pedigree_name} full size`}
+                                            className="w-full h-auto rounded"
+                                          />
+                                        </DialogContent>
+                                      </Dialog>
+                                    ) : (
+                                      <div className="w-12 h-12 bg-muted rounded border flex items-center justify-center">
+                                        <ImageIcon className="w-4 h-4 text-muted-foreground" />
                                       </div>
-                                    ))}
-                                    {dog.events.length === 0 && (
-                                      <Badge variant="outline" className="text-xs">
-                                        No events
-                                      </Badge>
                                     )}
+                                  </div>
+                                  
+                                  {/* Dog details */}
+                                  <div className="flex-1 space-y-1">
+                                    <div className="font-medium text-sm text-primary">
+                                      {dog.pedigree_name}
+                                    </div>
+                                    <div className="text-xs text-muted-foreground space-y-0.5">
+                                      <div><strong>Reg:</strong> {dog.dogs_nz_registration}</div>
+                                      <div><strong>Breed:</strong> {dog.breed}</div>
+                                    </div>
+                                    <div className="space-y-1">
+                                      {dog.events.map((event, eventIdx) => (
+                                        <div key={eventIdx} className="text-xs">
+                                          <Badge variant="secondary" className="text-xs mr-2">
+                                            {event.event_type}
+                                          </Badge>
+                                          <span className="text-muted-foreground">
+                                            at {event.qualifying_show}
+                                          </span>
+                                        </div>
+                                      ))}
+                                      {dog.events.length === 0 && (
+                                        <Badge variant="outline" className="text-xs">
+                                          No events
+                                        </Badge>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
