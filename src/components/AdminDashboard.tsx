@@ -131,30 +131,87 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
   };
 
   const exportData = () => {
-    const csvData = submissions.map(sub => ({
-      'Submission ID': sub.submission_id,
-      'Date': new Date(sub.created_at).toLocaleDateString(),
-      'Name': `${sub.exhibitor_first_name} ${sub.exhibitor_surname}`,
-      'Email': sub.exhibitor_email,
-      'Phone': sub.exhibitor_phone,
-      'Dogs': sub.dogs.length,
-      'Events': sub.dogs.reduce((sum, dog) => sum + dog.events.length, 0),
-      'Dinner Tickets': sub.dinner_tickets,
-      'Extra Catalogues': sub.extra_catalogues,
-      'Total Amount': `$${sub.total_amount}`,
-      'Dietary Requirements': sub.dietary_requirements || 'None'
-    }));
+    // Create detailed CSV with one row per dog entry
+    const detailedCsvData: any[] = [];
+    
+    submissions.forEach(sub => {
+      if (sub.dogs.length === 0) {
+        // Catering-only submission
+        detailedCsvData.push({
+          'Submission ID': sub.submission_id,
+          'Date': new Date(sub.created_at).toLocaleDateString(),
+          'Exhibitor First Name': sub.exhibitor_first_name,
+          'Exhibitor Surname': sub.exhibitor_surname,
+          'Email': sub.exhibitor_email,
+          'Phone': sub.exhibitor_phone,
+          'Dog Name': 'Catering Only',
+          'Registration Number': 'N/A',
+          'Breed': 'N/A',
+          'Event Type': 'N/A',
+          'Qualifying Show': 'N/A',
+          'Dinner Tickets': sub.dinner_tickets,
+          'Extra Catalogues': sub.extra_catalogues,
+          'Total Amount': `$${sub.total_amount}`,
+          'Dietary Requirements': sub.dietary_requirements || 'None'
+        });
+      } else {
+        // Submissions with dogs - one row per dog/event combination
+        sub.dogs.forEach(dog => {
+          if (dog.events.length === 0) {
+            detailedCsvData.push({
+              'Submission ID': sub.submission_id,
+              'Date': new Date(sub.created_at).toLocaleDateString(),
+              'Exhibitor First Name': sub.exhibitor_first_name,
+              'Exhibitor Surname': sub.exhibitor_surname,
+              'Email': sub.exhibitor_email,
+              'Phone': sub.exhibitor_phone,
+              'Dog Name': dog.pedigree_name,
+              'Registration Number': dog.dogs_nz_registration,
+              'Breed': dog.breed,
+              'Event Type': 'None',
+              'Qualifying Show': 'None',
+              'Dinner Tickets': sub.dinner_tickets,
+              'Extra Catalogues': sub.extra_catalogues,
+              'Total Amount': `$${sub.total_amount}`,
+              'Dietary Requirements': sub.dietary_requirements || 'None'
+            });
+          } else {
+            dog.events.forEach(event => {
+              detailedCsvData.push({
+                'Submission ID': sub.submission_id,
+                'Date': new Date(sub.created_at).toLocaleDateString(),
+                'Exhibitor First Name': sub.exhibitor_first_name,
+                'Exhibitor Surname': sub.exhibitor_surname,
+                'Email': sub.exhibitor_email,
+                'Phone': sub.exhibitor_phone,
+                'Dog Name': dog.pedigree_name,
+                'Registration Number': dog.dogs_nz_registration,
+                'Breed': dog.breed,
+                'Event Type': event.event_type,
+                'Qualifying Show': event.qualifying_show,
+                'Dinner Tickets': sub.dinner_tickets,
+                'Extra Catalogues': sub.extra_catalogues,
+                'Total Amount': `$${sub.total_amount}`,
+                'Dietary Requirements': sub.dietary_requirements || 'None'
+              });
+            });
+          }
+        });
+      }
+    });
 
     const csv = [
-      Object.keys(csvData[0]).join(','),
-      ...csvData.map(row => Object.values(row).join(','))
+      Object.keys(detailedCsvData[0]).join(','),
+      ...detailedCsvData.map(row => Object.values(row).map(val => 
+        String(val).includes(',') ? `"${val}"` : val
+      ).join(','))
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `submissions_${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `detailed_submissions_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -163,7 +220,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     sub.exhibitor_first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sub.exhibitor_surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
     sub.exhibitor_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    sub.submission_id.toLowerCase().includes(searchTerm.toLowerCase())
+    sub.submission_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    sub.dogs.some(dog => 
+      dog.pedigree_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dog.dogs_nz_registration.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      dog.breed.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
 
   return (
@@ -239,7 +301,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
           </div>
           <Button onClick={exportData} className="flex items-center gap-2">
             <Download className="w-4 h-4" />
-            Export CSV
+            Export Detailed CSV
           </Button>
         </div>
 
@@ -260,8 +322,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                       <TableHead>Date</TableHead>
                       <TableHead>Exhibitor</TableHead>
                       <TableHead>Contact</TableHead>
-                      <TableHead>Dogs</TableHead>
-                      <TableHead>Events</TableHead>
+                      <TableHead className="min-w-80">Dog Details</TableHead>
+                      <TableHead>Event Summary</TableHead>
                       <TableHead>Catering</TableHead>
                       <TableHead>Total</TableHead>
                     </TableRow>
@@ -288,13 +350,36 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                             <p className="text-muted-foreground">{submission.exhibitor_phone}</p>
                           </div>
                         </TableCell>
-                        <TableCell>
-                          <div className="space-y-1">
+                        <TableCell className="max-w-md">
+                          <div className="space-y-2">
                             {submission.dogs.map((dog, idx) => (
-                              <div key={dog.id} className="text-sm">
-                                <Badge variant="outline">
-                                  {dog.pedigree_name} ({dog.breed})
-                                </Badge>
+                              <div key={dog.id} className="border rounded-lg p-2 bg-muted/20">
+                                <div className="space-y-1">
+                                  <div className="font-medium text-sm text-primary">
+                                    {dog.pedigree_name}
+                                  </div>
+                                  <div className="text-xs text-muted-foreground space-y-0.5">
+                                    <div><strong>Reg:</strong> {dog.dogs_nz_registration}</div>
+                                    <div><strong>Breed:</strong> {dog.breed}</div>
+                                  </div>
+                                  <div className="space-y-1">
+                                    {dog.events.map((event, eventIdx) => (
+                                      <div key={eventIdx} className="text-xs">
+                                        <Badge variant="secondary" className="text-xs mr-2">
+                                          {event.event_type}
+                                        </Badge>
+                                        <span className="text-muted-foreground">
+                                          at {event.qualifying_show}
+                                        </span>
+                                      </div>
+                                    ))}
+                                    {dog.events.length === 0 && (
+                                      <Badge variant="outline" className="text-xs">
+                                        No events
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
                             ))}
                             {submission.dogs.length === 0 && (
@@ -303,14 +388,17 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="space-y-1">
-                            {submission.dogs.map((dog) => 
-                              dog.events.map((event, idx) => (
-                                <Badge key={idx} variant="secondary" className="text-xs">
-                                  {event.event_type}
+                          <div className="text-sm">
+                            <div className="font-medium mb-1">
+                              {submission.dogs.reduce((sum, dog) => sum + dog.events.length, 0)} total events
+                            </div>
+                            <div className="space-y-1">
+                              {Array.from(new Set(submission.dogs.flatMap(dog => dog.events.map(e => e.event_type)))).map(eventType => (
+                                <Badge key={eventType} variant="outline" className="text-xs mr-1">
+                                  {eventType}
                                 </Badge>
-                              ))
-                            )}
+                              ))}
+                            </div>
                           </div>
                         </TableCell>
                         <TableCell>
