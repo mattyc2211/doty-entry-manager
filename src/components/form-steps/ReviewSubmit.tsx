@@ -202,7 +202,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
         <CardContent className="space-y-3">
           {entryType === 'competition' && <div className="flex justify-between">
               <span>Dog entries ({dogs.reduce((total, dog) => total + dog.events.length, 0)} events)</span>
-              <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 45}</span>
+              <span>${dogs.reduce((total, dog) => total + dog.events.length, 0) * 30}</span>
             </div>}
           <div className="flex justify-between">
             <span>Dinner tickets</span>

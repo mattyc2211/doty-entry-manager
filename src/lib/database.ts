@@ -53,7 +53,7 @@ export const submitFormData = async (formData: FormData, entryType: 'competition
   const submissionId = `NZ${Date.now().toString().slice(-6)}`;
   
   // Calculate total
-  const eventCost = formData.dogs.reduce((total, dog) => total + (dog.events.length * 45), 0);
+  const eventCost = formData.dogs.reduce((total, dog) => total + (dog.events.length * 30), 0);
   const dinnerCost = formData.catering.dinnerTickets * 45;
   const catalogueCost = formData.catering.extraCatalogues * 10;
   const totalAmount = eventCost + dinnerCost + catalogueCost;
