@@ -36,7 +36,7 @@ const Home = () => {
                 </div>
                 <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
                   New Zealand's most prestigious dog show competition. 
-                  Where champions are crowned and legends are born.
+                  Where champions are crowned and legends are made.
                 </p>
                 
                 {/* Important Dates */}
