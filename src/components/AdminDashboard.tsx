@@ -49,7 +49,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     totalSubmissions: 0,
     totalRevenue: 0,
     totalDogs: 0,
-    totalEvents: 0
+    totalDinnerTickets: 0,
+    eventTypeBreakdown: {} as { [key: string]: number }
   });
 
   useEffect(() => {
@@ -107,14 +108,24 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       // Calculate stats
       const totalRevenue = enrichedSubmissions.reduce((sum, sub) => sum + Number(sub.total_amount), 0);
       const totalDogs = enrichedSubmissions.reduce((sum, sub) => sum + sub.dogs.length, 0);
-      const totalEvents = enrichedSubmissions.reduce((sum, sub) => 
-        sum + sub.dogs.reduce((dogSum, dog) => dogSum + dog.events.length, 0), 0);
+      const totalDinnerTickets = enrichedSubmissions.reduce((sum, sub) => sum + (sub.dinner_tickets || 0), 0);
+      
+      // Calculate event type breakdown
+      const eventTypeBreakdown: { [key: string]: number } = {};
+      enrichedSubmissions.forEach(sub => {
+        sub.dogs.forEach(dog => {
+          dog.events.forEach(event => {
+            eventTypeBreakdown[event.event_type] = (eventTypeBreakdown[event.event_type] || 0) + 1;
+          });
+        });
+      });
 
       setStats({
         totalSubmissions: enrichedSubmissions.length,
         totalRevenue,
         totalDogs,
-        totalEvents
+        totalDinnerTickets,
+        eventTypeBreakdown
       });
 
     } catch (error) {
@@ -266,7 +277,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
 
           <TabsContent value="submissions" className="space-y-6">
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <Card>
                 <CardContent className="p-4 flex items-center gap-3">
                   <Users className="w-8 h-8 text-primary" />
@@ -301,8 +312,31 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
                 <CardContent className="p-4 flex items-center gap-3">
                   <Utensils className="w-8 h-8 text-blue-600" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Total Events</p>
-                    <p className="text-2xl font-bold">{stats.totalEvents}</p>
+                    <p className="text-sm text-muted-foreground">Dinner Tickets</p>
+                    <p className="text-2xl font-bold">{stats.totalDinnerTickets}</p>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <Trophy className="w-8 h-8 text-purple-600 flex-shrink-0 mt-1" />
+                    <div className="flex-1">
+                      <p className="text-sm text-muted-foreground mb-2">Dogs per Show</p>
+                      <div className="space-y-1">
+                        {Object.entries(stats.eventTypeBreakdown).length > 0 ? (
+                          Object.entries(stats.eventTypeBreakdown).map(([type, count]) => (
+                            <div key={type} className="flex justify-between text-sm">
+                              <span className="text-muted-foreground">{type}:</span>
+                              <span className="font-semibold">{count}</span>
+                            </div>
+                          ))
+                        ) : (
+                          <span className="text-sm text-muted-foreground">No entries yet</span>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
