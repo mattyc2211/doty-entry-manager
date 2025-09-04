@@ -72,6 +72,7 @@ export const DOG_BREEDS = [
   'German Shorthaired Pointer',
   'Golden Retriever',
   'Great Dane',
+  'Havanese',
   'Greyhound',
   'Irish Setter',
   'Irish Wolfhound',
