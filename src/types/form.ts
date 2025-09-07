@@ -39,6 +39,7 @@ export interface SubmissionData extends FormData {
 }
 
 export const DOG_BREEDS = [
+  'Affenpinscher',
   'Afghan Hound',
   'Airedale Terrier',
   'Akita',
