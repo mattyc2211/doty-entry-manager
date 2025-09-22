@@ -30,7 +30,7 @@ const AboutShow = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">Registration Deadline</h4>
-                  <p className="text-muted-foreground">22 September 2025</p>
+                  <p className="text-muted-foreground">17 October 2025</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">Entry Fees</h4>
