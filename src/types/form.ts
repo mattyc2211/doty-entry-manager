@@ -161,6 +161,7 @@ export const DOG_BREEDS = [
   'Welsh Springer Spaniel',
   'West Highland White Terrier',
   'Whippet',
+  'White Swiss Shepherd',
   'Wire Fox Terrier',
   'Yorkshire Terrier'
 ];
