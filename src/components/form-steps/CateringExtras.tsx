@@ -250,7 +250,7 @@ const CateringExtras = ({
           <div className="space-y-2">
             <h4 className="font-medium text-center">Payment Information</h4>
             <div className="bg-muted p-3 rounded space-y-1 text-sm">
-              <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+              <p><strong>Account Name:</strong> NZ Premier ShowDog of The Year</p>
               <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
               <p><strong>Reference:</strong> Use your surname</p>
             </div>

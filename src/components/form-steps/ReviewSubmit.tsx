@@ -83,7 +83,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
               <div className="space-y-2 text-sm">
               <h4 className="font-medium">Bank Transfer Details:</h4>
               <div className="bg-muted p-3 rounded space-y-1">
-                <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+                <p><strong>Account Name:</strong> NZ Premier ShowDog of The Year</p>
                 <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
                 <p><strong>Reference:</strong> {exhibitor.surname}</p>
               </div>
@@ -236,7 +236,7 @@ const ReviewSubmit: React.FC<ReviewSubmitProps> = ({
           <div className="space-y-2 text-sm">
             <h4 className="font-medium">Bank Transfer Details:</h4>
             <div className="bg-muted p-3 rounded space-y-1">
-              <p><strong>Account Name:</strong> Premier Show Dog of the Year</p>
+              <p><strong>Account Name:</strong> NZ Premier ShowDog of The Year</p>
               <p><strong>Account Number:</strong> 12-3031-0250030-00</p>
               <p><strong>Reference:</strong> {exhibitor.surname}</p>
             </div>
