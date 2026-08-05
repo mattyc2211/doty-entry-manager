@@ -1,0 +1,33 @@
+# AWS Amplify Hosting build settings.
+#
+# This is a static Vite SPA. There is no backend here: the only one is Supabase,
+# reached from the browser with the anon key, with row level security doing the
+# enforcing. So there is no `backend:` phase and nothing to deploy but files.
+#
+# Custom headers deliberately live in customHttp.yml, not in this file. AWS
+# recommends against putting them in the buildspec:
+# https://docs.aws.amazon.com/amplify/latest/userguide/custom-headers.html
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Vite 5 needs Node 18+. If the build image errors on this line, drop it
+        # and set the Node version in the console under build image settings.
+        - nvm use 20
+        - node --version
+        # Fails the build if the Supabase settings are missing, rather than
+        # shipping a bundle that white-screens on first load.
+        - node scripts/check-env.mjs
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - ~/.npm/**/*

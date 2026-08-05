@@ -1,37 +1,43 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import FormHeader from '@/components/FormHeader';
-import { Construction } from 'lucide-react';
+import royalCanin from '@/assets/royal-canin-logo.png';
 
-const Sponsors = () => {
+/**
+ * A sponsor page that is mostly one logo should look deliberate rather than
+ * sparse, so the title sponsor gets the full width and the page says what the
+ * sponsorship actually is.
+ */
+export default function Sponsors() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
-      <FormHeader />
-      
-      <div className="pt-40 pb-8 container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Sponsors</h1>
-            <p className="text-xl text-muted-foreground">Our valued partners and supporters</p>
-          </div>
+    <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
+      <p className="eyebrow">Support</p>
+      <h1 className="display rule-red mt-4 text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
+        Sponsors
+      </h1>
 
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-2 text-primary">
-                <Construction className="w-6 h-6" />
-                Under Construction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center py-12">
-              <p className="text-lg text-muted-foreground">
-                This section is currently under construction and will be available soon.
-              </p>
-            </CardContent>
-          </Card>
+      <section className="mt-14 border border-show-rule">
+        <div className="h-[6px] bg-show-red" />
+        <div className="grid items-center gap-10 p-10 sm:grid-cols-[16rem_1fr] lg:p-14">
+          {/* The supplied file is square with the logo sitting in its upper
+              third, so it is cropped to the artwork instead of rendering with a
+              block of dead space underneath it. */}
+          <img
+            src={royalCanin}
+            alt="Royal Canin"
+            className="h-24 w-full max-w-[16rem] justify-self-center object-cover object-[center_25%]"
+          />
+          <div>
+            <p className="eyebrow">Title sponsor</p>
+            <h2 className="display-md mt-3 text-2xl text-show-ink">Royal Canin</h2>
+            <p className="mt-4 max-w-lg leading-relaxed text-show-charcoal">
+              Royal Canin is the title sponsor of the New Zealand Premier Show Dog
+              of the Year, and the show carries their name.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <p className="mt-10 max-w-xl text-show-charcoal">
+        Interested in supporting the show? Contact the organisers.
+      </p>
     </div>
   );
-};
-
-export default Sponsors;
+}

@@ -1,41 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import AdminLogin from '@/components/AdminLogin';
-import AdminDashboard from '@/components/AdminDashboard';
+import { useAdminSession } from '@/hooks/useAdminSession';
+import { AdminLogin } from '@/components/admin/AdminLogin';
+import { AdminDashboard } from '@/components/admin/AdminDashboard';
 
-const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export default function Admin() {
+  const { session, isAdmin, loading, signOut } = useAdminSession();
 
-  useEffect(() => {
-    // Check if admin is already logged in
-    const adminSession = localStorage.getItem('admin_session');
-    if (adminSession) {
-      try {
-        const session = JSON.parse(adminSession);
-        // Check if session is less than 24 hours old
-        if (Date.now() - session.timestamp < 24 * 60 * 60 * 1000) {
-          setIsAuthenticated(true);
-        } else {
-          localStorage.removeItem('admin_session');
-        }
-      } catch (error) {
-        localStorage.removeItem('admin_session');
-      }
-    }
-  }, []);
-
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
-
-  if (isAuthenticated) {
-    return <AdminDashboard onLogout={handleLogout} />;
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-wash text-sm text-show-charcoal">
+        Checking your access…
+      </div>
+    );
   }
 
-  return <AdminLogin onLoginSuccess={handleLoginSuccess} />;
-};
+  if (!session) return <AdminLogin />;
 
-export default Admin;
+  // Signed in, but not an organiser. This state exists because being
+  // authenticated is not the same as being allowed: the database gates on
+  // membership of public.admins, and this screen just says so out loud rather
+  // than showing an empty dashboard that looks broken.
+  if (!isAdmin) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-wash px-5">
+        <div className="max-w-sm border border-show-rule bg-white p-8 text-center">
+          <h1 className="display text-xl text-show-ink">Not an organiser account</h1>
+          <p className="mt-3 text-sm text-show-charcoal">
+            You are signed in, but this account has not been given access to
+            entries.
+          </p>
+          <button
+            type="button"
+            onClick={signOut}
+            className="mt-6 border border-show-ink px-5 py-2.5 text-sm font-medium text-show-ink transition-colors hover:bg-show-ink hover:text-white"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return <AdminDashboard onSignOut={signOut} />;
+}

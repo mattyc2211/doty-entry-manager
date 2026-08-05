@@ -1,0 +1,31 @@
+# Custom response headers for Amplify Hosting.
+#
+# This file, in the repository root, is where AWS wants headers to live. They
+# used to be set in amplify.yml, and the docs now recommend against that:
+# https://docs.aws.amazon.com/amplify/latest/userguide/custom-headers.html
+customHeaders:
+  # Vite fingerprints everything under /assets, so those files can be cached
+  # hard and for a long time.
+  - pattern: '/assets/**'
+    headers:
+      - key: Cache-Control
+        value: 'public, max-age=31536000, immutable'
+
+  # index.html must never be cached. It is the file that names the fingerprinted
+  # assets, so a stale copy points at filenames that no longer exist and the
+  # site appears broken to anyone who visited before the last deploy.
+  - pattern: '/index.html'
+    headers:
+      - key: Cache-Control
+        value: 'no-cache, no-store, must-revalidate'
+
+  - pattern: '/**'
+    headers:
+      - key: X-Frame-Options
+        value: 'DENY'
+      - key: X-Content-Type-Options
+        value: 'nosniff'
+      - key: Referrer-Policy
+        value: 'strict-origin-when-cross-origin'
+      - key: Permissions-Policy
+        value: 'geolocation=(), microphone=(), camera=()'

@@ -1,27 +1,28 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
+export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <div className="mx-auto max-w-xl px-5 py-24 lg:px-8 lg:py-32">
+      <p className="eyebrow">404</p>
+      <h1 className="display rule-red mt-4 text-4xl text-show-ink">Nothing here</h1>
+      <p className="mt-5 text-show-charcoal">
+        That page does not exist. The show, the qualifying rules and the entry form
+        are all one click away.
+      </p>
+      <div className="mt-8 flex flex-wrap gap-4">
+        <Link
+          to="/"
+          className="bg-show-ink px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-show-red"
+        >
+          Back to the show
+        </Link>
+        <Link
+          to="/enter"
+          className="border border-show-ink px-6 py-3.5 text-sm font-medium text-show-ink transition-colors hover:bg-show-ink hover:text-white"
+        >
+          Start an entry
+        </Link>
       </div>
     </div>
   );
-};
-
-export default NotFound;
+}

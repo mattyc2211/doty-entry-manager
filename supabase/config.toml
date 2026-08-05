@@ -1,1 +1,46 @@
-project_id = "omqutbfwqaumviobkddk"
+# project_id names the local Docker containers and is the link target for
+# `supabase link`. It was the old Lovable project ref; the rebuild gets its
+# own name so the two cannot be confused at the command line.
+project_id = "doty-entry-manager"
+
+# Ports use the 547xx block. This machine runs several other Supabase projects
+# locally (Gauge, ideas-hub, pulse and two more), which between them occupy the
+# 543xx, 544xx, 545xx and 546xx blocks.
+[api]
+port = 54721
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54722
+shadow_port = 54720
+major_version = 15
+
+[studio]
+port = 54723
+
+[inbucket]
+port = 54724
+
+[analytics]
+enabled = false
+
+[auth]
+site_url = "http://localhost:8080"
+additional_redirect_urls = ["http://localhost:8080"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+
+# There is exactly one organiser account, created deliberately. Public signup
+# would otherwise let anyone reach the `authenticated` role. Membership of
+# public.admins is the real gate; this closes the door in front of it.
+enable_signup = false
+
+[auth.email]
+# Do NOT set enable_signup here. In this CLI version that key disables the email
+# provider outright, which locks the organiser out of signing in rather than
+# stopping new accounts. `enable_signup` under [auth] above is the right knob.
+# The same distinction applies on the hosted project: turn off signups, leave
+# email sign-in on.
+enable_confirmations = false

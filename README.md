@@ -1,73 +1,90 @@
-# Welcome to your Lovable project
+# Royal Canin New Zealand Premier Show Dog of the Year
 
-## Project info
+Entry system for the show. Exhibitors lodge an entry, pay by bank transfer using
+the reference they are given, and the organisers reconcile payments in an admin
+dashboard.
 
-**URL**: https://lovable.dev/projects/a0edbbf4-6c66-4411-8e21-2551429f46a6
+Originally built in Lovable in 2025 and rebuilt in 2026: same show, new code.
 
-## How can I edit this code?
+## What it does
 
-There are several ways of editing your application.
+- **The show is data.** Dates, fees, the bank account and the qualification
+  wording live in the `shows` and `show_events` tables. Running next year's show
+  is an insert, not a code change. The 2025 build had these hardcoded across five
+  source files, and its commit history is mostly edits to them.
+- **Entries are claims of qualification.** You cannot buy your way in. Every dog
+  must have won Best in Show (or the equivalent for its title) inside a fixed
+  qualifying period, and the entry names the show and the date. The database
+  enforces the period rather than just printing it.
+- **The server prices the entry.** `create_entry()` computes the total from the
+  show's own fees inside one transaction. The browser never states what it owes.
+- **Payment references are sequential per show** (`DOTY26-0042`) and allocated
+  under a row lock, so two entries cannot be given the same one.
 
-**Use Lovable**
+## Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a0edbbf4-6c66-4411-8e21-2551429f46a6) and start prompting.
+Vite, React 18, TypeScript, Tailwind and shadcn/ui, on Supabase (Postgres, Auth
+and Storage). Hosted as a static site on AWS Amplify. There is no server of our
+own: the browser talks to Supabase directly, and row level security is what
+enforces access.
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Running it locally
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm install
+supabase start          # ports are in the 547xx block, see supabase/config.toml
+supabase db reset       # applies the migrations, including the 2026 show
+cp .env.example .env    # then fill in from `supabase status`
+npm run dev             # http://localhost:8080
 ```
 
-**Edit a file directly in GitHub**
+To sign in to `/admin` locally, create an organiser account:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```sh
+node scripts/create-organiser.mjs \
+  --url http://127.0.0.1:54721 \
+  --key <local service_role key from `supabase status`> \
+  --email you@example.com \
+  --password somethinglongenough
+```
 
-**Use GitHub Codespaces**
+## Verifying it
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+There are no unit tests. What matters here is database behaviour, so it is
+tested from inside the database as the roles that really call it, plus two
+scripts that exercise the same path a browser takes.
 
-## What technologies are used for this project?
+```sh
+# 20 checks: RLS, grants, pricing, references, the admin gate. Reset first.
+supabase db reset
+docker exec -i supabase_db_doty-entry-manager psql -U postgres -d postgres \
+  -q -v ON_ERROR_STOP=1 < supabase/tests/01-entries.sql
+docker exec -i supabase_db_doty-entry-manager psql -U postgres -d postgres \
+  -q -v ON_ERROR_STOP=1 < supabase/tests/02-admin-gate.sql
 
-This project is built with:
+# End to end through PostgREST as anon, against whatever .env points at.
+node scripts/smoke.mjs
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Read-only check of a deployed project. Safe against production.
+node scripts/verify-remote.mjs --url <project url> --key <anon key>
+```
 
-## How can I deploy this project?
+See `supabase/tests/README.md` for what each check covers and why.
 
-Simply open [Lovable](https://lovable.dev/projects/a0edbbf4-6c66-4411-8e21-2551429f46a6) and click on Share -> Publish.
+## Layout
 
-## Can I connect a custom domain to my Lovable project?
+```
+supabase/migrations/   schema, then the 2026 show as configuration
+supabase/tests/        SQL verification, with notes on what each check is for
+scripts/               env guard, organiser creation, smoke and remote checks
+src/lib/               show config, entry submission, admin queries, formatting
+src/components/entry/  the entry flow
+src/components/admin/  login and reconciliation dashboard
+src/components/show/   shared show furniture, including the ring card
+```
 
-Yes, you can!
+## Deploying
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+See [DEPLOY.md](DEPLOY.md). The one step that will break the site if skipped is
+the SPA rewrite rule: without it every route except `/` returns 404 on a direct
+visit.

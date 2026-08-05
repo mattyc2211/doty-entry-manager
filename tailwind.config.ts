@@ -18,7 +18,23 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				// Archivo is variable on both weight and width. The display styles in
+				// index.css drive the width axis; this is just the family.
+				display: ['Archivo', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				sans: ['IBM Plex Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				mono: ['IBM Plex Mono', 'ui-monospace', 'monospace'],
+			},
 			colors: {
+				show: {
+					red: 'var(--red)',
+					'red-deep': 'var(--red-deep)',
+					ink: 'var(--ink)',
+					charcoal: 'var(--charcoal)',
+					rule: 'var(--rule)',
+					wash: 'var(--wash)',
+					paid: 'var(--paid)',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -26,8 +42,7 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
+					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
