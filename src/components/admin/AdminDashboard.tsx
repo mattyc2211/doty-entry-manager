@@ -57,7 +57,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       <header className="border-b border-show-rule bg-white">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-5 lg:px-8">
           <ShowMark size="sm" />
-          <span className="eyebrow">Entries</span>
+          <span className="label">Entries</span>
           <button
             type="button"
             onClick={onSignOut}
@@ -168,7 +168,7 @@ function Stat({
 }) {
   return (
     <div className="bg-white p-5">
-      <p className="eyebrow">{label}</p>
+      <p className="label">{label}</p>
       <p
         className={cn(
           'code mt-2 text-2xl font-semibold',
@@ -261,7 +261,7 @@ function EntryRow({
       {open && (
         <div className="animate-rise grid gap-8 border-t border-show-rule bg-wash p-5 sm:grid-cols-2">
           <div>
-            <p className="eyebrow">Exhibitor</p>
+            <p className="label">Exhibitor</p>
             <p className="mt-2 text-sm text-show-ink">{entry.exhibitorName}</p>
             <p className="text-sm text-show-charcoal">{entry.exhibitorEmail}</p>
             <p className="code text-sm text-show-charcoal">{entry.exhibitorPhone}</p>
@@ -272,7 +272,7 @@ function EntryRow({
           </div>
 
           <div>
-            <p className="eyebrow">Extras</p>
+            <p className="label">Extras</p>
             <p className="mt-2 text-sm text-show-charcoal">
               {entry.dinnerTickets} dinner{' '}
               {entry.dinnerTickets === 1 ? 'ticket' : 'tickets'} ·{' '}
@@ -288,7 +288,7 @@ function EntryRow({
 
           {entry.dogs.length > 0 && (
             <div className="sm:col-span-2">
-              <p className="eyebrow">Dogs</p>
+              <p className="label">Dogs</p>
               <ul className="mt-3 space-y-4">
                 {entry.dogs.map((dog) => (
                   <li key={dog.id} className="flex gap-4">

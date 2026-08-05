@@ -15,8 +15,7 @@ export function ExhibitorStep({
 
   return (
     <div>
-      <p className="eyebrow">Step one</p>
-      <h2 className="display mt-3 text-3xl text-show-ink">Who is entering?</h2>
+      <h2 className="display text-3xl text-show-ink">Who is entering?</h2>
       <p className="mt-4 max-w-lg text-show-charcoal">
         The confirmation and your payment reference go to this email, so use one
         you check.

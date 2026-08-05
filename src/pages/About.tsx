@@ -7,8 +7,7 @@ export default function About() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
-      <p className="eyebrow">The show</p>
-      <h1 className="display rule-red mt-4 text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
+      <h1 className="display rule-red text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
         One night,
         <br />
         three titles
@@ -67,7 +66,7 @@ export default function About() {
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="eyebrow">{label}</dt>
+      <dt className="label">{label}</dt>
       <dd className="mt-1 text-show-ink">{value}</dd>
     </div>
   );

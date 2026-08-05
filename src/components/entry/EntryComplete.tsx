@@ -20,8 +20,7 @@ export function EntryComplete({
 }) {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16 text-center lg:px-8 lg:py-24">
-      <p className="eyebrow">Entry lodged</p>
-      <h1 className="display mt-4 text-[clamp(2rem,6vw,3.5rem)] text-show-ink">
+      <h1 className="display text-[clamp(2rem,6vw,3.5rem)] text-show-ink">
         We have your entry.
       </h1>
       <p className="mx-auto mt-5 max-w-lg text-show-charcoal">
@@ -42,7 +41,7 @@ export function EntryComplete({
 
       <div className="mx-auto mt-14 max-w-md border border-show-rule text-left">
         <div className="border-b border-show-rule bg-wash px-6 py-4">
-          <p className="eyebrow">Transfer</p>
+          <p className="label">Transfer</p>
         </div>
         <dl className="space-y-3 px-6 py-5 text-sm">
           <Row label="Amount" value={formatMoney(receipt.totalAmount)} mono />

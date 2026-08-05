@@ -40,7 +40,7 @@ export const TextInput = forwardRef<
     <input
       ref={ref}
       className={cn(
-        'h-11 w-full border bg-white px-3 text-sm text-show-ink placeholder:text-show-charcoal/60',
+        'h-11 w-full border bg-white px-3 text-sm text-show-ink placeholder:text-show-charcoal',
         mono && 'code',
         invalid ? 'border-show-red' : 'border-show-rule',
         className,

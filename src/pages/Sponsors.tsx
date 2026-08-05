@@ -8,8 +8,7 @@ import royalCanin from '@/assets/royal-canin-logo.png';
 export default function Sponsors() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
-      <p className="eyebrow">Support</p>
-      <h1 className="display rule-red mt-4 text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
+      <h1 className="display rule-red text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
         Sponsors
       </h1>
 
@@ -25,7 +24,7 @@ export default function Sponsors() {
             className="h-24 w-full max-w-[16rem] justify-self-center object-cover object-[center_25%]"
           />
           <div>
-            <p className="eyebrow">Title sponsor</p>
+            <p className="label">Title sponsor</p>
             <h2 className="display-md mt-3 text-2xl text-show-ink">Royal Canin</h2>
             <p className="mt-4 max-w-lg leading-relaxed text-show-charcoal">
               Royal Canin is the title sponsor of the New Zealand Premier Show Dog

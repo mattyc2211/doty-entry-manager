@@ -1,4 +1,4 @@
-import { Plus, Trash2, ImagePlus } from 'lucide-react';
+import { ChevronDown, Plus, Trash2, ImagePlus } from 'lucide-react';
 import { Field, TextInput } from './Field';
 import { BreedSelect } from './BreedSelect';
 import { newDog, type DraftDog } from './types';
@@ -32,8 +32,7 @@ export function DogsStep({
 
   return (
     <div>
-      <p className="eyebrow">Step two</p>
-      <h2 className="display mt-3 text-3xl text-show-ink">The dogs</h2>
+      <h2 className="display text-3xl text-show-ink">The dogs</h2>
       <p className="mt-4 max-w-lg text-show-charcoal">
         For each dog, tell us the title it is entering and the win that qualified
         it. Qualifying wins must fall between{' '}
@@ -70,12 +69,10 @@ export function DogsStep({
         {dogs.length === 0 ? 'Add a dog' : 'Add another dog'}
       </button>
 
-      {dogs.length === 0 && (
-        <p className="mt-6 max-w-lg text-sm text-show-charcoal">
-          Only coming to the dinner? Continue without adding a dog and choose your
-          tickets on the next step.
-        </p>
-      )}
+      <p className="mt-6 max-w-lg text-sm text-show-charcoal">
+        Only coming to the dinner? Continue without filling this in and choose your
+        tickets on the next step.
+      </p>
     </div>
   );
 }
@@ -118,9 +115,7 @@ function DogCard({
   return (
     <article className="border border-show-rule bg-white">
       <header className="flex items-center justify-between border-b border-show-rule bg-wash px-5 py-3">
-        <span className="code text-xs text-show-charcoal">
-          Dog {String(index + 1).padStart(2, '0')}
-        </span>
+        <span className="label">Dog {index + 1}</span>
         <button
           type="button"
           onClick={onRemove}
@@ -201,14 +196,21 @@ function DogCard({
                       <span className="display-md block text-sm text-show-ink">
                         {event.title}
                       </span>
-                      <span className="mt-1.5 block text-xs leading-relaxed text-show-charcoal">
-                        {event.requirement}
-                      </span>
                     </span>
                     <span className="code text-xs text-show-charcoal">
                       {formatMoney(event.entryFee)}
                     </span>
                   </label>
+
+                  <details className="group border-t border-show-rule px-4 py-2.5">
+                    <summary className="cursor-pointer list-none text-xs text-show-charcoal transition-colors hover:text-show-ink">
+                      What qualifies a dog for this
+                      <ChevronDown className="ml-1 inline h-3 w-3 transition-transform group-open:rotate-180" />
+                    </summary>
+                    <p className="mt-2 max-w-prose text-xs leading-relaxed text-show-charcoal">
+                      {event.requirement}
+                    </p>
+                  </details>
 
                   {entered && (
                     <div className="animate-rise grid gap-4 border-t border-show-rule bg-wash p-4 sm:grid-cols-2">

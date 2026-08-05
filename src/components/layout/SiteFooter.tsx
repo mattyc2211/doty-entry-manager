@@ -13,7 +13,7 @@ export function SiteFooter() {
           <div>
             <ShowMark size="lg" />
             {show && (
-              <p className="code mt-4 text-xs text-show-charcoal">
+              <p className="mt-4 text-sm text-show-charcoal">
                 {formatShowDate(show.showDate)}
               </p>
             )}

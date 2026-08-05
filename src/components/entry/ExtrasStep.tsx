@@ -15,8 +15,7 @@ export function ExtrasStep({
 }) {
   return (
     <div>
-      <p className="eyebrow">Step three</p>
-      <h2 className="display mt-3 text-3xl text-show-ink">Dinner & catalogues</h2>
+      <h2 className="display text-3xl text-show-ink">Dinner & catalogues</h2>
       <p className="mt-4 max-w-lg text-show-charcoal">
         Every entry includes one catalogue. Add seats at the presentation dinner
         and extra copies here.
@@ -53,7 +52,7 @@ export function ExtrasStep({
               onChange={(e) =>
                 onChange({ ...value, dietaryRequirements: e.target.value })
               }
-              className="w-full border border-show-rule bg-white p-3 text-sm text-show-ink placeholder:text-show-charcoal/60"
+              className="w-full border border-show-rule bg-white p-3 text-sm text-show-ink placeholder:text-show-charcoal"
               placeholder="One gluten free, one vegetarian"
             />
           </Field>

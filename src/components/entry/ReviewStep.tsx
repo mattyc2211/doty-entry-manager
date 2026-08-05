@@ -1,4 +1,4 @@
-import type { EntryDraft } from './types';
+import { isBlankDog, type EntryDraft } from './types';
 import type { Show } from '@/lib/show';
 import { priceEntry } from '@/lib/entries';
 import { formatMoney, formatShortDate } from '@/lib/format';
@@ -9,20 +9,20 @@ import { formatMoney, formatShortDate } from '@/lib/format';
  * exhibitor recognises this shape, which makes it quick to check.
  */
 export function ReviewStep({ show, draft }: { show: Show; draft: EntryDraft }) {
-  const total = priceEntry(show, draft.dogs, draft.catering);
+  const dogs = draft.dogs.filter((d) => !isBlankDog(d));
+  const total = priceEntry(show, dogs, draft.catering);
   const eventFor = (code: string) => show.events.find((e) => e.code === code);
 
   return (
     <div>
-      <p className="eyebrow">Step four</p>
-      <h2 className="display mt-3 text-3xl text-show-ink">Check and submit</h2>
+      <h2 className="display text-3xl text-show-ink">Check and submit</h2>
       <p className="mt-4 max-w-lg text-show-charcoal">
         Nothing is lodged until you submit, and nothing is confirmed until payment
         reaches the organisers.
       </p>
 
       <section className="mt-10">
-        <p className="eyebrow">Exhibitor</p>
+        <p className="label">Exhibitor</p>
         <p className="mt-2 text-show-ink">
           {draft.exhibitor.firstName} {draft.exhibitor.surname}
         </p>
@@ -30,11 +30,11 @@ export function ReviewStep({ show, draft }: { show: Show; draft: EntryDraft }) {
         <p className="code text-sm text-show-charcoal">{draft.exhibitor.phone}</p>
       </section>
 
-      {draft.dogs.length > 0 && (
+      {dogs.length > 0 && (
         <section className="mt-10">
-          <p className="eyebrow">Entries</p>
+          <p className="label">Entries</p>
           <ol className="mt-4 border-t border-show-rule">
-            {draft.dogs.map((dog) => (
+            {dogs.map((dog) => (
               <li key={dog.id} className="border-b border-show-rule py-5">
                 <div className="flex items-start gap-4">
                   {dog.photoPreview && (
@@ -88,7 +88,7 @@ export function ReviewStep({ show, draft }: { show: Show; draft: EntryDraft }) {
 
       {(draft.catering.dinnerTickets > 0 || draft.catering.extraCatalogues > 0) && (
         <section className="mt-10">
-          <p className="eyebrow">Dinner & catalogues</p>
+          <p className="label">Dinner & catalogues</p>
           <ul className="mt-4 border-t border-show-rule">
             {draft.catering.dinnerTickets > 0 && (
               <li className="flex items-baseline justify-between border-b border-show-rule py-3 text-sm">
@@ -135,7 +135,7 @@ export function ReviewStep({ show, draft }: { show: Show; draft: EntryDraft }) {
       </div>
 
       <div className="mt-10 border border-show-rule bg-wash p-6">
-        <p className="eyebrow">Paying</p>
+        <p className="label">Paying</p>
         <p className="mt-3 text-sm leading-relaxed text-show-charcoal">
           Once you submit, you will get an entry reference. Transfer{' '}
           <span className="font-medium text-show-ink">{formatMoney(total)}</span> to

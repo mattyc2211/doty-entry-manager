@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import { STEPS, type StepKey, type EntryDraft } from './types';
+import { STEPS, isBlankDog, type StepKey, type EntryDraft } from './types';
 import type { Show } from '@/lib/show';
 import { formatMoney } from '@/lib/format';
 import { priceEntry } from '@/lib/entries';
@@ -26,7 +26,10 @@ export function EntryRail({
   furthest: number;
   onJump: (step: StepKey) => void;
 }) {
-  const total = priceEntry(show, draft.dogs, draft.catering);
+  // A card the exhibitor has not filled in yet is not part of the entry, so
+  // it does not appear in the running summary as an "Unnamed dog".
+  const dogs = draft.dogs.filter((d) => !isBlankDog(d));
+  const total = priceEntry(show, dogs, draft.catering);
   const currentIndex = STEPS.findIndex((s) => s.key === current);
   const titleFor = (code: string) =>
     show.events.find((e) => e.code === code)?.title ?? code;
@@ -74,13 +77,13 @@ export function EntryRail({
 
       {/* The claim so far. Only appears once there is something to show, so an
           empty box never sits there looking broken. */}
-      {(draft.dogs.length > 0 || total > 0) && (
+      {(dogs.length > 0 || total > 0) && (
         <div className="mt-8">
-          <p className="eyebrow">This entry</p>
+          <p className="label">This entry</p>
 
           <ul className="mt-4 space-y-4">
-            {draft.dogs.map((dog) => (
-              <li key={dog.id} className="border-l-2 border-show-rule pl-3">
+            {dogs.map((dog) => (
+              <li key={dog.id}>
                 <p className="pedigree text-xs leading-snug text-show-ink">
                   {dog.pedigreeName || 'Unnamed dog'}
                 </p>
@@ -100,13 +103,13 @@ export function EntryRail({
             ))}
 
             {draft.catering.dinnerTickets > 0 && (
-              <li className="border-l-2 border-show-rule pl-3 text-xs text-show-charcoal">
+              <li className="text-xs text-show-charcoal">
                 {draft.catering.dinnerTickets} dinner{' '}
                 {draft.catering.dinnerTickets === 1 ? 'ticket' : 'tickets'}
               </li>
             )}
             {draft.catering.extraCatalogues > 0 && (
-              <li className="border-l-2 border-show-rule pl-3 text-xs text-show-charcoal">
+              <li className="text-xs text-show-charcoal">
                 {draft.catering.extraCatalogues} extra{' '}
                 {draft.catering.extraCatalogues === 1 ? 'catalogue' : 'catalogues'}
               </li>

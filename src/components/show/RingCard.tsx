@@ -36,7 +36,7 @@ export function RingCard({
       {/* The heavy red bar, as it runs along the foot of the show's artwork. */}
       <div className="h-[6px] -mx-8 bg-show-red" />
 
-      <p className="eyebrow mt-6">Entry reference</p>
+      <p className="label mt-6">Entry reference</p>
 
       <p className="code mt-3 text-[2.75rem] leading-none font-semibold text-show-ink sm:text-[3.25rem]">
         {reference}

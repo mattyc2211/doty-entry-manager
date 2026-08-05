@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useShow } from '@/hooks/useShow';
 import { submitEntry, uploadDogPhoto, type EntryReceipt } from '@/lib/entries';
 import { isQualifyingDateValid } from '@/lib/show';
@@ -11,7 +11,13 @@ import { DogsStep, type DogErrors } from '@/components/entry/DogsStep';
 import { ExtrasStep } from '@/components/entry/ExtrasStep';
 import { ReviewStep } from '@/components/entry/ReviewStep';
 import { EntryComplete } from '@/components/entry/EntryComplete';
-import { STEPS, emptyDraft, type EntryDraft, type StepKey } from '@/components/entry/types';
+import {
+  STEPS,
+  emptyDraft,
+  isBlankDog,
+  type EntryDraft,
+  type StepKey,
+} from '@/components/entry/types';
 import type { ExhibitorInput } from '@/lib/entries';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -80,7 +86,10 @@ export default function Enter() {
 
     if (step === 'dogs') {
       const errs: DogErrors = {};
-      for (const dog of draft.dogs) {
+      // An untouched card is not an error. Step two now opens with one card
+      // already there, so someone entering only for the dinner would otherwise
+      // be blocked by a row they never filled in.
+      for (const dog of draft.dogs.filter((d) => !isBlankDog(d))) {
         const d: DogErrors[string] = { eventDetail: {} };
         if (!dog.pedigreeName.trim()) d.pedigreeName = 'Add the pedigree name.';
         if (!dog.dogsNzRegistration.trim())
@@ -127,7 +136,9 @@ export default function Enter() {
   };
 
   const submit = async () => {
-    if (draft.dogs.length === 0 && !draft.catering.dinnerTickets && !draft.catering.extraCatalogues) {
+    const realDogs = draft.dogs.filter((d) => !isBlankDog(d));
+
+    if (realDogs.length === 0 && !draft.catering.dinnerTickets && !draft.catering.extraCatalogues) {
       setSubmitError('Add a dog, or a dinner ticket or catalogue, before submitting.');
       return;
     }
@@ -139,7 +150,7 @@ export default function Enter() {
       // Photos upload first. If one fails the entry is not lodged at all, which
       // is better than a half-recorded entry the exhibitor thinks went through.
       const dogs = await Promise.all(
-        draft.dogs.map(async (dog) => ({
+        realDogs.map(async (dog) => ({
           pedigreeName: dog.pedigreeName,
           dogsNzRegistration: dog.dogsNzRegistration,
           breed: dog.breed,
@@ -198,7 +209,11 @@ export default function Enter() {
           {step === 'review' && <ReviewStep show={show} draft={draft} />}
 
           {submitError && (
-            <p className="mt-8 border-l-2 border-show-red bg-wash p-4 text-sm text-show-ink">
+            <p
+              role="alert"
+              className="mt-8 flex items-start gap-3 border border-show-red bg-white p-4 text-sm text-show-ink"
+            >
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-show-red" />
               {submitError}
             </p>
           )}
