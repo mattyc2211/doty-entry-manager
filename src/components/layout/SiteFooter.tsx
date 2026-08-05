@@ -23,24 +23,14 @@ export function SiteFooter() {
             <Link to="/about" className="hover:text-show-ink">
               The show
             </Link>
-            <Link to="/judges" className="hover:text-show-ink">
-              Judges
-            </Link>
             <Link to="/qualifying" className="hover:text-show-ink">
               Qualifying
-            </Link>
-            <Link to="/sponsors" className="hover:text-show-ink">
-              Sponsors
             </Link>
             <Link to="/admin" className="hover:text-show-ink">
               Organisers
             </Link>
           </nav>
         </div>
-
-        <p className="mt-10 border-t border-show-rule pt-6 text-xs text-show-charcoal">
-          Run under Dogs New Zealand regulations.
-        </p>
       </div>
     </footer>
   );

@@ -5,9 +5,7 @@ import { SiteLayout } from '@/components/layout/SiteLayout';
 import Home from './pages/Home';
 import Enter from './pages/Enter';
 import About from './pages/About';
-import Judges from './pages/Judges';
 import Qualifying from './pages/Qualifying';
-import Sponsors from './pages/Sponsors';
 import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 
@@ -28,9 +26,13 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/enter" element={<Enter />} />
             <Route path="/about" element={<About />} />
-            <Route path="/judges" element={<Judges />} />
             <Route path="/qualifying" element={<Qualifying />} />
-            <Route path="/sponsors" element={<Sponsors />} />
+            {/* Judges and Sponsors are hidden for now, not deleted. The pages
+                and their data are still in the repo; restore by re-adding the
+                imports and these two routes, plus their nav entries in
+                SiteHeader and SiteFooter.
+                <Route path="/judges" element={<Judges />} />
+                <Route path="/sponsors" element={<Sponsors />} /> */}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

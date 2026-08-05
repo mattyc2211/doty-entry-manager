@@ -4,11 +4,11 @@ import { Menu, X } from 'lucide-react';
 import { ShowMark } from '@/components/show/ShowMark';
 import { cn } from '@/lib/utils';
 
+// Judges and Sponsors are hidden for now. Their pages still exist; add the
+// entries back here and in SiteFooter when they are ready to show.
 const NAV = [
   { to: '/about', label: 'The show' },
-  { to: '/judges', label: 'Judges' },
   { to: '/qualifying', label: 'Qualifying' },
-  { to: '/sponsors', label: 'Sponsors' },
 ];
 
 export function SiteHeader() {
