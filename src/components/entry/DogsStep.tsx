@@ -138,7 +138,6 @@ function DogCard({
             value={dog.pedigreeName}
             onChange={(e) => onUpdate({ pedigreeName: e.target.value })}
             invalid={!!errors.pedigreeName}
-            placeholder="Ch Silverwood Northern Light"
           />
         </Field>
 
@@ -153,7 +152,6 @@ function DogCard({
             value={dog.dogsNzRegistration}
             onChange={(e) => onUpdate({ dogsNzRegistration: e.target.value })}
             invalid={!!errors.dogsNzRegistration}
-            placeholder="01234-2024"
           />
         </Field>
 
@@ -224,7 +222,6 @@ function DogCard({
                           onChange={(e) =>
                             updateEvent(event.code, { qualifyingShow: e.target.value })
                           }
-                          placeholder="Auckland All Breeds"
                           invalid={!!detailError}
                         />
                       </Field>
