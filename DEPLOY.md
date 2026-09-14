@@ -81,6 +81,38 @@ is set.
 
 ---
 
+## 4. The organiser Edge Function
+
+Adding, resetting and removing organisers from inside the app goes through
+`supabase/functions/manage-admins`. It is not part of the Amplify build; it is
+deployed to the Supabase project separately, and it has to be redeployed after
+any change under `supabase/functions/`.
+
+```sh
+supabase functions deploy manage-admins --project-ref kbfktirsmwgxrwjgxqgy
+```
+
+The CLI must be logged in to the Supabase account that owns the project. If
+`supabase projects list` does not show `kbfktirsmwgxrwjgxqgy`, it is logged in
+as a different account: either run `supabase login`, or create a personal
+access token at <https://supabase.com/dashboard/account/tokens> and set
+`SUPABASE_ACCESS_TOKEN` for the one command, which leaves the stored login
+alone.
+
+Nothing else needs configuring. The function reads the project URL and keys
+from the environment the Edge runtime injects, and `verify_jwt` is set off in
+`supabase/config.toml` because the function verifies the caller itself.
+
+**Test after deploying:** sign in at `/admin`, open **Organisers**, and add an
+address you control. A temporary password should appear. Remove it again
+afterwards.
+
+If the Organisers page says it *could not reach the organiser service*, the
+function is not deployed. If it says *only organisers can manage organisers*
+for an account that can see entries, the deployed function is stale.
+
+---
+
 ## What is already handled in the repo
 
 - **`amplify.yml`** pins Node 20, runs the env check, `npm ci`, then

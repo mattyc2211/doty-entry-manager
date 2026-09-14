@@ -38,7 +38,7 @@ cp .env.example .env    # then fill in from `supabase status`
 npm run dev             # http://localhost:8080
 ```
 
-To sign in to `/admin` locally, create an organiser account:
+To sign in to `/admin` locally, create the first organiser account:
 
 ```sh
 node scripts/create-organiser.mjs \
@@ -47,6 +47,35 @@ node scripts/create-organiser.mjs \
   --email you@example.com \
   --password somethinglongenough
 ```
+
+Every organiser after the first is added from inside the app, under
+**Organisers** in the admin area. That goes through the `manage-admins` Edge
+Function, so run it locally alongside the dev server:
+
+```sh
+supabase functions serve   # in a second terminal
+```
+
+## Organisers
+
+An organiser is an Auth user plus a row in `public.admins`. The row is what
+grants access: every policy on the entry tables gates on `is_admin()`, so a
+signed-in user without it sees nothing.
+
+Organisers add, reset and remove each other from `/admin/organisers`. Adding
+someone creates their account on the spot with a temporary password that is
+shown once, for the organiser to pass on by phone or in person. There is no
+invitation email, on purpose: Supabase's built-in mailer only delivers to
+members of the Supabase project and is capped at two messages an hour, so an
+emailed invite would quietly reach nobody. Once in, an organiser sets their
+own password on the same page.
+
+Creating an Auth user needs the service_role key, which can never be in the
+browser bundle, so this is the one piece of server-side code in the project:
+`supabase/functions/manage-admins`. It checks `is_admin()` for the caller
+before touching anything, refuses self-removal so the last organiser cannot
+lock everyone out, and deletes the Auth user on removal so no orphaned sign-in
+is left behind.
 
 ## Verifying it
 
@@ -65,6 +94,13 @@ docker exec -i supabase_db_doty-entry-manager psql -U postgres -d postgres \
 # End to end through PostgREST as anon, against whatever .env points at.
 node scripts/smoke.mjs
 
+# The organiser gate, with fakes in place of Supabase. No stack needed.
+node scripts/test-manage-admins.mjs
+
+# Organiser management end to end through the real Edge Function. Local only:
+# it creates and deletes accounts. Needs `supabase functions serve` running.
+node scripts/smoke-organisers.mjs --email you@example.com --password somethinglongenough
+
 # Read-only check of a deployed project. Safe against production.
 node scripts/verify-remote.mjs --url <project url> --key <anon key>
 ```
@@ -75,11 +111,12 @@ See `supabase/tests/README.md` for what each check covers and why.
 
 ```
 supabase/migrations/   schema, then the 2026 show as configuration
+supabase/functions/    manage-admins, the one server-side piece (organiser accounts)
 supabase/tests/        SQL verification, with notes on what each check is for
 scripts/               env guard, organiser creation, smoke and remote checks
 src/lib/               show config, entry submission, admin queries, formatting
 src/components/entry/  the entry flow
-src/components/admin/  login and reconciliation dashboard
+src/components/admin/  login, reconciliation dashboard, organisers
 src/components/show/   shared show furniture, including the ring card
 ```
 

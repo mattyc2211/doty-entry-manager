@@ -42,6 +42,11 @@ export function formatShortDate(iso: string): string {
   return NZ_SHORT.format(localDate(iso));
 }
 
+/** A timestamp as a local short date: "05 Aug 2026". */
+export function formatShortTimestamp(iso: string): string {
+  return NZ_SHORT.format(new Date(iso));
+}
+
 export function formatDateTime(iso: string): string {
   return new Intl.DateTimeFormat('en-NZ', {
     day: '2-digit',

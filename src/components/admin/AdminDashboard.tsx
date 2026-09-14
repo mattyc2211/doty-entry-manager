@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ChevronDown, Loader2, LogOut, Search } from 'lucide-react';
+import { ChevronDown, Loader2, Search } from 'lucide-react';
 import {
   fetchEntries,
   setPaymentStatus,
@@ -9,12 +9,11 @@ import {
   type PaymentStatus,
 } from '@/lib/admin';
 import { formatMoney, formatDateTime, formatShortDate } from '@/lib/format';
-import { ShowMark } from '@/components/show/ShowMark';
 import { cn } from '@/lib/utils';
 
 type Filter = 'all' | 'unpaid' | 'paid';
 
-export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
+export function AdminDashboard() {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState<Filter>('unpaid');
   const [search, setSearch] = useState('');
@@ -53,23 +52,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
   }, [entries, filter, search]);
 
   return (
-    <div className="min-h-screen bg-wash">
-      <header className="border-b border-show-rule bg-white">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-5 lg:px-8">
-          <ShowMark size="sm" />
-          <span className="label">Entries</span>
-          <button
-            type="button"
-            onClick={onSignOut}
-            className="ml-auto inline-flex items-center gap-2 text-sm text-show-charcoal hover:text-show-ink"
-          >
-            <LogOut className="h-4 w-4" />
-            Sign out
-          </button>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8">
+    <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8">
         {/* Money first. Reconciling bank transfers is the actual job here, so
             what is outstanding leads rather than a headline entry count. */}
         <div className="grid gap-px border border-show-rule bg-show-rule sm:grid-cols-2 lg:grid-cols-4">
@@ -150,7 +133,6 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
             />
           ))}
         </div>
-      </div>
     </div>
   );
 }

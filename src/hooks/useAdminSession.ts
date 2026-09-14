@@ -38,9 +38,21 @@ export function useAdminSession() {
 
     supabase.auth.getSession().then(({ data }) => check(data.session));
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event, next) => {
+      // A refreshed token or a changed password is the same person with the
+      // same access. Re-running the admin check here would flip `loading` and
+      // unmount whatever page they are on, mid-form.
+      if (event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+        setSession(next);
+        return;
+      }
+
       setLoading(true);
-      check(next);
+      // Deferred rather than awaited. Supabase holds its auth lock while it
+      // notifies subscribers, and a Supabase call made inside this callback
+      // waits for that same lock: the two deadlock and the page hangs on
+      // "Checking your access". Letting the callback return first releases it.
+      setTimeout(() => check(next), 0);
     });
 
     return () => {

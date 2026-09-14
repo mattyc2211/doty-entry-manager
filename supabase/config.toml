@@ -44,3 +44,10 @@ enable_signup = false
 # The same distinction applies on the hosted project: turn off signups, leave
 # email sign-in on.
 enable_confirmations = false
+
+[functions.manage-admins]
+# The gateway's own token check is off so that the function, not the gateway,
+# decides who may call it: it verifies the session with Auth and then asks the
+# database whether that user is an organiser. Every request is checked in code;
+# see supabase/functions/manage-admins/handler.ts.
+verify_jwt = false

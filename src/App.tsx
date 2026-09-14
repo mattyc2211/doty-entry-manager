@@ -7,6 +7,8 @@ import Enter from './pages/Enter';
 import About from './pages/About';
 import Qualifying from './pages/Qualifying';
 import Admin from './pages/Admin';
+import { AdminDashboard } from './components/admin/AdminDashboard';
+import { AdminOrganisers } from './components/admin/AdminOrganisers';
 import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient({
@@ -20,7 +22,10 @@ const App = () => (
         <Routes>
           {/* Admin sits outside the public shell: it has its own header, and
               the show's navigation is not useful while reconciling payments. */}
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="organisers" element={<AdminOrganisers />} />
+          </Route>
 
           <Route element={<SiteLayout />}>
             <Route path="/" element={<Home />} />

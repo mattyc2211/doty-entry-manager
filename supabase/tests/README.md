@@ -55,6 +55,19 @@ six digits of the epoch millisecond, which recur every 16.7 minutes against a
 `UNIQUE` constraint. `isOpen` was hardcoded `true`. Admin was a localStorage
 key checked in the browser, over tables that granted `SELECT` to everyone.
 
+## The organiser function
+
+`supabase/functions/manage-admins` has two checks of its own, both in
+`scripts/`, because what it decides (who may call it, what it refuses) is not
+database behaviour and cannot be tested from inside Postgres:
+
+- `test-manage-admins.mjs` runs the handler under Node with fakes in place of
+  Supabase. No stack needed. Covers the gate from both sides, self-removal,
+  duplicates and the password generator.
+- `smoke-organisers.mjs` calls the real function through `supabase functions
+  serve` the way the browser does: adds an organiser, signs in as them, resets
+  and removes them. It refuses to run against anything but a local URL.
+
 ## One thing worth knowing
 
 `create_entry` takes a row lock on the active show to allocate the reference,

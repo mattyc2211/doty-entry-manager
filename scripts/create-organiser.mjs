@@ -1,6 +1,9 @@
 /**
- * Creates an organiser account: an auth user, plus the row in public.admins
- * that actually grants access.
+ * Creates the FIRST organiser account: an auth user, plus the row in
+ * public.admins that actually grants access. Every organiser after the first
+ * is added from inside the app (Organisers, in the admin area), which goes
+ * through the manage-admins Edge Function. This script is for bootstrapping a
+ * fresh project and for recovering a locked-out organiser from the shell.
  *
  * Both halves are required. Being signed in is not the same as being an
  * organiser: every RLS policy on the entry tables gates on membership of

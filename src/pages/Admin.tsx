@@ -1,6 +1,13 @@
+import { Outlet } from 'react-router-dom';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import { AdminLogin } from '@/components/admin/AdminLogin';
-import { AdminDashboard } from '@/components/admin/AdminDashboard';
+import { AdminShell } from '@/components/admin/AdminShell';
+
+/** What the organiser pages get from the gate: who is signed in. */
+export interface AdminContext {
+  userId: string;
+  email: string;
+}
 
 export default function Admin() {
   const { session, isAdmin, loading, signOut } = useAdminSession();
@@ -40,5 +47,14 @@ export default function Admin() {
     );
   }
 
-  return <AdminDashboard onSignOut={signOut} />;
+  const context: AdminContext = {
+    userId: session.user.id,
+    email: session.user.email ?? '',
+  };
+
+  return (
+    <AdminShell onSignOut={signOut}>
+      <Outlet context={context} />
+    </AdminShell>
+  );
 }
