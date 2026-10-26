@@ -94,7 +94,8 @@ export default function Nominate() {
 
       <p className="mt-6 max-w-xl text-lg leading-relaxed text-show-charcoal">
         Two awards, one for the North Island and one for the South Island,
-        recognising an exhibitor who shows what good sportsmanship looks like.
+        recognising someone in the dog world who shows what good
+        sportsmanship looks like. They don't need to be an exhibitor.
         Nominate someone for either award, or both. Once nominations close,
         voting opens.
       </p>
