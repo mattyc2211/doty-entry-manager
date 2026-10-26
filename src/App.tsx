@@ -6,9 +6,11 @@ import Home from './pages/Home';
 import Enter from './pages/Enter';
 import About from './pages/About';
 import Qualifying from './pages/Qualifying';
+import Nominate from './pages/Nominate';
 import Admin from './pages/Admin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AdminOrganisers } from './components/admin/AdminOrganisers';
+import { AdminNominations } from './components/admin/AdminNominations';
 import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient({
@@ -24,6 +26,7 @@ const App = () => (
               the show's navigation is not useful while reconciling payments. */}
           <Route path="/admin" element={<Admin />}>
             <Route index element={<AdminDashboard />} />
+            <Route path="nominations" element={<AdminNominations />} />
             <Route path="organisers" element={<AdminOrganisers />} />
           </Route>
 
@@ -32,6 +35,7 @@ const App = () => (
             <Route path="/enter" element={<Enter />} />
             <Route path="/about" element={<About />} />
             <Route path="/qualifying" element={<Qualifying />} />
+            <Route path="/nominate" element={<Nominate />} />
             {/* Judges and Sponsors are hidden for now, not deleted. The pages
                 and their data are still in the repo; restore by re-adding the
                 imports and these two routes, plus their nav entries in

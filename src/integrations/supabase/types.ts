@@ -135,6 +135,47 @@ export type Database = {
           },
         ]
       }
+      nominations: {
+        Row: {
+          award: string
+          created_at: string
+          id: string
+          nominator_member_number: string
+          nominator_name: string
+          nominee_name: string
+          reason: string | null
+          show_id: string
+        }
+        Insert: {
+          award: string
+          created_at?: string
+          id?: string
+          nominator_member_number: string
+          nominator_name: string
+          nominee_name: string
+          reason?: string | null
+          show_id: string
+        }
+        Update: {
+          award?: string
+          created_at?: string
+          id?: string
+          nominator_member_number?: string
+          nominator_name?: string
+          nominee_name?: string
+          reason?: string | null
+          show_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nominations_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       show_events: {
         Row: {
           code: string
@@ -186,6 +227,7 @@ export type Database = {
           is_active: boolean
           name: string
           next_entry_number: number
+          nominations_open: boolean
           qualification_end: string
           qualification_start: string
           show_date: string
@@ -205,6 +247,7 @@ export type Database = {
           is_active?: boolean
           name: string
           next_entry_number?: number
+          nominations_open?: boolean
           qualification_end: string
           qualification_start: string
           show_date: string
@@ -224,6 +267,7 @@ export type Database = {
           is_active?: boolean
           name?: string
           next_entry_number?: number
+          nominations_open?: boolean
           qualification_end?: string
           qualification_start?: string
           show_date?: string
@@ -311,6 +355,10 @@ export type Database = {
         Returns: Json
       }
       is_admin: { Args: never; Returns: boolean }
+      submit_nominations: {
+        Args: { p_nominations: Json; p_nominator: Json }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

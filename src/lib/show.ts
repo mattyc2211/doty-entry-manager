@@ -32,6 +32,7 @@ export interface Show {
   extraCatalogueFee: number;
   bankAccountName: string;
   bankAccountNumber: string;
+  nominationsOpen: boolean;
   events: ShowEvent[];
 }
 
@@ -62,7 +63,7 @@ export async function fetchActiveShow(): Promise<Show> {
        entries_open_at, entries_close_at,
        qualification_start, qualification_end,
        dinner_ticket_fee, extra_catalogue_fee,
-       bank_account_name, bank_account_number,
+       bank_account_name, bank_account_number, nominations_open,
        show_events ( id, code, title, requirement, entry_fee, sort_order )`,
     )
     .eq('is_active', true)
@@ -84,6 +85,7 @@ export async function fetchActiveShow(): Promise<Show> {
     extraCatalogueFee: Number(data.extra_catalogue_fee),
     bankAccountName: data.bank_account_name,
     bankAccountNumber: data.bank_account_number,
+    nominationsOpen: data.nominations_open,
     events: (data.show_events ?? [])
       .map((e) => ({
         id: e.id,

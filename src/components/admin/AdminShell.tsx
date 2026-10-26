@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 /**
  * The organiser area's own header. It sits outside the public site's shell on
  * purpose: the show's navigation is no use while reconciling payments, and the
- * two things an organiser does here (entries, organisers) are the whole menu.
+ * three things an organiser does here (entries, nominations, organisers) are
+ * the whole menu.
  */
 export function AdminShell({
   onSignOut,
@@ -28,6 +29,7 @@ export function AdminShell({
             <AdminNavLink to="/admin" end>
               Entries
             </AdminNavLink>
+            <AdminNavLink to="/admin/nominations">Nominations</AdminNavLink>
             <AdminNavLink to="/admin/organisers">Organisers</AdminNavLink>
           </nav>
 
