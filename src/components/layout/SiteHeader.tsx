@@ -5,11 +5,12 @@ import { ShowMark } from '@/components/show/ShowMark';
 import { cn } from '@/lib/utils';
 
 // Judges and Sponsors are hidden for now. Their pages still exist; add the
-// entries back here and in SiteFooter when they are ready to show.
+// entries back here and in SiteFooter when they are ready to show. The same
+// goes for Sportsmanship awards (/nominate), which is reachable by its URL
+// but not linked until the organisers launch it.
 const NAV = [
   { to: '/about', label: 'The show' },
   { to: '/qualifying', label: 'Qualifying' },
-  { to: '/nominate', label: 'Sportsmanship awards' },
 ];
 
 export function SiteHeader() {
