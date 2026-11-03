@@ -74,12 +74,23 @@ export default function Home() {
                   <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Link>
               )}
-              <Link
-                to="/qualifying"
-                className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
-              >
-                Check what qualifies
-              </Link>
+              {/* Once entries close, what qualifies stops mattering; the
+                  awards are the other thing people can still take part in. */}
+              {entryWindow === 'closed' && show?.nominationsOpen ? (
+                <Link
+                  to="/nominate"
+                  className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
+                >
+                  Nominate for the sportsmanship awards
+                </Link>
+              ) : (
+                <Link
+                  to="/qualifying"
+                  className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
+                >
+                  Check what qualifies
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -89,6 +100,31 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-5 pt-10 lg:px-8">
           <EntryStatusNotice show={show} window={entryWindow} />
         </div>
+      )}
+
+      {/* What people can still do, straight off the home page. Each card
+          appears only while its switch is on in the organisers' area. */}
+      {show && (show.dinnerBookingsOpen || show.nominationsOpen) && (
+        <section className="mx-auto max-w-6xl px-5 pt-10 lg:px-8">
+          <div className="grid gap-px border border-show-rule bg-show-rule sm:grid-cols-2">
+            {show.dinnerBookingsOpen && (
+              <HomeCard
+                to="/dinner"
+                title="Book the presentation dinner"
+                body={`Seats are ${formatMoney(show.dinnerTicketFee)} each. Book and pay by bank transfer, no dog entry needed.`}
+                cta="Book dinner"
+              />
+            )}
+            {show.nominationsOpen && (
+              <HomeCard
+                to="/nominate"
+                title="Sportsmanship awards"
+                body="Nominate someone for the North Island or South Island award, or both."
+                cta="Make a nomination"
+              />
+            )}
+          </div>
+        </section>
       )}
 
       <section className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-20">
@@ -137,7 +173,7 @@ export default function Home() {
                 </dd>
                 <dd className="mt-2 text-sm text-show-charcoal">
                   Per seat at the presentation dinner. Dietary requirements are
-                  asked for with your entry.
+                  asked for when you book.
                 </dd>
               </div>
               <div>
@@ -164,5 +200,28 @@ export default function Home() {
         </section>
       )}
     </>
+  );
+}
+
+function HomeCard({
+  to,
+  title,
+  body,
+  cta,
+}: {
+  to: string;
+  title: string;
+  body: string;
+  cta: string;
+}) {
+  return (
+    <Link to={to} className="group flex flex-col bg-white p-6 transition-colors hover:bg-wash lg:p-8">
+      <h2 className="display-md text-xl text-show-ink">{title}</h2>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-show-charcoal">{body}</p>
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-show-red">
+        {cta}
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </Link>
   );
 }
