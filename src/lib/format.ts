@@ -73,3 +73,15 @@ export function daysUntil(iso: string): number {
   const now = new Date();
   return Math.ceil((target.getTime() - now.getTime()) / 86_400_000);
 }
+
+/** A timestamp as an NZ calendar date: "4 November 2026". For the entry
+ *  window, whose timestamps are stored in UTC, so slicing the ISO string
+ *  would give the UTC date (a day early for anything before 1pm NZ). */
+export function formatNzDay(iso: string): string {
+  return new Intl.DateTimeFormat('en-NZ', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Pacific/Auckland',
+  }).format(new Date(iso));
+}

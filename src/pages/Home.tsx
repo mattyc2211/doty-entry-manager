@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useShow } from '@/hooks/useShow';
+import { primaryAction } from '@/lib/show';
 import { formatDate, formatMoney } from '@/lib/format';
 import { EntryStatusNotice } from '@/components/show/EntryStatusNotice';
 import { ShowMark } from '@/components/show/ShowMark';
@@ -17,6 +18,7 @@ import { ShowMark } from '@/components/show/ShowMark';
  */
 export default function Home() {
   const { show, window: entryWindow, isLoading } = useShow();
+  const action = primaryAction(show, entryWindow);
 
   const showDate = show ? new Date(show.showDate) : null;
   const fmt = (opts: Intl.DateTimeFormatOptions, fallback: string) =>
@@ -63,13 +65,15 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-              <Link
-                to="/enter"
-                className="group inline-flex items-center gap-2 bg-show-red px-7 py-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-show-red-deep"
-              >
-                Start an entry
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-              </Link>
+              {action && (
+                <Link
+                  to={action.to}
+                  className="group inline-flex items-center gap-2 bg-show-red px-7 py-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-show-red-deep"
+                >
+                  {action.label}
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </Link>
+              )}
               <Link
                 to="/qualifying"
                 className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"

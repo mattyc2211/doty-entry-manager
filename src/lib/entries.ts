@@ -131,3 +131,27 @@ export async function submitEntry(
     totalAmount: Number(receipt.total_amount),
   };
 }
+
+/** Dinner seats on their own, for after dog entries have closed. Priced by
+ *  book_dinner() on the server, like every other entry. */
+export async function bookDinner(
+  booker: ExhibitorInput,
+  tickets: number,
+  dietaryRequirements?: string,
+): Promise<EntryReceipt> {
+  const { data, error } = await supabase.rpc('book_dinner', {
+    p_booker: {
+      first_name: booker.firstName,
+      surname: booker.surname,
+      email: booker.email,
+      phone: booker.phone,
+    },
+    p_tickets: tickets,
+    p_dietary: dietaryRequirements?.trim() || null,
+  });
+
+  if (error) throw new Error(error.message);
+
+  const receipt = data as { reference: string; total_amount: number | string };
+  return { reference: receipt.reference, totalAmount: Number(receipt.total_amount) };
+}

@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import { AlertCircle, Clock } from 'lucide-react';
 import type { Show, EntryWindow } from '@/lib/show';
-import { formatDate } from '@/lib/format';
+import { formatNzDay } from '@/lib/format';
 
 /**
  * Says plainly when entries are not open, and when they will be.
@@ -35,7 +36,7 @@ export function EntryStatusNotice({
             <>
               Entries for {show.name} open on{' '}
               <span className="font-medium text-show-ink">
-                {formatDate(show.entriesOpenAt.slice(0, 10))}
+                {formatNzDay(show.entriesOpenAt)}
               </span>
               .
             </>
@@ -43,9 +44,20 @@ export function EntryStatusNotice({
             <>
               Entries closed on{' '}
               <span className="font-medium text-show-ink">
-                {formatDate(show.entriesCloseAt.slice(0, 10))}
+                {formatNzDay(show.entriesCloseAt)}
               </span>
-              . Contact the organisers if you believe this is wrong.
+              .{' '}
+              {show.dinnerBookingsOpen ? (
+                <>
+                  Seats at the presentation dinner can still be{' '}
+                  <Link to="/dinner" className="font-medium text-show-ink underline hover:text-show-red">
+                    booked here
+                  </Link>
+                  .
+                </>
+              ) : (
+                'Contact the organisers if you believe this is wrong.'
+              )}
             </>
           )}
         </p>

@@ -219,6 +219,7 @@ export type Database = {
           bank_account_name: string
           bank_account_number: string
           created_at: string
+          dinner_bookings_open: boolean
           dinner_ticket_fee: number
           entries_close_at: string
           entries_open_at: string
@@ -239,6 +240,7 @@ export type Database = {
           bank_account_name: string
           bank_account_number: string
           created_at?: string
+          dinner_bookings_open?: boolean
           dinner_ticket_fee: number
           entries_close_at: string
           entries_open_at: string
@@ -259,6 +261,7 @@ export type Database = {
           bank_account_name?: string
           bank_account_number?: string
           created_at?: string
+          dinner_bookings_open?: boolean
           dinner_ticket_fee?: number
           entries_close_at?: string
           entries_open_at?: string
@@ -355,6 +358,10 @@ export type Database = {
         Returns: Json
       }
       is_admin: { Args: never; Returns: boolean }
+      book_dinner: {
+        Args: { p_booker: Json; p_tickets: number; p_dietary?: string | null }
+        Returns: Json
+      }
       submit_nominations: {
         Args: { p_nominations: Json; p_nominator: Json }
         Returns: Json

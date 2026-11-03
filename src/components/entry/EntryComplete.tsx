@@ -14,18 +14,21 @@ import { formatMoney } from '@/lib/format';
 export function EntryComplete({
   show,
   receipt,
+  kind = 'entry',
 }: {
   show: Show;
   receipt: EntryReceipt;
+  kind?: 'entry' | 'dinner';
 }) {
+  const noun = kind === 'dinner' ? 'booking' : 'entry';
   return (
     <div className="mx-auto max-w-3xl px-5 py-16 text-center lg:px-8 lg:py-24">
       <h1 className="display text-[clamp(2rem,6vw,3.5rem)] text-show-ink">
-        We have your entry.
+        We have your {noun}.
       </h1>
       <p className="mx-auto mt-5 max-w-lg text-show-charcoal">
         It is not confirmed until payment reaches the organisers. Quote the
-        reference below on your transfer so they can match it to this entry.
+        reference below on your transfer so they can match it to this {noun}.
       </p>
 
       <div className="mt-12 flex justify-center">
@@ -57,7 +60,7 @@ export function EntryComplete({
           exhibitor discovers by waiting for it. */}
       <p className="mx-auto mt-10 max-w-md text-sm text-show-charcoal">
         Keep this reference somewhere you can find it. The organisers will email you
-        once your payment has landed and your entry is confirmed.
+        once your payment has landed and your {noun} is confirmed.
       </p>
 
       <Link

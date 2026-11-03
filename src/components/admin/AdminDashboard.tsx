@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ChevronDown, Loader2, Search } from 'lucide-react';
 import {
   fetchEntries,
+  setDinnerBookingsOpen,
   setPaymentStatus,
   summarise,
   type AdminEntry,
@@ -10,6 +11,7 @@ import {
 } from '@/lib/admin';
 import { formatMoney, formatDateTime, formatShortDate } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { useShow } from '@/hooks/useShow';
 
 type Filter = 'all' | 'unpaid' | 'paid';
 
@@ -32,6 +34,13 @@ export function AdminDashboard() {
 
   const stats = useMemo(() => summarise(entries), [entries]);
 
+  const { show, window: entryWindow } = useShow();
+  const dinnerToggle = useMutation({
+    mutationFn: (open: boolean) => setDinnerBookingsOpen(show!.id, open),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['active-show'] }),
+  });
+  const dinnerOpen = show?.dinnerBookingsOpen ?? false;
+
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase();
     return entries.filter((entry) => {
@@ -53,6 +62,37 @@ export function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8">
+        <section className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-show-rule bg-white p-6">
+          <div className="mr-auto">
+            <p className="text-base font-medium text-show-ink">
+              Dog entries are {entryWindow === 'open' ? 'open' : 'closed'} · dinner bookings are{' '}
+              {dinnerOpen ? 'open' : 'closed'}
+            </p>
+            <p className="mt-1 text-sm text-show-charcoal">
+              {dinnerOpen
+                ? 'The page at /dinner is taking dinner-only bookings.'
+                : 'The page at /dinner says bookings are not open.'}
+            </p>
+          </div>
+          <button
+            type="button"
+            disabled={!show || dinnerToggle.isPending}
+            onClick={() => dinnerToggle.mutate(!dinnerOpen)}
+            className={cn(
+              'inline-flex h-11 items-center gap-2 px-5 text-sm font-semibold transition-colors disabled:opacity-60',
+              dinnerOpen
+                ? 'border border-show-ink text-show-ink hover:bg-show-ink hover:text-white'
+                : 'bg-show-red text-white hover:bg-show-red-deep',
+            )}
+          >
+            {dinnerToggle.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {dinnerOpen ? 'Close dinner bookings' : 'Open dinner bookings'}
+          </button>
+          {dinnerToggle.error && (
+            <p className="w-full text-sm text-show-red">{dinnerToggle.error.message}</p>
+          )}
+        </section>
+
         {/* Money first. Reconciling bank transfers is the actual job here, so
             what is outstanding leads rather than a headline entry count. */}
         <div className="grid gap-px border border-show-rule bg-show-rule sm:grid-cols-2 lg:grid-cols-4">

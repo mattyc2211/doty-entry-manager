@@ -2,20 +2,25 @@ import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { ShowMark } from '@/components/show/ShowMark';
+import { useShow } from '@/hooks/useShow';
+import { primaryAction } from '@/lib/show';
 import { cn } from '@/lib/utils';
 
 // Judges and Sponsors are hidden for now. Their pages still exist; add the
-// entries back here and in SiteFooter when they are ready to show. The same
-// goes for Sportsmanship awards (/nominate), which is reachable by its URL
-// but not linked until the organisers launch it.
+// entries back here and in SiteFooter when they are ready to show.
 const NAV = [
   { to: '/about', label: 'The show' },
   { to: '/qualifying', label: 'Qualifying' },
+  { to: '/nominate', label: 'Sportsmanship awards' },
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const { show, window } = useShow();
+  // The red button follows the show: the entry form while entries are open,
+  // the dinner page after, and nothing once both are shut.
+  const action = primaryAction(show, window);
 
   return (
     <header className="sticky top-0 z-40 border-b border-show-rule bg-white/95 backdrop-blur">
@@ -43,12 +48,14 @@ export function SiteHeader() {
               {item.label}
             </NavLink>
           ))}
-          <Link
-            to="/enter"
-            className="bg-show-red px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-show-red-deep"
-          >
-            Enter
-          </Link>
+          {action && (
+            <Link
+              to={action.to}
+              className="bg-show-red px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-show-red-deep"
+            >
+              {action.short}
+            </Link>
+          )}
         </nav>
 
         <button
@@ -78,13 +85,15 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/enter"
-              onClick={() => setOpen(false)}
-              className="mt-4 block bg-show-red px-5 py-3 text-center text-sm font-semibold text-white"
-            >
-              Enter
-            </Link>
+            {action && (
+              <Link
+                to={action.to}
+                onClick={() => setOpen(false)}
+                className="mt-4 block bg-show-red px-5 py-3 text-center text-sm font-semibold text-white"
+              >
+                {action.short}
+              </Link>
+            )}
           </div>
         </nav>
       )}

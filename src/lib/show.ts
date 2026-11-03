@@ -33,6 +33,7 @@ export interface Show {
   bankAccountName: string;
   bankAccountNumber: string;
   nominationsOpen: boolean;
+  dinnerBookingsOpen: boolean;
   events: ShowEvent[];
 }
 
@@ -63,7 +64,7 @@ export async function fetchActiveShow(): Promise<Show> {
        entries_open_at, entries_close_at,
        qualification_start, qualification_end,
        dinner_ticket_fee, extra_catalogue_fee,
-       bank_account_name, bank_account_number, nominations_open,
+       bank_account_name, bank_account_number, nominations_open, dinner_bookings_open,
        show_events ( id, code, title, requirement, entry_fee, sort_order )`,
     )
     .eq('is_active', true)
@@ -86,6 +87,7 @@ export async function fetchActiveShow(): Promise<Show> {
     bankAccountName: data.bank_account_name,
     bankAccountNumber: data.bank_account_number,
     nominationsOpen: data.nominations_open,
+    dinnerBookingsOpen: data.dinner_bookings_open,
     events: (data.show_events ?? [])
       .map((e) => ({
         id: e.id,
@@ -97,4 +99,20 @@ export async function fetchActiveShow(): Promise<Show> {
       }))
       .sort((a, b) => a.sortOrder - b.sortOrder),
   };
+}
+
+/**
+ * Where the site's main call to action should send people. While entries are
+ * open that is the entry form; once they close and dinner bookings are open it
+ * is the booking page; otherwise there is nothing to sign up for.
+ */
+export function primaryAction(
+  show: Show | undefined,
+  window: EntryWindow | undefined,
+): { to: string; label: string; short: string } | null {
+  if (!show || !window) return null;
+  if (window === 'open') return { to: '/enter', label: 'Start an entry', short: 'Enter' };
+  if (window === 'closed' && show.dinnerBookingsOpen)
+    return { to: '/dinner', label: 'Book the dinner', short: 'Book dinner' };
+  return null;
 }

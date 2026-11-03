@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useShow } from '@/hooks/useShow';
+import { primaryAction } from '@/lib/show';
 import { formatShowDate, formatDate, formatMoney } from '@/lib/format';
 
 export default function About() {
-  const { show } = useShow();
+  const { show, window } = useShow();
+  const action = primaryAction(show, window);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
@@ -48,14 +50,16 @@ export default function About() {
               />
               <Detail label="Dinner" value={`${formatMoney(show.dinnerTicketFee)} per seat`} />
             </dl>
-            <div className="border-t border-show-rule p-6">
-              <Link
-                to="/enter"
-                className="block bg-show-red px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-show-red-deep"
-              >
-                Start an entry
-              </Link>
-            </div>
+            {action && (
+              <div className="border-t border-show-rule p-6">
+                <Link
+                  to={action.to}
+                  className="block bg-show-red px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-show-red-deep"
+                >
+                  {action.label}
+                </Link>
+              </div>
+            )}
           </aside>
         )}
       </div>

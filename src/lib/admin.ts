@@ -124,3 +124,11 @@ export function summarise(entries: AdminEntry[]) {
     unpaidCount: unpaid.length,
   };
 }
+
+export async function setDinnerBookingsOpen(showId: string, open: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('shows')
+    .update({ dinner_bookings_open: open })
+    .eq('id', showId);
+  if (error) throw new Error(error.message);
+}

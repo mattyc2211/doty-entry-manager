@@ -7,6 +7,7 @@ import Enter from './pages/Enter';
 import About from './pages/About';
 import Qualifying from './pages/Qualifying';
 import Nominate from './pages/Nominate';
+import Dinner from './pages/Dinner';
 import Admin from './pages/Admin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AdminOrganisers } from './components/admin/AdminOrganisers';
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/qualifying" element={<Qualifying />} />
             <Route path="/nominate" element={<Nominate />} />
+            <Route path="/dinner" element={<Dinner />} />
             {/* Judges and Sponsors are hidden for now, not deleted. The pages
                 and their data are still in the repo; restore by re-adding the
                 imports and these two routes, plus their nav entries in
