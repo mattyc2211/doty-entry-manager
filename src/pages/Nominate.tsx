@@ -21,7 +21,7 @@ const EMPTY: Draft = {
 };
 
 /**
- * Nominations for the two sportsmanship awards. One short page rather than a
+ * Nominations for the two showmanship awards. One short page rather than a
  * wizard: a name, a member number, and one or both nominees. Either award can
  * be left blank, so someone who only knows exhibitors on one island is not
  * pushed into guessing for the other.
@@ -89,13 +89,13 @@ export default function Nominate() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-20">
       <h1 className="display rule-red text-[clamp(2.25rem,6vw,4rem)] text-show-ink">
-        Sportsmanship awards
+        Showmanship awards
       </h1>
 
       <p className="mt-6 max-w-xl text-lg leading-relaxed text-show-charcoal">
         Two awards, one for the North Island and one for the South Island,
         recognising someone in the dog world who shows what good
-        sportsmanship looks like. They don't need to be an exhibitor.
+        showmanship looks like. They don't need to be an exhibitor.
         Nominate someone for either award, or both. Once nominations close,
         voting opens.
       </p>

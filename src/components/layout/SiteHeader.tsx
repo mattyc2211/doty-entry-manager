@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 const NAV = [
   { to: '/about', label: 'The show' },
   { to: '/qualifying', label: 'Qualifying' },
-  { to: '/nominate', label: 'Sportsmanship awards' },
+  { to: '/nominate', label: 'Showmanship awards' },
 ];
 
 export function SiteHeader() {

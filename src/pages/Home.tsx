@@ -81,7 +81,7 @@ export default function Home() {
                   to="/nominate"
                   className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
                 >
-                  Nominate for the sportsmanship awards
+                  Nominate for the showmanship awards
                 </Link>
               ) : (
                 <Link
@@ -118,7 +118,7 @@ export default function Home() {
             {show.nominationsOpen && (
               <HomeCard
                 to="/nominate"
-                title="Sportsmanship awards"
+                title="Showmanship awards"
                 body="Nominate someone for the North Island or South Island award, or both."
                 cta="Make a nomination"
               />

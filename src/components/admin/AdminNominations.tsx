@@ -13,7 +13,7 @@ import { formatShortTimestamp } from '@/lib/format';
 import { cn } from '@/lib/utils';
 
 /**
- * Sportsmanship nominations. The switch opens and closes the public form (the
+ * Showmanship nominations. The switch opens and closes the public form (the
  * server enforces it too). The tally groups by nominee so the voting shortlist
  * can be read straight off the page; the list underneath is every nomination
  * as it was sent, with the reason and who sent it.
@@ -41,7 +41,7 @@ export function AdminNominations() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-10 lg:px-8">
-      <h1 className="display text-3xl text-show-ink">Sportsmanship nominations</h1>
+      <h1 className="display text-3xl text-show-ink">Showmanship nominations</h1>
 
       <section className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-show-rule bg-white p-6">
         <div className="mr-auto">

@@ -27,7 +27,7 @@ export function SiteFooter() {
               Qualifying
             </Link>
             <Link to="/nominate" className="hover:text-show-ink">
-              Sportsmanship awards
+              Showmanship awards
             </Link>
             <Link to="/admin" className="hover:text-show-ink">
               Organisers

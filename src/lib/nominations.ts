@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 export type Award = 'north_island' | 'south_island';
 
 export const AWARDS: { code: Award; title: string }[] = [
-  { code: 'north_island', title: 'North Island Sportsmanship Award' },
-  { code: 'south_island', title: 'South Island Sportsmanship Award' },
+  { code: 'north_island', title: 'North Island Showmanship Award' },
+  { code: 'south_island', title: 'South Island Showmanship Award' },
 ];
 
 export function awardTitle(code: Award): string {
