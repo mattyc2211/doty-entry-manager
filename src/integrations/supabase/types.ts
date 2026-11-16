@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.15"
+  }
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -51,6 +56,41 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      ballot_candidates: {
+        Row: {
+          award: string
+          created_at: string
+          id: string
+          name: string
+          show_id: string
+          sort_order: number
+        }
+        Insert: {
+          award: string
+          created_at?: string
+          id?: string
+          name: string
+          show_id: string
+          sort_order?: number
+        }
+        Update: {
+          award?: string
+          created_at?: string
+          id?: string
+          name?: string
+          show_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ballot_candidates_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       dog_entries: {
         Row: {
@@ -234,6 +274,7 @@ export type Database = {
           show_date: string
           updated_at: string
           venue: string | null
+          voting_open: boolean
           year: number
         }
         Insert: {
@@ -255,6 +296,7 @@ export type Database = {
           show_date: string
           updated_at?: string
           venue?: string | null
+          voting_open?: boolean
           year: number
         }
         Update: {
@@ -276,6 +318,7 @@ export type Database = {
           show_date?: string
           updated_at?: string
           venue?: string | null
+          voting_open?: boolean
           year?: number
         }
         Relationships: []
@@ -348,24 +391,71 @@ export type Database = {
           },
         ]
       }
+      votes: {
+        Row: {
+          award: string
+          candidate_id: string
+          created_at: string
+          id: string
+          show_id: string
+          voter_member_number: string
+          voter_name: string
+        }
+        Insert: {
+          award: string
+          candidate_id: string
+          created_at?: string
+          id?: string
+          show_id: string
+          voter_member_number: string
+          voter_name: string
+        }
+        Update: {
+          award?: string
+          candidate_id?: string
+          created_at?: string
+          id?: string
+          show_id?: string
+          voter_member_number?: string
+          voter_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ballot_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      book_dinner: {
+        Args: { p_booker: Json; p_dietary?: string; p_tickets: number }
+        Returns: Json
+      }
       create_entry: {
         Args: { p_catering?: Json; p_dogs?: Json; p_exhibitor: Json }
         Returns: Json
       }
+      get_ballot: { Args: never; Returns: Json }
       is_admin: { Args: never; Returns: boolean }
-      book_dinner: {
-        Args: { p_booker: Json; p_tickets: number; p_dietary?: string | null }
-        Returns: Json
-      }
       submit_nominations: {
         Args: { p_nominations: Json; p_nominator: Json }
         Returns: Json
       }
+      submit_votes: { Args: { p_voter: Json; p_votes: Json }; Returns: Json }
     }
     Enums: {
       [_ in never]: never
@@ -376,6 +466,62 @@ export type Database = {
   }
   storage: {
     Tables: {
+      bucket_lifecycle_states: {
+        Row: {
+          bucket_id: string
+          claim_id: string | null
+          claim_until: string | null
+          continuation: Json | null
+          failure_count: number
+          generation: string | null
+          last_completed_at: string | null
+          last_error: Json | null
+          last_result: Json | null
+          last_started_at: string | null
+          last_success_at: string | null
+          next_run_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          bucket_id: string
+          claim_id?: string | null
+          claim_until?: string | null
+          continuation?: Json | null
+          failure_count?: number
+          generation?: string | null
+          last_completed_at?: string | null
+          last_error?: Json | null
+          last_result?: Json | null
+          last_started_at?: string | null
+          last_success_at?: string | null
+          next_run_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bucket_id?: string
+          claim_id?: string | null
+          claim_until?: string | null
+          continuation?: Json | null
+          failure_count?: number
+          generation?: string | null
+          last_completed_at?: string | null
+          last_error?: Json | null
+          last_result?: Json | null
+          last_started_at?: string | null
+          last_success_at?: string | null
+          next_run_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bucket_lifecycle_states_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: true
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       buckets: {
         Row: {
           allowed_mime_types: string[] | null
@@ -383,12 +529,15 @@ export type Database = {
           created_at: string | null
           file_size_limit: number | null
           id: string
+          lifecycle_configuration: Json | null
+          lifecycle_configuration_generation: string | null
           name: string
           owner: string | null
           owner_id: string | null
           public: boolean | null
           type: Database["storage"]["Enums"]["buckettype"]
           updated_at: string | null
+          versioning_status: string
         }
         Insert: {
           allowed_mime_types?: string[] | null
@@ -396,12 +545,15 @@ export type Database = {
           created_at?: string | null
           file_size_limit?: number | null
           id: string
+          lifecycle_configuration?: Json | null
+          lifecycle_configuration_generation?: string | null
           name: string
           owner?: string | null
           owner_id?: string | null
           public?: boolean | null
           type?: Database["storage"]["Enums"]["buckettype"]
           updated_at?: string | null
+          versioning_status?: string
         }
         Update: {
           allowed_mime_types?: string[] | null
@@ -409,12 +561,15 @@ export type Database = {
           created_at?: string | null
           file_size_limit?: number | null
           id?: string
+          lifecycle_configuration?: Json | null
+          lifecycle_configuration_generation?: string | null
           name?: string
           owner?: string | null
           owner_id?: string | null
           public?: boolean | null
           type?: Database["storage"]["Enums"]["buckettype"]
           updated_at?: string | null
+          versioning_status?: string
         }
         Relationships: []
       }
@@ -469,100 +624,29 @@ export type Database = {
         }
         Relationships: []
       }
-      iceberg_namespaces: {
+      lifecycle_abandoned_artifacts: {
         Row: {
-          bucket_name: string
-          catalog_id: string
-          created_at: string
-          id: string
-          metadata: Json
+          attempted_at: string
+          bucket_id: string
+          key: string
           name: string
-          updated_at: string
+          version: string | null
         }
         Insert: {
-          bucket_name: string
-          catalog_id: string
-          created_at?: string
-          id?: string
-          metadata?: Json
+          attempted_at?: string
+          bucket_id: string
+          key: string
           name: string
-          updated_at?: string
+          version?: string | null
         }
         Update: {
-          bucket_name?: string
-          catalog_id?: string
-          created_at?: string
-          id?: string
-          metadata?: Json
+          attempted_at?: string
+          bucket_id?: string
+          key?: string
           name?: string
-          updated_at?: string
+          version?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "iceberg_namespaces_catalog_id_fkey"
-            columns: ["catalog_id"]
-            isOneToOne: false
-            referencedRelation: "buckets_analytics"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      iceberg_tables: {
-        Row: {
-          bucket_name: string
-          catalog_id: string
-          created_at: string
-          id: string
-          location: string
-          name: string
-          namespace_id: string
-          remote_table_id: string | null
-          shard_id: string | null
-          shard_key: string | null
-          updated_at: string
-        }
-        Insert: {
-          bucket_name: string
-          catalog_id: string
-          created_at?: string
-          id?: string
-          location: string
-          name: string
-          namespace_id: string
-          remote_table_id?: string | null
-          shard_id?: string | null
-          shard_key?: string | null
-          updated_at?: string
-        }
-        Update: {
-          bucket_name?: string
-          catalog_id?: string
-          created_at?: string
-          id?: string
-          location?: string
-          name?: string
-          namespace_id?: string
-          remote_table_id?: string | null
-          shard_id?: string | null
-          shard_key?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "iceberg_tables_catalog_id_fkey"
-            columns: ["catalog_id"]
-            isOneToOne: false
-            referencedRelation: "buckets_analytics"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "iceberg_tables_namespace_id_fkey"
-            columns: ["namespace_id"]
-            isOneToOne: false
-            referencedRelation: "iceberg_namespaces"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       migrations: {
         Row: {
@@ -587,9 +671,12 @@ export type Database = {
       }
       objects: {
         Row: {
+          archived_at: string | null
           bucket_id: string | null
           created_at: string | null
           id: string
+          is_delete_marker: boolean
+          is_versioned: boolean
           last_accessed_at: string | null
           metadata: Json | null
           name: string | null
@@ -601,9 +688,12 @@ export type Database = {
           version: string | null
         }
         Insert: {
+          archived_at?: string | null
           bucket_id?: string | null
           created_at?: string | null
           id?: string
+          is_delete_marker?: boolean
+          is_versioned?: boolean
           last_accessed_at?: string | null
           metadata?: Json | null
           name?: string | null
@@ -615,9 +705,12 @@ export type Database = {
           version?: string | null
         }
         Update: {
+          archived_at?: string | null
           bucket_id?: string | null
           created_at?: string | null
           id?: string
+          is_delete_marker?: boolean
+          is_versioned?: boolean
           last_accessed_at?: string | null
           metadata?: Json | null
           name?: string | null
@@ -800,6 +893,14 @@ export type Database = {
         Args: { bucketid: string; metadata: Json; name: string; owner: string }
         Returns: undefined
       }
+      delete_lifecycle_objects: {
+        Args: { object_ids: string[] }
+        Returns: {
+          id: string
+          is_delete_marker: boolean
+          metadata: Json
+        }[]
+      }
       extension: { Args: { name: string }; Returns: string }
       filename: { Args: { name: string }; Returns: string }
       foldername: { Args: { name: string }; Returns: string[] }
@@ -808,7 +909,7 @@ export type Database = {
         Returns: string
       }
       get_size_by_bucket: {
-        Args: never
+        Args: { delete_markers?: string; noncurrent_versions?: string }
         Returns: {
           bucket_id: string
           size: number
@@ -822,6 +923,7 @@ export type Database = {
           next_key_token?: string
           next_upload_token?: string
           prefix_param: string
+          raw_prefix_param?: string
         }
         Returns: {
           created_at: string
@@ -832,28 +934,42 @@ export type Database = {
       list_objects_with_delimiter: {
         Args: {
           _bucket_id: string
+          delete_markers?: string
           delimiter_param: string
           max_keys?: number
           next_token?: string
+          next_token_archived_at?: string
+          next_token_version?: string
+          noncurrent_versions?: string
           prefix_param: string
           sort_order?: string
           start_after?: string
         }
         Returns: {
+          archived_at: string
           created_at: string
           id: string
+          is_delete_marker: boolean
+          is_versioned: boolean
           last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
+          version: string
         }[]
       }
       operation: { Args: never; Returns: string }
+      reconcile_lifecycle_state: {
+        Args: { policy_changed: boolean; target_bucket_id: string }
+        Returns: undefined
+      }
       search: {
         Args: {
           bucketname: string
+          delete_markers?: string
           levels?: number
           limits?: number
+          noncurrent_versions?: string
           offsets?: number
           prefix: string
           search?: string
@@ -861,16 +977,22 @@ export type Database = {
           sortorder?: string
         }
         Returns: {
+          archived_at: string
           created_at: string
           id: string
+          is_delete_marker: boolean
+          is_versioned: boolean
           last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
+          version: string
         }[]
       }
       search_by_timestamp: {
         Args: {
+          delete_markers?: string
+          noncurrent_versions?: string
           p_bucket_id: string
           p_level: number
           p_limit: number
@@ -879,36 +1001,50 @@ export type Database = {
           p_sort_column_after: string
           p_sort_order: string
           p_start_after: string
+          p_start_after_version?: string
         }
         Returns: {
+          archived_at: string
           created_at: string
           id: string
+          is_delete_marker: boolean
+          is_versioned: boolean
           key: string
           last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
+          version: string
         }[]
       }
       search_v2: {
         Args: {
           bucket_name: string
+          delete_markers?: string
           levels?: number
           limits?: number
+          noncurrent_versions?: string
           prefix: string
           sort_column?: string
           sort_column_after?: string
           sort_order?: string
           start_after?: string
+          start_after_archived_at?: string
+          start_after_is_continuation?: boolean
+          start_after_version?: string
         }
         Returns: {
+          archived_at: string
           created_at: string
           id: string
+          is_delete_marker: boolean
+          is_versioned: boolean
           key: string
           last_accessed_at: string
           metadata: Json
           name: string
           updated_at: string
+          version: string
         }[]
       }
     }
@@ -929,12 +1065,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -958,11 +1094,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -983,11 +1119,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -1008,11 +1144,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -1025,11 +1161,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -1051,4 +1187,3 @@ export const Constants = {
     },
   },
 } as const
-

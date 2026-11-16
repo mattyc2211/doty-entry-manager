@@ -34,6 +34,7 @@ export interface Show {
   bankAccountNumber: string;
   nominationsOpen: boolean;
   dinnerBookingsOpen: boolean;
+  votingOpen: boolean;
   events: ShowEvent[];
 }
 
@@ -64,7 +65,7 @@ export async function fetchActiveShow(): Promise<Show> {
        entries_open_at, entries_close_at,
        qualification_start, qualification_end,
        dinner_ticket_fee, extra_catalogue_fee,
-       bank_account_name, bank_account_number, nominations_open, dinner_bookings_open,
+       bank_account_name, bank_account_number, nominations_open, dinner_bookings_open, voting_open,
        show_events ( id, code, title, requirement, entry_fee, sort_order )`,
     )
     .eq('is_active', true)
@@ -88,6 +89,7 @@ export async function fetchActiveShow(): Promise<Show> {
     bankAccountNumber: data.bank_account_number,
     nominationsOpen: data.nominations_open,
     dinnerBookingsOpen: data.dinner_bookings_open,
+    votingOpen: data.voting_open,
     events: (data.show_events ?? [])
       .map((e) => ({
         id: e.id,

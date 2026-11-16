@@ -8,10 +8,12 @@ import About from './pages/About';
 import Qualifying from './pages/Qualifying';
 import Nominate from './pages/Nominate';
 import Dinner from './pages/Dinner';
+import Vote from './pages/Vote';
 import Admin from './pages/Admin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AdminOrganisers } from './components/admin/AdminOrganisers';
 import { AdminNominations } from './components/admin/AdminNominations';
+import { AdminVotes } from './components/admin/AdminVotes';
 import NotFound from './pages/NotFound';
 
 const queryClient = new QueryClient({
@@ -28,6 +30,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />}>
             <Route index element={<AdminDashboard />} />
             <Route path="nominations" element={<AdminNominations />} />
+            <Route path="votes" element={<AdminVotes />} />
             <Route path="organisers" element={<AdminOrganisers />} />
           </Route>
 
@@ -38,6 +41,8 @@ const App = () => (
             <Route path="/qualifying" element={<Qualifying />} />
             <Route path="/nominate" element={<Nominate />} />
             <Route path="/dinner" element={<Dinner />} />
+            {/* Not linked anywhere on purpose: reached by its address only. */}
+            <Route path="/vote" element={<Vote />} />
             {/* Judges and Sponsors are hidden for now, not deleted. The pages
                 and their data are still in the repo; restore by re-adding the
                 imports and these two routes, plus their nav entries in

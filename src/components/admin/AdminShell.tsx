@@ -30,6 +30,7 @@ export function AdminShell({
               Entries
             </AdminNavLink>
             <AdminNavLink to="/admin/nominations">Nominations</AdminNavLink>
+            <AdminNavLink to="/admin/votes">Votes</AdminNavLink>
             <AdminNavLink to="/admin/organisers">Organisers</AdminNavLink>
           </nav>
 
