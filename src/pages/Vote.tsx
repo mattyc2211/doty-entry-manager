@@ -8,8 +8,7 @@ import { fetchBallot, splitName, submitVotes, type Candidate, type VoteInput } f
 import { formatShowDate } from '@/lib/format';
 import { cn } from '@/lib/utils';
 
-/** A candidate id, or SKIP for "not voting for this award". */
-const SKIP = 'skip';
+/** The chosen candidate id for each award, empty if none. */
 type Picks = Record<Award, string>;
 
 /**
@@ -37,7 +36,7 @@ export default function Vote() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const votes = AWARDS.filter((a) => picks[a.code] && picks[a.code] !== SKIP).map((a) => ({
+    const votes = AWARDS.filter((a) => picks[a.code]).map((a) => ({
       award: a.code,
       candidateId: picks[a.code],
     }));
@@ -227,21 +226,10 @@ function AwardBallot({
               </Option>
             );
           })}
-          <Option
-            id={`${award}-skip`}
-            name={award}
-            checked={value === SKIP}
-            onChange={() => onChange(SKIP)}
-            skip
-          >
-            I won't vote for this award
-          </Option>
         </div>
 
         <p className="mt-3 min-h-[1.5em] text-sm text-show-charcoal" aria-live="polite">
-          {value === SKIP ? (
-            'You are not voting for this award.'
-          ) : chosen ? (
+          {chosen ? (
             <>
               Your vote: <strong className="text-show-ink">{chosen.name}</strong>
             </>
@@ -259,14 +247,12 @@ function Option({
   name,
   checked,
   onChange,
-  skip,
   children,
 }: {
   id: string;
   name: string;
   checked: boolean;
   onChange: () => void;
-  skip?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -283,20 +269,14 @@ function Option({
         htmlFor={id}
         className={cn(
           'flex min-h-14 cursor-pointer items-center gap-3.5 border bg-white px-4 py-3 text-sm text-show-ink transition-colors hover:border-show-ink peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-show-ink',
-          skip && 'border-dashed text-show-charcoal',
-          checked && !skip && 'border-show-red bg-[#fdecee] shadow-[inset_4px_0_0_var(--red)]',
-          checked && skip && 'border-show-charcoal bg-wash',
+          checked && 'border-show-red bg-[#fdecee] shadow-[inset_4px_0_0_var(--red)]',
           !checked && 'border-show-rule',
         )}
       >
         <span
           className={cn(
             'grid h-5 w-5 shrink-0 place-items-center border-[1.5px]',
-            checked
-              ? skip
-                ? 'border-show-charcoal bg-show-charcoal'
-                : 'border-show-red bg-show-red'
-              : 'border-show-charcoal bg-white',
+            checked ? 'border-show-red bg-show-red' : 'border-show-charcoal bg-white',
           )}
         >
           {checked && <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />}
