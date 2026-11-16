@@ -76,7 +76,14 @@ export default function Home() {
               )}
               {/* Once entries close, what qualifies stops mattering; the
                   awards are the other thing people can still take part in. */}
-              {entryWindow === 'closed' && show?.nominationsOpen ? (
+              {entryWindow === 'closed' && show?.votingOpen ? (
+                <Link
+                  to="/vote"
+                  className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
+                >
+                  Vote for the showmanship awards
+                </Link>
+              ) : entryWindow === 'closed' && show?.nominationsOpen ? (
                 <Link
                   to="/nominate"
                   className="border-b border-show-ink pb-0.5 text-sm font-medium text-show-ink transition-colors duration-200 hover:border-show-red hover:text-show-red"
@@ -104,7 +111,7 @@ export default function Home() {
 
       {/* What people can still do, straight off the home page. Each card
           appears only while its switch is on in the organisers' area. */}
-      {show && (show.dinnerBookingsOpen || show.nominationsOpen) && (
+      {show && (show.dinnerBookingsOpen || show.nominationsOpen || show.votingOpen) && (
         <section className="mx-auto max-w-6xl px-5 pt-10 lg:px-8">
           <div className="grid gap-px border border-show-rule bg-show-rule sm:grid-cols-2">
             {show.dinnerBookingsOpen && (
@@ -115,7 +122,14 @@ export default function Home() {
                 cta="Book dinner"
               />
             )}
-            {show.nominationsOpen && (
+            {show.votingOpen ? (
+              <HomeCard
+                to="/vote"
+                title="Showmanship awards"
+                body="Nominations are in. Vote for the North Island and South Island winners, one vote each per member."
+                cta="Vote now"
+              />
+            ) : show.nominationsOpen && (
               <HomeCard
                 to="/nominate"
                 title="Showmanship awards"

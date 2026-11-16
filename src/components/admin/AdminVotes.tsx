@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 
 /**
  * Showmanship voting. The switch opens and closes the ballot at /vote (the
- * server enforces it too). The page at /vote is not linked from the site, so
- * voters need the address. Counts per candidate, then every vote with who
+ * server enforces it too). While it is open, the site's showmanship links
+ * point at /vote. Counts per candidate, then every vote with who
  * cast it, so a vote under a made-up member number can be removed.
  */
 export function AdminVotes() {
@@ -42,8 +42,10 @@ export function AdminVotes() {
         <div className="mr-auto">
           <p className="text-base font-medium text-show-ink">Voting is {open ? 'open' : 'closed'}</p>
           <p className="mt-1 text-sm text-show-charcoal">
-            The ballot is at <span className="code">/vote</span>, which is not linked from the
-            site. {all.length} {all.length === 1 ? 'vote' : 'votes'} from {voters}{' '}
+            {open
+              ? 'The site links to the ballot at /vote.'
+              : 'The site links to the nomination form, and /vote says voting is not open.'}{' '}
+            {all.length} {all.length === 1 ? 'vote' : 'votes'} from {voters}{' '}
             {voters === 1 ? 'member' : 'members'}.
           </p>
         </div>

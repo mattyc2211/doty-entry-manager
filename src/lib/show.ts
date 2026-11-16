@@ -53,6 +53,14 @@ export function entryWindow(show: Show, now: Date = new Date()): EntryWindow {
   return 'open';
 }
 
+/**
+ * Where the showmanship awards link goes: the ballot while voting is open,
+ * otherwise the nomination form.
+ */
+export function awardsPath(show: Show | undefined): string {
+  return show?.votingOpen ? '/vote' : '/nominate';
+}
+
 export function isQualifyingDateValid(show: Show, date: string): boolean {
   return date >= show.qualificationStart && date <= show.qualificationEnd;
 }

@@ -106,10 +106,21 @@ export default function Nominate() {
         <div className="mt-10 flex max-w-2xl items-start gap-4 border border-show-rule bg-wash p-6">
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-show-red" />
           <div>
-            <p className="display-md text-base text-show-ink">Nominations are not open</p>
-            <p className="mt-2 text-sm leading-relaxed text-show-charcoal">
-              Check back soon, or watch the show's announcements for when they open.
+            <p className="display-md text-base text-show-ink">
+              {show.votingOpen ? 'Nominations have closed' : 'Nominations are not open'}
             </p>
+            {show.votingOpen ? (
+              <p className="mt-2 text-sm leading-relaxed text-show-charcoal">
+                Voting is open now.{' '}
+                <Link to="/vote" className="font-medium text-show-ink underline hover:text-show-red">
+                  Vote for the showmanship awards
+                </Link>
+              </p>
+            ) : (
+              <p className="mt-2 text-sm leading-relaxed text-show-charcoal">
+                Check back soon, or watch the show's announcements for when they open.
+              </p>
+            )}
           </div>
         </div>
       )}

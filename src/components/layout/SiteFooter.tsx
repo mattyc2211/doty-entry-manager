@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ShowMark } from '@/components/show/ShowMark';
 import { useShow } from '@/hooks/useShow';
 import { formatShowDate } from '@/lib/format';
+import { awardsPath } from '@/lib/show';
 
 export function SiteFooter() {
   const { show } = useShow();
@@ -26,7 +27,7 @@ export function SiteFooter() {
             <Link to="/qualifying" className="hover:text-show-ink">
               Qualifying
             </Link>
-            <Link to="/nominate" className="hover:text-show-ink">
+            <Link to={awardsPath(show)} className="hover:text-show-ink">
               Showmanship awards
             </Link>
             <Link to="/admin" className="hover:text-show-ink">

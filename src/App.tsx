@@ -41,7 +41,6 @@ const App = () => (
             <Route path="/qualifying" element={<Qualifying />} />
             <Route path="/nominate" element={<Nominate />} />
             <Route path="/dinner" element={<Dinner />} />
-            {/* Not linked anywhere on purpose: reached by its address only. */}
             <Route path="/vote" element={<Vote />} />
             {/* Judges and Sponsors are hidden for now, not deleted. The pages
                 and their data are still in the repo; restore by re-adding the

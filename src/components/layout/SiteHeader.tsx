@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { ShowMark } from '@/components/show/ShowMark';
 import { useShow } from '@/hooks/useShow';
-import { primaryAction } from '@/lib/show';
+import { awardsPath, primaryAction } from '@/lib/show';
 import { cn } from '@/lib/utils';
 
 // Judges and Sponsors are hidden for now. Their pages still exist; add the
@@ -14,6 +14,8 @@ const NAV = [
   { to: '/nominate', label: 'Showmanship awards' },
 ];
 
+// The awards entry follows the show: nominations first, then the ballot.
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -21,6 +23,9 @@ export function SiteHeader() {
   // The red button follows the show: the entry form while entries are open,
   // the dinner page after, and nothing once both are shut.
   const action = primaryAction(show, window);
+  const nav = NAV.map((item) =>
+    item.to === '/nominate' ? { ...item, to: awardsPath(show) } : item,
+  );
 
   return (
     <header className="sticky top-0 z-40 border-b border-show-rule bg-white/95 backdrop-blur">
@@ -34,7 +39,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="ml-auto hidden items-center gap-7 md:flex">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -72,7 +77,7 @@ export function SiteHeader() {
       {open && (
         <nav className="border-t border-show-rule bg-white md:hidden">
           <div className="mx-auto max-w-6xl px-5 py-3">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}

@@ -12,13 +12,10 @@ import { cn } from '@/lib/utils';
 type Picks = Record<Award, string>;
 
 /**
- * Voting for the two showmanship awards. Deliberately unlinked: nothing in the
- * header, footer or home page points here, so only people given the address
- * reach it. It also asks search engines not to index it.
+ * Voting for the two showmanship awards. While voting is open the site's
+ * showmanship links point here instead of at the nomination form.
  */
 export default function Vote() {
-  useNoIndex();
-
   const ballot = useQuery({ queryKey: ['ballot'], queryFn: fetchBallot });
   const [name, setName] = useState('');
   const [memberNumber, setMemberNumber] = useState('');
@@ -294,15 +291,4 @@ function ReceiptRow({ label, value }: { label: string; value: React.ReactNode })
       <dd className="text-right font-semibold text-show-ink">{value}</dd>
     </div>
   );
-}
-
-/** Adds a robots noindex tag while this page is mounted. */
-function useNoIndex() {
-  useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.name = 'robots';
-    meta.content = 'noindex, nofollow';
-    document.head.appendChild(meta);
-    return () => meta.remove();
-  }, []);
 }
